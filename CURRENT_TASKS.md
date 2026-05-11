@@ -4,8 +4,9 @@
   - `[x]` Rename and rebuild the squad (Caleb, Nova, Atlas, etc.) in Ollama.
   - `[x]` Implement `knowledge_manager.py` for `Learnings.md` maintenance.
 
-- `[/]` **Phase 2: Agency Operations (Website & SEO)**
+- `[/]` **Phase 2: Agency Operations & Skill Building**
+  - `[ ]` **Skill Building**: Develop robust Playwright-based browser interaction tools (Click, Type, SEO Extract).
   - `[ ]` Integrate Headless Browser (Playwright) for **Rowan** to perform SEO audits.
-  - `[ ]` Build the first "Anti-Gravity Agency" landing page (Caleb & Aria).
   - `[ ]` Set up Nova's Decoupled Security pipeline for email outreach.
   - `[ ]` Implement "Spam Filter" checks for Nova's drafts.
+  - `[ ]` Build the first "Anti-Gravity Agency" landing page (Caleb & Aria) [DE-PRIORITIZED].

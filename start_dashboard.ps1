@@ -5,11 +5,12 @@ Write-Host "=========================================" -ForegroundColor Cyan
 
 $WorkspacePath = (Get-Item .).FullName
 
-Write-Host "Starting secure sandbox container on port 8000..." -ForegroundColor Yellow
+Write-Host "Starting secure agency infrastructure via Docker Compose..." -ForegroundColor Yellow
 
-# Run the container in detached mode, map port 8000, mount workspace
-docker run -d --name antigravity-dashboard -p 8000:8000 -v "${WorkspacePath}:/workspace" -w /workspace anti-sandbox python backend/app.py
+# Start the services
+docker-compose up -d
 
-Write-Host "Command Center is running!" -ForegroundColor Green
-Write-Host "Open your browser to: http://localhost:8000" -ForegroundColor Cyan
-Write-Host "To stop the dashboard, run: docker stop antigravity-dashboard; docker rm antigravity-dashboard" -ForegroundColor Gray
+Write-Host "Command Center and Iron Sentry are running!" -ForegroundColor Green
+Write-Host "Dashboard: http://localhost:8000" -ForegroundColor Cyan
+Write-Host "Iron Sentry: listening on port 2525" -ForegroundColor Cyan
+Write-Host "To stop the agency, run: docker-compose down" -ForegroundColor Gray

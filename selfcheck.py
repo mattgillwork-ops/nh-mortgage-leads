@@ -70,7 +70,7 @@ REQUIRED_SOURCE_FILES = [
     os.path.join(BASE_DIR, "agents", "researcher_agent.py"),
     os.path.join(BASE_DIR, "agents", "ux_agent.py"),
     os.path.join(BASE_DIR, "tools", "web_search.py"),
-    os.path.join(BASE_DIR, "tools", "browser_preview.py"),
+    os.path.join(BASE_DIR, "tools", "mcp_server.py"),
 ]
 
 SENSITIVE_PATTERNS = [
@@ -505,6 +505,74 @@ def check_resilience_config():
     return passed, failed
 
 
+def check_mcp_health():
+    """Check 11: Verify MCP server and tool registry."""
+    print_header("CHECK 11: MCP Server & Tool Registry")
+    passed = 0
+    failed = 0
+
+    mcp_path = os.path.join(BASE_DIR, "tools", "mcp_server.py")
+    if os.path.isfile(mcp_path):
+        print_pass("MCP Server script (mcp_server.py) exists.")
+        passed += 1
+        
+        # Check for FastMCP import
+        with open(mcp_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        if "FastMCP" in content:
+            print_pass("MCP server is using the modern FastMCP framework.")
+            passed += 1
+        else:
+            print_fail("MCP server is using outdated or missing FastMCP framework.")
+            failed += 1
+    else:
+        print_fail("MCP Server script is MISSING!")
+        failed += 1
+
+    # Check for mcp dependency
+    try:
+        import mcp
+        print_pass("MCP Python SDK is installed.")
+        passed += 1
+    except ImportError:
+        print_fail("MCP Python SDK is NOT installed.")
+        failed += 1
+
+    return passed, failed
+
+
+def check_hardened_security():
+    """Check 12: Verify hardened tool regex and security protocols."""
+    print_header("CHECK 12: Hardened Security Audit")
+    passed = 0
+    failed = 0
+
+    base_agent_path = os.path.join(BASE_DIR, "agents", "base_agent.py")
+    if os.path.isfile(base_agent_path):
+        with open(base_agent_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        # Check for the hardened MCP regex
+        if r"mcp_pattern = re.compile(r'<\|?mcp_call" in content:
+            print_pass("Hardened MCP tool-calling regex is present in BaseAgent.")
+            passed += 1
+        else:
+            print_fail("Hardened MCP regex is MISSING. Hallucination risk is high!")
+            failed += 1
+            
+        if "asyncio.run(self._execute_mcp_tool" in content:
+            print_pass("BaseAgent is correctly bridging sync and async for MCP.")
+            passed += 1
+        else:
+            print_fail("BaseAgent is missing the MCP execution bridge.")
+            failed += 1
+    else:
+        print_fail("BaseAgent.py is missing!")
+        failed += 2
+
+    return passed, failed
+
+
 # ============================================================
 # MAIN RUNNER
 # ============================================================
@@ -533,6 +601,8 @@ def run_selfcheck(skip_live=False):
         check_security,
         check_memory_health,
         check_resilience_config,
+        check_mcp_health,
+        check_hardened_security,
     ]
 
     for check in checks:

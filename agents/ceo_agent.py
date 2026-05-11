@@ -69,9 +69,14 @@ class CEOAgent(BaseAgent):
             # Interactive Approval for Code Tasks (skip on retries)
             if classification.get("task_type") == "code" and not classification.get("_skip_approval"):
                 plan = classification.get("implementation_plan", "No plan provided.")
+                
+                # Harden against list format from model
+                if isinstance(plan, list):
+                    plan = "\n".join(str(item) for item in plan)
+                
                 print("\n" + "=" * 56)
                 print("  [ALEX] IMPLEMENTATION PLAN:")
-                print("  " + "\n  ".join(plan.split("\n")))
+                print("  " + "\n  ".join(str(plan).split("\n")))
                 print("=" * 56 + "\n")
                 
                 while True:
@@ -186,7 +191,7 @@ class CEOAgent(BaseAgent):
         obsidian_context = self.memory.get_context()
 
         # Step 1: Classify
-        classification = self.classify_task(prompt)
+        classification = self.classify_task(f"{obsidian_context}\n\nTask: {prompt}")
         self.logger.info(f"Classification: {json.dumps(classification, indent=2)}")
 
         # Step 2: Delegate

@@ -5,3 +5,7 @@ chromadb
 PyYAML
 pyautogui
 pillow
+playwright
+mcp[cli]
+pyrit
+mailtrap

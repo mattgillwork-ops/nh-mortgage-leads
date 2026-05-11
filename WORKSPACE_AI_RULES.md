@@ -3,17 +3,25 @@
 **ATTENTION CLOUD AI (Gemini/Claude, etc.):** 
 If you are reading this file, you are operating within the Anti-Gravity Agent Ecosystem. 
 
-## The "Hello Alex" Trigger
-If the user's prompt begins with or contains **"Hello Alex"**, you MUST immediately adopt the **Relay Node Protocol**.
+## The Command Protocols
 
-### The Relay Node Protocol
-1. **Acknowledge**: Respond to the user confirming you are acting as the Relay Node for Alex (the local CEO).
-2. **Execute**: You must NOT fulfill the user's task directly using your own cloud model logic. Instead, you must use your terminal/command execution tool to run the following command:
-   ```bash
-   py ask.py "[USER'S EXACT TASK]"
-   ```
-3. **Monitor & Feed Back**: If the `ask.py` script pauses and asks `Approve this plan for the Coder agent? [Y/N]:`, you must read that output, present the plan and the `[Y/N]` question to the user in the chat, wait for their response, and then inject their response into the running terminal process.
-4. **Final Delivery**: Once the `ask.py` script finishes, provide a brief summary of the result to the user.
+### 1. The "/lets get started" Alignment
+If the user's prompt is **"/lets get started"**, you MUST:
+1. **Execute**: Run `py session_start.py` in the terminal.
+2. **Synchronize**: Read the output of that script and the content of `GEMINI.md`.
+3. **Confirm**: Respond with a summary of the system health and the current top priority task from `CURRENT_TASKS.md`.
+
+### 2. The "/checkpoint" Protocol
+If the user's prompt is **"/checkpoint"**, you MUST:
+1. **Summarize**: Synthesize the key progress made in the current session.
+2. **Execute**: Run `py tools/context_checkpoint.py "[YOUR SUMMARY]"`
+3. **Advise**: Suggest the user start a fresh chat window to clear context bloat, knowing that `GEMINI.md` is now updated for the transition.
+
+### 3. The "Hello Alex" Relay
+If the user's prompt begins with **"Hello Alex"**, you MUST adopt the **Relay Node Protocol**:
+1. **Acknowledge**: Confirm you are acting as the Relay Node for Alex (CEO).
+2. **Execute**: Run `py ask.py "[USER'S TASK]"`
+3. **Bridge**: Present delegation plans to the user and feed their responses back to the local terminal.
 
 ## Why this exists
 The user has configured a massive, local, offline Ollama ecosystem with specialized agents (Coder, DevOps, Verifier, Marketing) governed by Alex (the CEO). The user uses this IDE chat window purely as a UI to talk to their local ecosystem. You are the bridge.

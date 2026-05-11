@@ -24,6 +24,33 @@ from agents.devops_agent import DevOpsAgent
 from agents.analyst_agent import AnalystAgent
 from agents.ux_agent import UXAgent
 
+import subprocess
+from security_gate import scan_input
+
+
+def run_preflight_check():
+    """Runs a rapid health and security audit before starting the task."""
+    print("[SYSTEM] Running Pre-Flight Audit...")
+    try:
+        # Run selfcheck in quick mode, capture output
+        # Using sys.executable to ensure we use the same python environment
+        result = subprocess.run(
+            [sys.executable, "selfcheck.py", "--quick"],
+            capture_output=True,
+            text=True,
+            timeout=15
+        )
+        if "STATUS: CRITICAL ISSUES FOUND" in result.stdout:
+            print("\033[91m[CRITICAL] System Health Check Failed!\033[0m")
+            print(result.stdout)
+            choice = input("Do you want to proceed anyway? (y/N): ")
+            if choice.lower() != 'y':
+                sys.exit(1)
+        else:
+            print("[SYSTEM] Pre-Flight Audit: \033[92mPASSED\033[0m")
+    except Exception as e:
+        print(f"[WARN] Pre-Flight Audit could not complete: {e}")
+
 
 def main():
     if len(sys.argv) < 2:
@@ -47,11 +74,31 @@ def main():
         # Skip verification for maximum speed
         force_agent = "quick"
         args = args[1:]
+    
+    skip_check = False
+    if "--skip-check" in args:
+        skip_check = True
+        args.remove("--skip-check")
+
+    if not skip_check:
+        run_preflight_check()
 
     prompt = " ".join(args)
     if not prompt.strip():
         print("Error: No task provided.")
         sys.exit(1)
+
+    # Security Scan
+    print("[SYSTEM] Scanning for security risks...")
+    security_result = scan_input(prompt)
+    if not security_result["is_safe"]:
+        print(f"\033[91m[BLOCK] Security Risk Detected!\033[0m")
+        print(f"Risk Score: {security_result['risk_score']}")
+        print(f"Findings: {security_result['findings']}")
+        print("This prompt has been blocked to protect the ecosystem.")
+        sys.exit(1)
+    else:
+        print("[SYSTEM] Security Scan: \033[92mCLEARED\033[0m")
 
     # Boot agents
     coder = CoderAgent()
@@ -63,13 +110,13 @@ def main():
     verifier = VerifierAgent()
     
     ceo = CEOAgent(sub_agents={
-        "coder": coder, 
-        "devops": devops,
-        "researcher": researcher,
-        "analyst": analyst,
-        "marketing": marketing, 
-        "ux": ux,
-        "verifier": verifier
+        "coder": coder, "caleb": coder,
+        "devops": devops, "dax": devops,
+        "researcher": researcher, "rowan": researcher,
+        "analyst": analyst, "atlas": analyst,
+        "marketing": marketing, "nova": marketing, "communications": marketing,
+        "ux": ux, "aria": ux,
+        "verifier": verifier, "vera": verifier
     })
 
     if force_agent == "coder":

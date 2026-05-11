@@ -35,9 +35,10 @@ All 5 phases done. Git commit `7a7fa88` is the baseline.
 - **Dashboard**: FastAPI backend at `localhost:8000`, Docker container `antigravity-dashboard`
 
 ## What's Next (Priority Order)
-1. **Agency Operations** — Build the Anti-Gravity agency landing page (Caleb + Aria)
+1. **Browser Skill Building** — Develop robust Playwright-based browser interaction tools for Rowan (Rowan + Caleb)
 2. **SEO Automation** — Integrate Playwright for Rowan's competitive audits
 3. **Email Pipeline** — Mailtrap integration for Nova's outreach (human-in-the-loop)
+4. **Agency Operations** — Build the Anti-Gravity agency landing page (Caleb + Aria) [DE-PRIORITIZED]
 
 ## User Preferences
 - Infrastructure and hardening BEFORE business features

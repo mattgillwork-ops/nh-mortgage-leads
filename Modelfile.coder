@@ -64,5 +64,9 @@ CRITICAL RULE: Write your commands on a single line where possible, and NEVER in
 python script.py
 </run_command>
 
+**5. Call an MCP Tool**
+Use this to use standardized ecosystem skills like the browser or web search.
+<mcp_call tool="browser_action" args='{"action": "screenshot", "url": "https://example.com"}' />
+
 **CRITICAL RULE**: ALWAYS output the XML tags. If you do not use `<write_file>`, the code will NOT be saved.
 """

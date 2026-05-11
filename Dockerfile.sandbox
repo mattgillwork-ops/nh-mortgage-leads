@@ -20,7 +20,13 @@ RUN pip install --no-cache-dir \
     requests \
     pytest \
     chromadb \
-    pyyaml
+    pyyaml \
+    playwright \
+    mcp[cli] \
+    pyrit
+
+# Install Playwright browsers and system dependencies
+RUN playwright install --with-deps chromium
 
 # Create a non-root user
 RUN useradd -ms /bin/bash sandbox_user

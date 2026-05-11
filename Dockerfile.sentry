@@ -1,0 +1,26 @@
+
+FROM python:3.11-slim
+
+# Security: Run as non-root
+RUN groupadd -r sentry && useradd -r -g sentry sentry
+
+WORKDIR /app
+
+# Install only necessary networking libraries
+RUN pip install --no-cache-dir fastapi uvicorn
+
+# Copy core logic
+COPY tools/webhook_sentry.py tools/
+COPY security_gate.py .
+
+# Setup local vault with proper permissions
+RUN mkdir -p tru/Inbox && chown -R sentry:sentry /app/tru
+
+USER sentry
+
+# Port 2525 is mapped to 25 via Cloudflare Tunnel
+EXPOSE 2525
+
+ENV PYTHONUNBUFFERED=1
+
+CMD ["python", "tools/webhook_sentry.py"]
