@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Gravity Command Center</title>
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono&display=swap');
+        
+        :root {
+            --bg-dark: #0a0a0c;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.3);
+            --success: #10b981;
+            --error: #ef4444;
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            display: flex;
+            height: 100vh;
+            background: radial-gradient(circle at top right, #1e1b4b, #0a0a0c);
+        }
+
+        /* Sidebar Styling */
+        .Sidebar {
+            width: 280px;
+            background: rgba(10, 10, 12, 0.6);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glass-border);
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .Logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 60px;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .NavMenu { display: flex; flex-direction: column; gap: 12px; }
+        .NavMenu button {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .NavMenu button.Active { background: var(--glass); color: white; border: 1px solid var(--glass-border); }
+        .NavMenu button:hover { color: white; background: rgba(255, 255, 255, 0.05); }
+
+        .AgentStatus { margin-top: auto; background: var(--glass); padding: 20px; border-radius: 12px; border: 1px solid var(--glass-border); }
+        .AgentStatus h3 { font-size: 0.9rem; margin-bottom: 12px; color: var(--text-dim); }
+        .StatusOnline { color: var(--success); font-weight: 700; }
+        .StatusOffline { color: var(--error); font-weight: 700; }
+
+        /* Main Content Styling */
+        .MainContent {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .TopBar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .TopBar h1 { font-size: 2rem; font-weight: 700; }
+
+        /* View Containers */
+        .View { display: none; flex-direction: column; gap: 24px; animation: fadeIn 0.5s ease; }
+        .View.Active { display: flex; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Monitor Tab */
+        .HealthAction {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 24px;
+            border-radius: 12px;
+        }
+        .BtnPrimary {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+        .BtnPrimary:hover { filter: brightness(1.2); }
+        .BtnPrimary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .HealthOutput {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            display: none;
+            border: 1px solid var(--glass-border);
+        }
+        .HealthOutput.Success { border-left: 4px solid var(--success); }
+        .HealthOutput.Error { border-left: 4px solid var(--error); }
+
+        .LogList { display: flex; flex-direction: column; gap: 16px; }
+        .LogItem {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .LogItem:hover { border-color: var(--accent); }
+        
+        .LogHeader { display: flex; justify-content: space-between; align-items: center; }
+        .LogAgent { font-size: 0.9rem; font-weight: 800; color: var(--accent); }
+        .LogFilename { font-size: 0.75rem; color: var(--text-dim); }
+        
+        .LogPrompt { font-style: italic; color: var(--text-dim); font-size: 0.9rem; }
+        .LogResponse { font-size: 0.95rem; line-height: 1.5; color: var(--text-main); }
+
+        /* Markdown Document Rendering */
+        .MarkdownDoc {
+            background: var(--glass);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            line-height: 1.6;
+        }
+        .MarkdownDoc h1 { color: white; margin-bottom: 24px; font-size: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; }
+        .MarkdownDoc h2 { color: var(--accent); margin: 24px 0 16px 0; font-size: 1.4rem; }
+        .MarkdownDoc h3 { color: #a5b4fc; margin: 16px 0 12px 0; }
+        .MarkdownDoc p { margin-bottom: 16px; color: var(--text-main); }
+        .MarkdownDoc ul, .MarkdownDoc ol { margin-bottom: 16px; padding-left: 24px; color: var(--text-main); }
+        .MarkdownDoc li { margin-bottom: 8px; }
+        .MarkdownDoc strong { color: white; }
+        .MarkdownDoc pre { background: rgba(0,0,0,0.5); padding: 16px; border-radius: 8px; overflow-x: auto; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace; }
+        .MarkdownDoc code { font-family: 'JetBrains Mono', monospace; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+    <aside class="Sidebar">
+        <div class="Logo">ANTI-GRAVITY</div>
+        <nav class="NavMenu">
+            <button id="nav-monitor" class="Active" onclick="switchTab('monitor')">Live Monitor</button>
+            <button id="nav-tasks" onclick="switchTab('tasks')">1. Current Tasks</button>
+            <button id="nav-projects" onclick="switchTab('projects')">2. Future Projects</button>
+            <button id="nav-possible" onclick="switchTab('possible')">3. Possible Projects</button>
+            <button id="nav-plan" onclick="switchTab('plan')">Master Plan</button>
+            <button id="nav-alex" onclick="switchTab('alex')">Alex's Desk</button>
+        </nav>
+        
+        <div class="AgentStatus" id="agentStatus">
+            <h3>System Status</h3>
+            <p class="StatusOffline">○ CONNECTING...</p>
+        </div>
+    </aside>
+
+    <main class="MainContent">
+        <header class="TopBar">
+            <h1 id="viewTitle">Command Center</h1>
+        </header>
+
+        <!-- VIEW: Live Monitor -->
+        <div id="view-monitor" class="View Active">
+            <div class="HealthAction">
+                <button id="btnHealth" class="BtnPrimary" onclick="runHealthCheck()">Run Alignment & Health Check</button>
+                <div id="healthOutput" class="HealthOutput"></div>
+            </div>
+            
+            <h2>Live Task Feed</h2>
+            <div class="LogList" id="logList">
+                <!-- Logs populated via SSE -->
+            </div>
+        </div>
+
+        <!-- VIEW: Alex's Desk (Phase Review) -->
+        <div id="view-alex" class="View">
+            <div id="alexContent" class="MarkdownDoc">
+                <p style="color:var(--text-dim)">Loading latest Phase Review...</p>
+            </div>
+        </div>
+
+        <!-- VIEW: Current Tasks -->
+        <div id="view-tasks" class="View">
+            <div id="tasksContent" class="MarkdownDoc">
+                <p style="color:var(--text-dim)">Loading Current Tasks...</p>
+            </div>
+        </div>
+
+        <!-- VIEW: Future Projects -->
+        <div id="view-projects" class="View">
+            <div id="projectsContent" class="MarkdownDoc">
+                <p style="color:var(--text-dim)">Loading Future Projects...</p>
+            </div>
+        </div>
+
+        <!-- VIEW: Possible Projects -->
+        <div id="view-possible" class="View">
+            <div id="possibleContent" class="MarkdownDoc">
+                <p style="color:var(--text-dim)">Loading Possible Projects & Brainstorms...</p>
+            </div>
+        </div>
+
+        <!-- VIEW: Master Plan -->
+        <div id="view-plan" class="View">
+            <div id="planContent" class="MarkdownDoc">
+                <p style="color:var(--text-dim)">Loading Master Business Plan...</p>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // --- Tab Switching Logic ---
+        function switchTab(tabName) {
+            // Update Nav Buttons
+            document.querySelectorAll('.NavMenu button').forEach(btn => btn.classList.remove('Active'));
+            document.getElementById('nav-' + tabName).classList.add('Active');
+            
+            // Update Views
+            document.querySelectorAll('.View').forEach(view => view.classList.remove('Active'));
+            document.getElementById('view-' + tabName).classList.add('Active');
+            
+            // Update Title
+            const titles = {
+                'monitor': 'Command Center',
+                'tasks': 'Current Tasks',
+                'projects': 'Project Docket',
+                'possible': 'Possible Projects & Plans',
+                'plan': 'Master Business Plan',
+                'alex': 'Alex\'s Desk'
+            };
+            document.getElementById('viewTitle').innerText = titles[tabName];
+
+            // Lazy load documents
+            if(tabName === 'alex') fetchDocument('PHASE_REVIEW.md', 'alexContent');
+            if(tabName === 'projects') fetchDocument('FUTURE_PROJECTS.md', 'projectsContent');
+            if(tabName === 'possible') fetchDocument('POSSIBLE_PROJECTS.md', 'possibleContent');
+            if(tabName === 'tasks') fetchDocument('CURRENT_TASKS.md', 'tasksContent');
+            if(tabName === 'plan') fetchDocument('master_business_plan.md', 'planContent');
+        }
+
+        // --- Document Fetching ---
+        async function fetchDocument(docName, elementId) {
+            try {
+                const res = await fetch('/api/document/' + docName);
+                const data = await res.json();
+                if(data.error) {
+                    document.getElementById(elementId).innerHTML = `<p class="StatusOffline">${data.error}</p>`;
+                } else {
+                    document.getElementById(elementId).innerHTML = marked.parse(data.content);
+                }
+            } catch(e) {
+                document.getElementById(elementId).innerHTML = `<p class="StatusOffline">Failed to load document.</p>`;
+            }
+        }
+
+        // --- Health Check Execution ---
+        async function runHealthCheck() {
+            const btn = document.getElementById('btnHealth');
+            const outputBox = document.getElementById('healthOutput');
+            
+            btn.disabled = true;
+            btn.innerText = "Running Diagnostics...";
+            outputBox.style.display = 'block';
+            outputBox.className = 'HealthOutput';
+            outputBox.innerText = "Initializing Multi-Agent Diagnostics...\nPlease wait (approx 1-2 minutes).";
+
+            try {
+                const res = await fetch('/api/run_health_check', { method: 'POST' });
+                const data = await res.json();
+                
+                outputBox.innerText = data.output;
+                if(data.success) {
+                    outputBox.classList.add('Success');
+                } else {
+                    outputBox.classList.add('Error');
+                    if(data.error) outputBox.innerText += "\n\n[STDERR]\n" + data.error;
+                }
+            } catch(e) {
+                outputBox.classList.add('Error');
+                outputBox.innerText = "CRITICAL ERROR: Failed to reach backend.";
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Run Alignment & Health Check";
+            }
+        }
+
+        // --- Agent Status Polling ---
+        async function fetchStatus() {
+            try {
+                const res = await fetch('/health');
+                const data = await res.json();
+                document.getElementById('agentStatus').innerHTML = `
+                    <h3>System Status</h3>
+                    <p class="StatusOnline">● ${data.status.toUpperCase()}</p>
+                    <p style="margin-top:8px;font-size:0.85rem">Agents Online: ${data.agent_count}</p>
+                    <p style="margin-top:4px;font-size:0.75rem;color:var(--text-dim)">Vault: Memory_Logs</p>
+                `;
+            } catch(e) {
+                document.getElementById('agentStatus').innerHTML = `
+                    <h3>System Status</h3>
+                    <p class="StatusOffline">○ OFFLINE</p>
+                `;
+            }
+        }
+        fetchStatus();
+        setInterval(fetchStatus, 30000);
+
+        // --- SSE Log Streaming ---
+        const eventSource = new EventSource('/stream');
+        const logList = document.getElementById('logList');
+
+        eventSource.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            const div = document.createElement('div');
+            div.className = 'LogItem';
+            
+            div.innerHTML = `
+                <div class="LogHeader">
+                    <span class="LogAgent">⬡ ${data.agent}</span>
+                    <span class="LogFilename">${data.filename.replace('.md', '')}</span>
+                </div>
+                ${data.prompt ? `<div class="LogPrompt">"${data.prompt}"</div>` : ''}
+                <div class="LogResponse">${data.response}</div>
+            `;
+            
+            logList.insertBefore(div, logList.firstChild);
+            
+            // Keep only last 50 logs
+            if(logList.children.length > 50) {
+                logList.removeChild(logList.lastChild);
+            }
+        };
+
+        eventSource.onerror = function() {
+            console.error("EventSource failed.");
+        };
+    </script>
+</body>
+</html>

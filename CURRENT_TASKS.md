@@ -1,0 +1,11 @@
+- `[x]` **Phase 1: System Foundation & Autonomy**
+  - `[x]` Upgrade `BaseAgent` with **Reflexion Logic** (Self-Healing loop).
+  - `[x]` Deploy `heartbeat_daemon.py` and initiate autonomous pulse.
+  - `[x]` Rename and rebuild the squad (Caleb, Nova, Atlas, etc.) in Ollama.
+  - `[x]` Implement `knowledge_manager.py` for `Learnings.md` maintenance.
+
+- `[/]` **Phase 2: Agency Operations (Website & SEO)**
+  - `[ ]` Integrate Headless Browser (Playwright) for **Rowan** to perform SEO audits.
+  - `[ ]` Build the first "Anti-Gravity Agency" landing page (Caleb & Aria).
+  - `[ ]` Set up Nova's Decoupled Security pipeline for email outreach.
+  - `[ ]` Implement "Spam Filter" checks for Nova's drafts.

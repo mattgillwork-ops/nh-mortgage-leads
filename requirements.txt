@@ -1,0 +1,7 @@
+ollama
+google-genai
+python-dotenv
+chromadb
+PyYAML
+pyautogui
+pillow

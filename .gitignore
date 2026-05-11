@@ -1,0 +1,24 @@
+# Logs
+*.log
+heartbeat.log
+backend.log
+frontend.log
+localtunnel.log
+vite.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv*
+.env
+
+# JavaScript / Node
+node_modules/
+dist/
+
+# Project Specific
+tru/vector_db/
+tru/Memory_Logs/
+.DS_Store
+Thumbs.db
