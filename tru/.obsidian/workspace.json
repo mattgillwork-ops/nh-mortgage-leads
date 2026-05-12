@@ -27,10 +27,14 @@
             "id": "712c818118b49ec2",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "Research/Agent_Best_Practices_2026.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Agent_Best_Practices_2026"
             }
           }
         ]
@@ -193,8 +197,12 @@
       "bases:Create new base": false
     }
   },
-  "active": "7f16ec326bfade60",
+  "active": "712c818118b49ec2",
   "lastOpenFiles": [
+    "Memory_Logs/log_20260510_174333.md",
+    "Core_Rules/RESEARCH.md",
+    "Core_Rules/GEMINI.md",
+    "Core_Rules/AGENTS.md",
     "Welcome.md",
     "Untitled.base"
   ]

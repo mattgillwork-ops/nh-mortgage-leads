@@ -5,14 +5,36 @@ class DevOpsAgent(BaseAgent):
         super().__init__(agent_name="DevOps", model_name="anti-devops")
 
     def run(self, prompt: str) -> str:
-        context = self.memory.get_context()
-        augmented_prompt = f"{context}\n\n### INFRASTRUCTURE TASK ###\n{prompt}"
+        """Execute a DevOps task with recursive tool execution."""
+        context = self.memory.get_context(query=prompt)
+        current_prompt = f"{context}\n\n### INFRASTRUCTURE TASK ###\n{prompt}"
+        
         self.logger.info("Executing DevOps task...")
         
-        response = self.execute(augmented_prompt)
+        # Multi-pass loop to handle tool calls
+        max_passes = 3
+        full_conversation = []
         
-        # Execute tools (especially <run_command>)
-        response_with_tools = self.parse_and_execute_tools(response)
+        for i in range(max_passes):
+            response = self.execute(current_prompt)
+            full_conversation.append(response)
+            
+            # Execute tools (especially <run_command>)
+            result_with_tools = self.parse_and_execute_tools(response)
+            
+            # If tools were executed, feed the results back to the model
+            if "### Tool Execution Results ###" in result_with_tools:
+                tool_output = result_with_tools.split("### Tool Execution Results ###")[-1]
+                current_prompt = f"### PREVIOUS ATTEMPT ###\n{response}\n\n### Tool Execution Results ###\n{tool_output}\n\n### INSTRUCTIONS ###\nPlease acknowledge the tool results and provide your final confirmation or next steps based on the actual data."
+                continue
+            else:
+                # No more tools called, we are done
+                break
+                
+        # Final Response
+        final_response = full_conversation[-1]
         
-        self.memory.log_memory(prompt, response_with_tools, self.model_name, agent_name=self.agent_name)
-        return response_with_tools
+        # Log to Obsidian
+        self.memory.log_memory(prompt, "\n\n".join(full_conversation), self.model_name, agent_name=self.agent_name)
+
+        return final_response

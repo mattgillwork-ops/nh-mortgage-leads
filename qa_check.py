@@ -11,6 +11,11 @@ import re
 import ast
 import importlib
 
+# Force UTF-8 output for Windows compatibility
+if sys.platform == "win32":
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 
 def check_error_handling(filepath: str) -> list:
     """Checks that all requests.get() calls have try/except and timeout."""
@@ -128,8 +133,8 @@ def run_qa(target_path: str):
         py_files = [target_path]
     else:
         for root, dirs, files in os.walk(target_path):
-            # Skip __pycache__ and .git
-            dirs[:] = [d for d in dirs if d not in ('__pycache__', '.git')]
+            # Skip __pycache__, .git, and venv
+            dirs[:] = [d for d in dirs if d not in ('__pycache__', '.git', 'venv')]
             for f in files:
                 if f.endswith('.py') and f not in ('qa_check.py', 'agent_router.py'):
                     py_files.append(os.path.join(root, f))

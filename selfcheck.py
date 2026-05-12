@@ -37,7 +37,6 @@ REQUIRED_MODELS = [
     "anti-deep-thinker",
     "anti-analyst",
     "anti-devops",
-    "anti-researcher",
     "anti-ux",
 ]
 
@@ -67,7 +66,6 @@ REQUIRED_SOURCE_FILES = [
     os.path.join(BASE_DIR, "agents", "verifier_agent.py"),
     os.path.join(BASE_DIR, "agents", "analyst_agent.py"),
     os.path.join(BASE_DIR, "agents", "devops_agent.py"),
-    os.path.join(BASE_DIR, "agents", "researcher_agent.py"),
     os.path.join(BASE_DIR, "agents", "ux_agent.py"),
     os.path.join(BASE_DIR, "tools", "web_search.py"),
     os.path.join(BASE_DIR, "tools", "mcp_server.py"),
@@ -97,7 +95,7 @@ IDENTITY_CHALLENGES = {
     },
     "anti-marketing": {
         "prompt": "What is your name and what is your specialty? Respond in one sentence.",
-        "expected_keywords": ["market", "creative", "copy", "brand", "content", "advertis"],
+        "expected_keywords": ["marketing", "growth", "strategy", "copy", "brand", "seo"],
     },
     "anti-verifier": {
         "prompt": "Evaluate this task: 'Task: Print hello. Output: print(\"hello\")'. Ensure you return your standard JSON verdict.",
@@ -105,15 +103,11 @@ IDENTITY_CHALLENGES = {
     },
     "anti-analyst": {
         "prompt": "What is your name and what do you do? Respond in one sentence.",
-        "expected_keywords": ["analyst", "data", "insight", "metric", "trend"],
+        "expected_keywords": ["scientist", "atlas", "data", "insight", "security", "research"],
     },
     "anti-devops": {
         "prompt": "What is your name and what is your role? Respond in one sentence.",
         "expected_keywords": ["devops", "deploy", "infrastructure", "git", "pipeline", "docker"],
-    },
-    "anti-researcher": {
-        "prompt": "What is your name and what is your purpose? Respond in one sentence.",
-        "expected_keywords": ["research", "gather", "information", "web", "search", "summarize"],
     },
     "anti-ux": {
         "prompt": "What is your name and what do you specialize in? Respond in one sentence.",
@@ -125,10 +119,9 @@ IDENTITY_CHALLENGES = {
 ROUTING_TESTS = [
     {"prompt": "Write a Python web scraper", "expected_delegate": "coder"},
     {"prompt": "Write a catchy email subject line for our sale", "expected_delegate": "communications"},
-    {"prompt": "What is the capital of Japan?", "expected_delegate": "researcher"},
-    {"prompt": "Analyze the CSV file to find the average revenue", "expected_delegate": "analyst"},
+    {"prompt": "Audit the security of this data dump", "expected_delegate": "analyst"},
+    {"prompt": "Search the web for the latest SEO trends", "expected_delegate": "analyst"},
     {"prompt": "Deploy this docker container to AWS", "expected_delegate": "devops"},
-    {"prompt": "Search the web for the latest news on AI", "expected_delegate": "researcher"},
     {"prompt": "Make this dashboard look like a premium glassmorphic interface", "expected_delegate": "ux"},
 ]
 
@@ -553,7 +546,7 @@ def check_hardened_security():
             content = f.read()
 
         # Check for the hardened MCP regex
-        if r"mcp_pattern = re.compile(r'<\|?mcp_call" in content:
+        if r"mcp_pattern = re.compile(r'<\|?(?:exec_|call_)?mcp_call" in content:
             print_pass("Hardened MCP tool-calling regex is present in BaseAgent.")
             passed += 1
         else:
@@ -573,6 +566,56 @@ def check_hardened_security():
     return passed, failed
 
 
+def check_memory_protocol():
+    """Check 13: Verify Short-Term and Long-Term memory rules are enforced."""
+    print_header("CHECK 13: Memory Protocol & Architecture")
+    passed = 0
+    failed = 0
+
+    # 13a. Verify MEMORY_PROTOCOL.md exists
+    protocol_path = os.path.join(CORE_RULES_PATH, "MEMORY_PROTOCOL.md")
+    if os.path.isfile(protocol_path):
+        print_pass("MEMORY_PROTOCOL.md exists.")
+        passed += 1
+    else:
+        print_fail("MEMORY_PROTOCOL.md is MISSING! Agents lack memory discipline.")
+        failed += 1
+
+    # 13b. Verify base_agent.py enforces the first read
+    base_agent_path = os.path.join(BASE_DIR, "agents", "base_agent.py")
+    if os.path.isfile(base_agent_path):
+        with open(base_agent_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        if "MEMORY_PROTOCOL.md" in content and "critical_rules" in content:
+            print_pass("BaseAgent correctly enforces MEMORY_PROTOCOL.md as a mandatory read.")
+            passed += 1
+        else:
+            print_fail("BaseAgent is NOT enforcing MEMORY_PROTOCOL.md!")
+            failed += 1
+    else:
+        print_fail("BaseAgent.py is missing!")
+        failed += 1
+
+    # 13c. Verify structural separation
+    memory_logs = os.path.join(VAULT_PATH, "Memory_Logs")
+    projects = os.path.join(VAULT_PATH, "Projects")
+    knowledge = os.path.join(VAULT_PATH, "Knowledge_Graph")
+    
+    struct_passed = True
+    for path in [memory_logs, projects, knowledge]:
+        if not os.path.isdir(path):
+            print_fail(f"Required architecture missing: {os.path.basename(path)}")
+            struct_passed = False
+            failed += 1
+            
+    if struct_passed:
+        print_pass("Memory architecture directories are intact.")
+        passed += 1
+
+    return passed, failed
+
+
 # ============================================================
 # MAIN RUNNER
 # ============================================================
@@ -581,7 +624,7 @@ def run_selfcheck(skip_live=False):
     """Run the full self-check diagnostic suite."""
     print(f"\n{Colors.BOLD}{Colors.CYAN}")
     print("  +==================================================+")
-    print("  |     Anti-Gravity Self-Check Diagnostic v1.0       |")
+    print("  |     Anti-Gravity Self-Check Diagnostic v1.1       |")
     print("  +==================================================+")
     print(f"{Colors.RESET}")
     print(f"  Timestamp: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -603,6 +646,7 @@ def run_selfcheck(skip_live=False):
         check_resilience_config,
         check_mcp_health,
         check_hardened_security,
+        check_memory_protocol,
     ]
 
     for check in checks:

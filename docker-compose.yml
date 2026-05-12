@@ -18,21 +18,7 @@ services:
     networks:
       - anti-net
 
-  # The Private Mail Gateway
-  sentry:
-    build:
-      context: .
-      dockerfile: Dockerfile.sentry
-    container_name: antigravity-sentry
-    ports:
-      - "2525:2525"
-    volumes:
-      - .:/app
-    environment:
-      - PYTHONUNBUFFERED=1
-    restart: unless-stopped
-    networks:
-      - anti-net
+
 
 networks:
   anti-net:

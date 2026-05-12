@@ -1,9 +1,0 @@
-# Example configuration file for Cloudflare Tunnel
-tunnel: "your-tunnel-id"
-credentials-file: "/path/to/your/cert.pem"
-
-ingress:
-  - service: http://localhost:8080
-    originRequest:
-      noTLSVerify: true
-  - service: http_status:404

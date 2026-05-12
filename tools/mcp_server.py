@@ -4,27 +4,31 @@ import json
 from mcp.server.fastmcp import FastMCP
 from browser_skill import browser_skill
 from web_search import web_search
-from email_manager import send_email, read_inbox, get_message_content
-
 # Initialize the Anti-Gravity MCP Server
 mcp = FastMCP("Anti-Gravity Core Skills")
 
 @mcp.tool()
-async def browser_action(action: str, url: str, selector: str = None, text: str = None) -> str:
+async def browser_action(action: str, url: str = None, selector: str = None, text: str = None, session_id: str = "default", headless: bool = True, wait_time: int = 2000) -> str:
     """
-    Performs an automated browser action (navigate, click, type, extract_seo, screenshot).
+    Performs an automated browser action using Playwright with persistent session support.
     
     Args:
-        action: The action to perform ('navigate', 'click', 'type', 'extract_seo', 'screenshot').
-        url: The target URL.
-        selector: CSS selector for click/type actions.
+        action: The action to perform ('navigate', 'click', 'type', 'extract_seo', 'screenshot', 'scroll', 'hover', 'wait').
+        url: The target URL (required for 'navigate').
+        selector: CSS selector for click/type/hover/wait actions.
         text: Text to type for the 'type' action.
+        session_id: Unique ID to persist cookies/sessions (default: 'default').
+        headless: Whether to run in headless mode (default: True).
+        wait_time: Milliseconds to wait after action (default: 2000).
     """
     command = {
         "action": action,
         "url": url,
         "selector": selector,
-        "text": text
+        "text": text,
+        "session_id": session_id,
+        "headless": headless,
+        "wait_time": wait_time
     }
     result = await browser_skill(command)
     return json.dumps(result, indent=2)
@@ -40,41 +44,6 @@ def search_the_web(query: str, max_results: int = 3) -> str:
     """
     return web_search(query, max_results=max_results)
 
-@mcp.tool()
-def send_business_email(subject: str, body: str, to_email: str, to_name: str = "Recipient") -> str:
-    """
-    Sends a business outreach email via the Mailtrap pipeline.
-    The email will go to the Sandbox for human review before final delivery.
-    
-    Args:
-        subject: The subject line of the email.
-        body: The content of the email.
-        to_email: The recipient's email address.
-        to_name: The name of the recipient.
-    """
-    result = send_email(subject, body, to_email, to_name)
-    return json.dumps(result, indent=2)
-
-@mcp.tool()
-def read_business_inbox() -> str:
-    """
-    Retrieves the list of latest emails from the business inbox.
-    Used by Rowan for security triaging and Atlas for intent analysis.
-    """
-    result = read_inbox()
-    return json.dumps(result, indent=2)
-
-@mcp.tool()
-def get_email_details(message_id: str) -> str:
-    """
-    Retrieves full content and headers for a specific email.
-    Essential for scam detection and forensic header analysis.
-    
-    Args:
-        message_id: The unique ID of the message to inspect.
-    """
-    result = get_message_content(message_id)
-    return json.dumps(result, indent=2)
-
 if __name__ == "__main__":
     mcp.run(transport="stdio")
+

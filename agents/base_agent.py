@@ -53,26 +53,71 @@ def _get_gemini_client():
 
 def resilience_module(max_retries=3):
     """
-    Decorator that wraps local Ollama calls with automatic retry + cloud fallback.
-    If the local model fails 3 consecutive times, it triggers cloud_fallback().
+    Decorator that implements a 3-Layer Sovereign Fallback:
+    Layer 1: Local Specialist (2 attempts)
+    Layer 2: Local Powerhouse (1 attempt with larger model)
+    Layer 3: Cloud Fallback (Interactive approval required)
     """
     def decorator(func):
         @wraps(func)
         def wrapper(self, *args, **kwargs):
             failures = 0
-            last_error = None
-            while failures < max_retries:
+            last_error = ""
+            
+            # --- Layer 1: Local Specialist (2 attempts) ---
+            for attempt in range(2):
                 try:
                     return func(self, *args, **kwargs)
                 except Exception as e:
                     failures += 1
-                    last_error = e
-                    self.logger.warning(f"Local model failed ({failures}/{max_retries}): {e}")
+                    last_error = str(e)
+                    self.logger.warning(f"[LAYER 1] Specialist model '{self.model_name}' failed ({failures}/2): {e}")
+            
+            # --- Layer 2: Local Powerhouse (1 attempt) ---
+            powerhouse = getattr(self, "powerhouse_model", "gemma2:27b")
+            self.logger.info(f"[LAYER 2] Escalating to local powerhouse model: {powerhouse}")
+            try:
+                # Temporarily swap the model name for this execution
+                original_model = self.model_name
+                self.model_name = powerhouse
+                result = func(self, *args, **kwargs)
+                self.model_name = original_model # Restore
+                return result
+            except Exception as e:
+                last_error = str(e)
+                self.logger.error(f"[LAYER 2] Powerhouse model also failed: {e}")
 
-            self.logger.error(f"3 consecutive failures. Triggering Cloud Fallback.")
+            # --- Reflection Phase ---
             prompt = args[0] if args else kwargs.get("prompt", "")
-            return self.cloud_fallback(prompt)
+            reflection = self._generate_failure_reflection(prompt, last_error)
+            
+            print("\n" + "!" * 56)
+            print("  [ALEX] CRITICAL SOVEREIGNTY ALERT")
+            print("!" * 56)
+            print(f"  Local models failed to complete the task.")
+            print(f"  Reason: {last_error}")
+            print("\n  [REFLECTION & PREVENTION]")
+            print(f"  {reflection}")
+            print("!" * 56 + "\n")
+
+            # --- Layer 3: Cloud Fallback (Interactive Gate) ---
+            import sys
+            # Check if running in a TTY/Interactive shell
+            is_interactive = sys.stdin.isatty()
+            
+            if not is_interactive:
+                self.logger.error("Non-interactive environment detected. Aborting to preserve sovereignty.")
+                return f"CRITICAL FAILURE: Local models failed and no human was present to approve cloud fallback. Reason: {last_error}"
+
+            choice = input(f"Do you want to fallback to the Cloud (Gemini) for this task? [Y/N]: ").strip().lower()
+            if choice == 'y':
+                return self.cloud_fallback(prompt)
+            else:
+                self.logger.info("Cloud fallback rejected by user. Aborting.")
+                return f"ABORTED: Task stopped at user request after local failures. Reason: {last_error}"
+                
         return wrapper
+    return decorator
     return decorator
     return decorator
 
@@ -85,6 +130,7 @@ class MemoryManager:
         self.vault_path = vault_path or os.path.join(base_dir, "tru")
         self.rules_path = os.path.join(self.vault_path, "Core_Rules")
         self.logs_path = os.path.join(self.vault_path, "Memory_Logs")
+        self.projects_path = os.path.join(self.vault_path, "Projects")
         self.db_path = os.path.join(self.vault_path, "vector_db")
 
         # Initialize ChromaDB (Local Persistent)
@@ -97,6 +143,7 @@ class MemoryManager:
         # Ensure directories exist
         os.makedirs(self.logs_path, exist_ok=True)
         os.makedirs(self.rules_path, exist_ok=True)
+        os.makedirs(self.projects_path, exist_ok=True)
 
     def _get_embedding(self, text: str):
         """Generate embedding using Ollama's nomic-embed-text."""
@@ -112,12 +159,13 @@ class MemoryManager:
         Retrieves core rules and semantically relevant memory from Obsidian.
         Optimized to avoid context bloat:
         - Mandatorily loads ONLY AGENTS.md and GEMINI.md.
+        - Dynamically loads relevant Project state if mentioned in the query.
         - Other rules are retrieved via RAG if a query is provided.
         """
         context = "### SYSTEM CONTEXT FROM OBSIDIAN VAULT ###\n"
 
         # 1. Load Critical Core Rules (Mandatory)
-        critical_rules = ["AGENTS.md", "GEMINI.md"]
+        critical_rules = ["AGENTS.md", "GEMINI.md", "MEMORY_PROTOCOL.md", "ROUTING_PROTOCOL.md"]
         if os.path.exists(self.rules_path):
             import glob
             for file in glob.glob(os.path.join(self.rules_path, "*.md")):
@@ -126,7 +174,24 @@ class MemoryManager:
                     with open(file, 'r', encoding='utf-8') as f:
                         context += f"\n--- Core Rule (Critical): {fname} ---\n{f.read()}\n"
         
-        # 2. Semantic Retrieval (Memory & Non-Critical Rules)
+        # 2. Load Active Project State (Multi-Agent Collaboration)
+        if query and os.path.exists(self.projects_path):
+            # Simple keyword matching against project filenames
+            query_lower = query.lower()
+            project_files = glob.glob(os.path.join(self.projects_path, "*.md"))
+            for p_file in project_files:
+                p_name = os.path.basename(p_file).replace('.md', '').lower()
+                # If the project name (e.g. 'agency_landing_page' or 'seo_audit') is in the prompt
+                p_keywords = p_name.replace('_', ' ').split()
+                # Require at least one significant keyword match
+                if any(kw in query_lower for kw in p_keywords if len(kw) > 3) or p_name in query_lower:
+                    try:
+                        with open(p_file, 'r', encoding='utf-8') as f:
+                            context += f"\n### ACTIVE PROJECT STATE: {os.path.basename(p_file)} ###\n{f.read()}\n"
+                    except Exception:
+                        pass
+
+        # 3. Semantic Retrieval (Memory & Non-Critical Rules)
         if query and self.collection.count() > 0:
             embedding = self._get_embedding(query)
             if embedding:
@@ -173,7 +238,12 @@ class MemoryManager:
         
         # 1. Save to Obsidian (File System)
         yaml_frontmatter = yaml.dump(metadata, default_flow_style=False)
-        content = f"---\n{yaml_frontmatter}---\n\n# Task Log\n\n## Prompt\n{prompt}\n\n## Response\n{response}\n"
+        
+        # Enhanced Wikilinks for Obsidian Graph Connections
+        agent_link = f"[[{agent_name}_MOC]]" if agent_name != "unknown" else "[[General_Memory_MOC]]"
+        session_link = f"[[Session_{datetime.datetime.now().strftime('%Y-%m-%d')}]]"
+        
+        content = f"---\n{yaml_frontmatter}---\n\n# Task Log\n\n## Meta Connections\n- Agent: {agent_link}\n- Session: {session_link}\n\n## Prompt\n{prompt}\n\n## Response\n{response}\n"
         
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(content)
@@ -209,6 +279,43 @@ class BaseAgent:
         # Cloud fallback via the new google-genai SDK
         self.cloud_client = _get_gemini_client()
         self.cloud_model_name = "gemini-2.0-flash"
+        self.powerhouse_model = "gemma2:27b"
+
+    def _generate_failure_reflection(self, prompt: str, error_log: str) -> str:
+        """
+        Analyzes a local model failure and suggests prevention strategies.
+        Saves a drift report to Obsidian.
+        """
+        error_type = "Unknown"
+        suggestion = "Restart Ollama and check system resources."
+        
+        if "connection" in error_log.lower() or "refused" in error_log.lower():
+            error_type = "Infrastructure (Ollama Offline)"
+            suggestion = "Ensure Ollama is running (`ollama serve`)."
+        elif "context" in error_log.lower() or "length" in error_log.lower():
+            error_type = "Logic (Context Bloat)"
+            suggestion = "Prune the prompt or clear old memory logs to reduce token pressure."
+        elif "json" in error_log.lower():
+            error_type = "Logic (Formatting Error)"
+            suggestion = "The model failed to follow the JSON schema. Consider using a more capable model like gemma2."
+            
+        report = (
+            f"### System Drift Report: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
+            f"- **Agent**: {self.agent_name}\n"
+            f"- **Error Type**: {error_type}\n"
+            f"- **Error Detail**: {error_log}\n"
+            f"- **Suggested Prevention**: {suggestion}\n"
+        )
+        
+        # Save to Obsidian for long-term tracking
+        try:
+            report_path = os.path.join(self.memory.logs_path, f"drift_report_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.md")
+            with open(report_path, 'w', encoding='utf-8') as f:
+                f.write(f"---\ntype: drift_report\nagent: {self.agent_name}\n---\n\n{report}")
+        except Exception as e:
+            self.logger.error(f"Failed to save drift report: {e}")
+            
+        return report
 
     @resilience_module(max_retries=3)
     def execute(self, prompt: str, system_override: str = None, json_mode: bool = False) -> str:
