@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import rateData from '../data/rates.json';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '@/utils/supabase';
 
 const STEPS = [
   { id: 1, title: "Objective", type: 'choice', field: 'loan_purpose', options: ['Purchase', 'Refinance'] },
@@ -27,6 +27,22 @@ export default function LeadFunnel() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<any>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [marketRate, setMarketRate] = useState<any>({ rate: 6.875, last_verified: 'Loading...' });
+
+  useEffect(() => {
+    async function fetchRate() {
+        const { data, error } = await supabase
+            .from('market_rates')
+            .select('rate, last_verified')
+            .eq('rate_type', '30Y_FIXED')
+            .single();
+        
+        if (data && !error) {
+            setMarketRate(data);
+        }
+    }
+    fetchRate();
+  }, []);
 
   const handleChoice = (field: string, value: string) => {
     const updatedData = { ...formData, [field]: value };
@@ -43,7 +59,7 @@ export default function LeadFunnel() {
     
     // Dynamic ROI calculation logic
     const principal = (formData.est_value || 450000) - (formData.down_payment || 20000);
-    const rate = rateData.rate / 100; 
+    const rate = marketRate.rate / 100; 
     const monthlyRate = rate / 12;
     const n = 360; 
     const monthlyPayment = principal * (monthlyRate * Math.pow(1+monthlyRate, n)) / (Math.pow(1+monthlyRate, n) - 1);
@@ -88,7 +104,10 @@ export default function LeadFunnel() {
             </div>
             <div className="journal-card" style={{ padding: '1.5rem' }}>
                 <div style={{ fontSize: '0.7rem', opacity: 0.5, textTransform: 'uppercase' }}>Market Rate</div>
-                <div style={{ fontSize: '1.8rem', fontWeight: 700 }}>{rateData.rate}%</div>
+                <div style={{ fontSize: '1.8rem', fontWeight: 700 }}>{marketRate.rate}%</div>
+                <div style={{ fontSize: '0.6rem', opacity: 0.4, marginTop: '0.5rem', textTransform: 'uppercase' }}>
+                    Verified: {new Date(marketRate.last_verified).toLocaleDateString()}
+                </div>
             </div>
         </div>
 
@@ -99,11 +118,11 @@ export default function LeadFunnel() {
         </div>
 
         <div style={{ textAlign: 'left', background: '#f8fafc', padding: '2.5rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-            <h3 style={{ marginBottom: '1.5rem', fontSize: '1.2rem' }}>Next Steps:</h3>
+            <h3 style={{ marginBottom: '1.5rem', fontSize: '1.2rem' }}>Status & Next Steps:</h3>
             <ul className="journal-list" style={{ margin: 0 }}>
-                <li><strong>Verify Credit</strong>: Your {formData.credit_score} profile is ready for audit.</li>
-                <li><strong>Email Sent</strong>: A full PDF copy of this report has been sent to your inbox.</li>
-                <li><strong>Local Support</strong>: A Manchester analyst will reach out to verify these numbers at {formData.phone}.</li>
+                <li><strong>Lead Verified</strong>: Your market profile has been successfully ingested into our local engine.</li>
+                <li><strong>Analyst Assigned</strong>: A NH-based lead analyst will review your ROI numbers for accuracy.</li>
+                <li><strong>Direct Outreach</strong>: We will verify these projections with you at {formData.phone} shortly.</li>
             </ul>
         </div>
 

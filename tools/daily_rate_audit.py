@@ -1,57 +1,82 @@
 import os
-import json
+import asyncio
+import requests
+from playwright.async_api import async_playwright
+from dotenv import load_dotenv
 from datetime import datetime
-import subprocess
 
-RATES_FILE = "mortgage-app/src/data/rates.json"
+# Load environment variables
+load_dotenv(dotenv_path="mortgage-app/.env.local")
 
-def run_daily_audit():
-    print(f"[SYSTEM] Initiating Daily Rate Audit for {datetime.now().strftime('%Y-%m-%d')}...")
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+
+async def sync_rates():
+    print(f"[SYSTEM] Initiating Verified Rate Sync for {datetime.now().strftime('%Y-%m-%d')}...")
     
-    # Task Rowan to find the latest data
-    prompt = "Identify the current 30-year fixed mortgage rate for NH (New Hampshire) as of today. Return ONLY a JSON object like: {\"rate\": 5.XX, \"lender\": \"Name\", \"date\": \"YYYY-MM-DD\"}"
-    
-    try:
-        # Use ask.py to trigger Rowan
-        result = subprocess.run(
-            ["python", "ask.py", "--researcher", prompt],
-            capture_output=True,
-            text=True,
-            timeout=120
-        )
-        
-        # Extract JSON from Rowan's output (basic implementation)
-        # In a production version, we'd use a more robust parser
-        raw_output = result.stdout
-        if "{" in raw_output and "}" in raw_output:
-            json_str = raw_output[raw_output.find("{"):raw_output.rfind("}")+1]
-            rate_data = json.loads(json_str)
+    if not SUPABASE_URL or not SUPABASE_KEY:
+        print("[ERROR] Supabase credentials missing. Verify .env.local.")
+        return
+
+    async with async_playwright() as p:
+        try:
+            print("[FETCH] Launching browser to scrape Freddie Mac market data...")
+            browser = await p.chromium.launch(headless=True)
+            context = await browser.new_context(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+            page = await context.new_page()
             
-            # Ensure the directory exists
-            os.makedirs(os.path.dirname(RATES_FILE), exist_ok=True)
+            source_url = "https://www.freddiemac.com/pmms"
+            print(f"[NAVIGATE] Connecting to {source_url}...")
+            await page.goto(source_url, wait_until="domcontentloaded", timeout=60000)
             
-            with open(RATES_FILE, 'w') as f:
-                json.dump(rate_data, f, indent=2)
+            # Wait for the rate element to appear (using the verified selector)
+            print("[WAIT] Searching for rate elements...")
+            await page.wait_for_selector("p.stat.weight-bold", timeout=15000)
             
-            print(f"[SUCCESS] Rate Engine updated: {rate_data['rate']}% via {rate_data['lender']}")
+            # Extract all stats and find the one that looks like a rate (e.g. 6.xx)
+            stats = await page.query_selector_all("p.stat.weight-bold")
+            rate = None
+            for stat in stats:
+                text = await stat.inner_text()
+                if "." in text and len(text.strip()) <= 5: # Typical rate format 6.36
+                    try:
+                        rate = float(text.strip())
+                        break
+                    except:
+                        continue
             
-            # --- Autonomous Deployment ---
-            # Check if there are changes to the rates file
-            status = subprocess.run(["git", "status", "--porcelain", RATES_FILE], capture_output=True, text=True, cwd="mortgage-app")
-            if status.stdout.strip():
-                print("[SYSTEM] Rates changed. Initiating autonomous redeploy...")
-                # Commit and push from the main repo (since mortgage-app is part of it)
-                subprocess.run(["git", "add", RATES_FILE], cwd=".")
-                subprocess.run(["git", "commit", "-m", f"AUTONOMOUS: Daily Rate Update ({rate_data['date']})"], cwd=".")
-                # Push to the main repo if linked, or the standalone if that's where the user is looking
-                # For this setup, we'll push to the mortgage-app standalone repo if it exists
-                subprocess.run(["git", "push"], cwd=".")
-                print("[SUCCESS] Autonomous redeploy triggered.")
+            if not rate:
+                raise Exception("Could not find a valid rate value in the expected elements.")
+
+            print(f"[EXTRACT] Market Rate Found: {rate}%")
+            
+            # REST API Upsert (PostgREST style)
+            # We use an RPC or a POST with Upsert header
+            endpoint = f"{SUPABASE_URL}/rest/v1/market_rates"
+            headers = {
+                "apikey": SUPABASE_KEY,
+                "Authorization": f"Bearer {SUPABASE_KEY}",
+                "Content-Type": "application/json",
+                "Prefer": "resolution=merge-duplicates"
+            }
+            payload = {
+                "rate_type": "30Y_FIXED",
+                "rate": rate,
+                "source_url": source_url,
+                "last_verified": datetime.now().isoformat()
+            }
+            
+            response = requests.post(endpoint, headers=headers, json=payload)
+            
+            if response.status_code in [200, 201]:
+                print("[SUCCESS] Market intelligence synced to Supabase instantly via REST.")
             else:
-                print("[INFO] No rate change detected. Skipping redeploy.")
+                print(f"[ERROR] Supabase REST API failed: {response.status_code} - {response.text}")
+                
+            await browser.close()
             
-    except Exception as e:
-        print(f"[CRITICAL] Rate Audit Failed: {e}")
+        except Exception as e:
+            print(f"[CRITICAL] Rate Sync Failed: {e}")
 
 if __name__ == "__main__":
-    run_daily_audit()
+    asyncio.run(sync_rates())
