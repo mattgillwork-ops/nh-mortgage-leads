@@ -11,6 +11,13 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Verify Secrets
+        run: |
+          if [ -z "${{ secrets.SUPABASE_URL }}" ]; then echo "Error: SUPABASE_URL is missing"; exit 1; fi
+          if [ -z "${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" ]; then echo "Error: SUPABASE_SERVICE_ROLE_KEY is missing"; exit 1; fi
 
       - name: Setup Python
         uses: actions/setup-python@v5
