@@ -1,5 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "NH First-Time Buyer Guide | NH Mortgage Journal",
+  description: "State-level advantages and ROI audits for NH home buyers.",
+};
 
 export default function FirstTimeBuyerGuide() {
   return (

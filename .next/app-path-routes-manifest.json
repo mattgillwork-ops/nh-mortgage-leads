@@ -1,0 +1,13 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/admin/leads/page": "/admin/leads",
+  "/api/submit_lead/route": "/api/submit_lead",
+  "/favicon.ico/route": "/favicon.ico",
+  "/funnel/page": "/funnel",
+  "/guides/lakes-region-refi/page": "/guides/lakes-region-refi",
+  "/guides/manchester-trends/page": "/guides/manchester-trends",
+  "/guides/nh-first-time-buyer/page": "/guides/nh-first-time-buyer",
+  "/guides/page": "/guides",
+  "/page": "/"
+}

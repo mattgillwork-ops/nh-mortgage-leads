@@ -1,0 +1,145 @@
+/* [project]/src/app/globals.css [app-client] (css) */
+:root {
+  --nh-slate: 222 47% 11%;
+  --nh-gold: 35 44% 42%;
+  --nh-ice: 210 40% 96%;
+  --nh-granite: 215 16% 47%;
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-border: 214 32% 91%;
+  --font-main: "Inter", sans-serif;
+  --font-display: "Playfair Display", serif;
+  --font-alt: "Outfit", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .display-font {
+  font-family: var(--font-display);
+  letter-spacing: -.01em;
+  color: hsl(var(--nh-slate));
+  font-weight: 700;
+}
+
+p {
+  margin-bottom: 1.5rem;
+}
+
+.journal-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px #00000008;
+}
+
+.journal-list {
+  margin: 2rem 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.journal-list li {
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+  display: flex;
+  position: relative;
+}
+
+.journal-list li:before {
+  content: "•";
+  color: hsl(var(--nh-gold));
+  font-size: 1.2rem;
+  font-weight: bold;
+  position: absolute;
+  left: .5rem;
+}
+
+.gold-gradient {
+  color: hsl(var(--nh-gold));
+}
+
+.btn-primary {
+  background: hsl(var(--nh-slate));
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: var(--font-main);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 2.5rem;
+  font-size: .9rem;
+  transition: all .2s;
+}
+
+.btn-primary:hover {
+  background: hsl(var(--nh-gold));
+  transform: translateY(-1px);
+}
+
+.badge {
+  background: hsla(var(--nh-gold), .1);
+  color: hsl(var(--nh-gold));
+  border: 1px solid hsla(var(--nh-gold), .2);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: .7rem;
+  font-weight: 700;
+  font-family: var(--font-alt);
+  border-radius: 4px;
+  padding: .5rem 1.2rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: .4s ease-out forwards fadeIn;
+}
+
+.nav-link {
+  color: #0f172999;
+  font-weight: 500;
+  font-family: var(--font-alt);
+  text-decoration: none;
+  transition: all .2s;
+}
+
+.nav-link:hover {
+  color: hsl(var(--nh-gold));
+}
+
+.container-journal {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/*# sourceMappingURL=src_app_globals_css_0w3-wzy._.single.css.map*/
