@@ -14,7 +14,7 @@ class VerifierAgent(BaseAgent):
     """
 
     def __init__(self):
-        super().__init__(agent_name="Verifier", model_name="anti-verifier")
+        super().__init__(agent_name="Vera", agent_id="vera")
 
     def run(self, prompt: str) -> str:
         """

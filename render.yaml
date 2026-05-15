@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: nh-mortgage-leads
+    runtime: node
+    plan: free
+    # Since we are in the root, we delegate to the mortgage-app folder
+    buildCommand: cd mortgage-app && npm install && npm run build
+    startCommand: cd mortgage-app && npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 22.0.0
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://nh-mortgage-leads.onrender.com

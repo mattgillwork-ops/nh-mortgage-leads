@@ -9,6 +9,9 @@ verification across the entire agent ecosystem.
 
 import os
 import sys
+
+# CRITICAL: Force 127.0.0.1 to avoid the 0.0.0.0 connection bug in Python clients
+os.environ["OLLAMA_HOST"] = "http://127.0.0.1:11434"
 import json
 import glob
 import time
@@ -171,6 +174,9 @@ def check_ollama_health():
     print_header("CHECK 1: Ollama Server Health")
     passed = 0
     failed = 0
+
+    # FORCE 127.0.0.1 to avoid the 0.0.0.0 client connection bug
+    os.environ["OLLAMA_HOST"] = "http://127.0.0.1:11434"
 
     try:
         models = ollama.list()
@@ -535,8 +541,8 @@ def check_mcp_health():
 
 
 def check_hardened_security():
-    """Check 12: Verify hardened tool regex and security protocols."""
-    print_header("CHECK 12: Hardened Security Audit")
+    """Check 12: Verify v3 Whitelist Firewall and security protocols."""
+    print_header("CHECK 12: Hardened v3 Security Firewall")
     passed = 0
     failed = 0
 
@@ -545,19 +551,19 @@ def check_hardened_security():
         with open(base_agent_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        # Check for the hardened MCP regex
-        if r"mcp_pattern = re.compile(r'<\|?(?:exec_|call_)?mcp_call" in content:
-            print_pass("Hardened MCP tool-calling regex is present in BaseAgent.")
+        # Check for the v3 Whitelist Firewall
+        if "authorized_tools" in content and "parse_and_execute_tools" in content:
+            print_pass("Hardened v3 Whitelist Firewall is ACTIVE.")
             passed += 1
         else:
-            print_fail("Hardened MCP regex is MISSING. Hallucination risk is high!")
+            print_fail("v3 Whitelist Firewall is MISSING. Hallucination risk is high!")
             failed += 1
             
-        if "asyncio.run(self._execute_mcp_tool" in content:
-            print_pass("BaseAgent is correctly bridging sync and async for MCP.")
+        if "_resolve_identity" in content:
+            print_pass("BaseAgent is using the centralized identity resolution engine.")
             passed += 1
         else:
-            print_fail("BaseAgent is missing the MCP execution bridge.")
+            print_fail("BaseAgent is missing the identity resolution engine.")
             failed += 1
     else:
         print_fail("BaseAgent.py is missing!")
@@ -567,31 +573,30 @@ def check_hardened_security():
 
 
 def check_memory_protocol():
-    """Check 13: Verify Short-Term and Long-Term memory rules are enforced."""
-    print_header("CHECK 13: Memory Protocol & Architecture")
+    """Check 13: Verify v3 Memory Schema and Governance enforcement."""
+    print_header("CHECK 13: v3 Memory Governance")
     passed = 0
     failed = 0
 
-    # 13a. Verify MEMORY_PROTOCOL.md exists
-    protocol_path = os.path.join(CORE_RULES_PATH, "MEMORY_PROTOCOL.md")
-    if os.path.isfile(protocol_path):
-        print_pass("MEMORY_PROTOCOL.md exists.")
+    # 13a. Verify Memory Paths
+    if os.path.exists(os.path.join(BASE_DIR, "tru", "Proposals")):
+        print_pass("Memory Governance Proposal path exists.")
         passed += 1
     else:
-        print_fail("MEMORY_PROTOCOL.md is MISSING! Agents lack memory discipline.")
+        print_fail("Memory Proposals path is MISSING!")
         failed += 1
 
-    # 13b. Verify base_agent.py enforces the first read
+    # 13b. Verify v3 Schema Enforcement
     base_agent_path = os.path.join(BASE_DIR, "agents", "base_agent.py")
     if os.path.isfile(base_agent_path):
         with open(base_agent_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        if "MEMORY_PROTOCOL.md" in content and "critical_rules" in content:
-            print_pass("BaseAgent correctly enforces MEMORY_PROTOCOL.md as a mandatory read.")
+        if "log_memory" in content and "confidence_level" in content:
+            print_pass("BaseAgent enforces the V3 Memory Schema.")
             passed += 1
         else:
-            print_fail("BaseAgent is NOT enforcing MEMORY_PROTOCOL.md!")
+            print_fail("BaseAgent is NOT enforcing the V3 Memory Schema!")
             failed += 1
     else:
         print_fail("BaseAgent.py is missing!")
@@ -613,6 +618,26 @@ def check_memory_protocol():
         print_pass("Memory architecture directories are intact.")
         passed += 1
 
+    return passed, failed
+
+def check_agent_isolation():
+    """Check 14: Verify Agent Isolation and Tool Whitelisting."""
+    print_header("CHECK 14: Agent Isolation & Tool Whitelisting")
+    passed = 0
+    failed = 0
+    
+    base_agent_path = os.path.join(BASE_DIR, "agents", "base_agent.py")
+    if os.path.isfile(base_agent_path):
+        with open(base_agent_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        if "self.authorized_tools" in content and "parse_and_execute_tools" in content:
+            print_pass("Agent-specific tool whitelisting is active.")
+            passed += 1
+        else:
+            print_fail("Agent tool whitelisting is MISSING!")
+            failed += 1
+    
     return passed, failed
 
 
@@ -647,6 +672,7 @@ def run_selfcheck(skip_live=False):
         check_mcp_health,
         check_hardened_security,
         check_memory_protocol,
+        check_agent_isolation,
     ]
 
     for check in checks:
@@ -681,10 +707,13 @@ def run_selfcheck(skip_live=False):
 
     if total_failed == 0:
         print(f"  {Colors.GREEN}{Colors.BOLD}STATUS: ALL SYSTEMS OPERATIONAL{Colors.RESET}")
+        return 0
     elif total_failed <= 2:
         print(f"  {Colors.YELLOW}{Colors.BOLD}STATUS: MINOR ISSUES DETECTED{Colors.RESET}")
+        return 0 # Allow minor issues to pass with exit 0
     else:
         print(f"  {Colors.RED}{Colors.BOLD}STATUS: CRITICAL ISSUES FOUND — ACTION REQUIRED{Colors.RESET}")
+        return 1 # CRITICAL FAIL
 
     print()
 

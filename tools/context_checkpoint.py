@@ -1,18 +1,13 @@
-"""
-Anti-Gravity Context Checkpoint Tool
-====================================
-Summarizes the current session state and updates GEMINI.md.
-Usage: python tools/context_checkpoint.py "Optional summary of last actions"
-"""
-
 import os
 import sys
 import datetime
+import subprocess
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GEMINI_PATH = os.path.join(BASE_DIR, "GEMINI.md")
 TASKS_PATH = os.path.join(BASE_DIR, "CURRENT_TASKS.md")
 FUTURE_PATH = os.path.join(BASE_DIR, "FUTURE_PROJECTS.md")
+PYTHON_EXE = sys.executable
 
 def get_file_content(path):
     if os.path.exists(path):
@@ -20,33 +15,49 @@ def get_file_content(path):
             return f.read()
     return "Not found."
 
+def extract_section(content, section_title):
+    """Extracts a section from markdown content until the next ## header."""
+    if section_title not in content:
+        return ""
+    start = content.split(section_title)[1]
+    section = section_title + start.split("##")[0]
+    return section.strip()
+
 def main():
-    print("Generating Context Checkpoint...")
+    print("Generating Context Checkpoint (v3 Hardened)...")
     
-    manual_summary = sys.argv[1] if len(sys.argv) > 1 else "Infrastructure hardening and context optimization."
+    manual_summary = sys.argv[1] if len(sys.argv) > 1 else "Context optimization and session sync."
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     current_tasks = get_file_content(TASKS_PATH)
     future_projects = get_file_content(FUTURE_PATH)
-    
-    # Read the current GEMINI.md to preserve core architecture details
     old_gemini = get_file_content(GEMINI_PATH)
     
-    # Extract the "Agent Squad" and "Key Architecture Details" sections (the stable parts)
-    squad_match = old_gemini.split("## The Agent Squad")
-    squad_section = "## The Agent Squad" + squad_match[1].split("##")[0] if len(squad_match) > 1 else ""
-    
-    arch_match = old_gemini.split("## Key Architecture Details")
-    arch_section = "## Key Architecture Details" + arch_match[1].split("##")[0] if len(arch_match) > 1 else ""
+    # Preserve Critical Infrastructure Sections
+    squad_section = extract_section(old_gemini, "## The Agent Squad")
+    arch_section = extract_section(old_gemini, "## Key Architecture Details")
+    prefs_section = extract_section(old_gemini, "## User Preferences")
+    issues_section = extract_section(old_gemini, "## Known Issues")
+    files_section = extract_section(old_gemini, "## Important Files")
 
-    handoff_content = f"""# Anti-Gravity AI Ecosystem — Session Handoff (AUTO-GENERATED)
+    # 1. Index Session Learnings into Knowledge Graph
+    print("[CHECKPOINT] Indexing session learnings...")
+    try:
+        subprocess.run([PYTHON_EXE, os.path.join(BASE_DIR, "knowledge_manager.py"), "--index"], capture_output=True)
+        print("      OK.")
+    except Exception as e:
+        print(f"      [WARN] Knowledge indexing failed: {e}")
+
+    handoff_content = f"""# Anti-Gravity AI Ecosystem — Session Handoff
 
 **Read this file first when resuming work.**
 
-## Last Update: {timestamp}
-**Last Actions**: {manual_summary}
+## Last Checkpoint: {timestamp}
+**Summary**: {manual_summary}
 
 {squad_section}
+
+## Current Phase: Intelligence & Growth Initiation (ACTIVE)
 
 ## Current Status
 ### Active Tasks
@@ -56,6 +67,12 @@ def main():
 {future_projects}
 
 {arch_section}
+
+{prefs_section}
+
+{files_section}
+
+{issues_section}
 
 ## Instructions for Next Session
 1. Read this `GEMINI.md` to align on current progress.

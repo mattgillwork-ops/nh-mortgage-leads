@@ -13,7 +13,7 @@ class MarketingAgent(BaseAgent):
     """
 
     def __init__(self):
-        super().__init__(agent_name="Marketing", model_name="anti-marketing")
+        super().__init__(agent_name="Nova", agent_id="nova")
 
     def run(self, prompt: str) -> str:
         """Execute a marketing/creative task with recursive tool execution."""

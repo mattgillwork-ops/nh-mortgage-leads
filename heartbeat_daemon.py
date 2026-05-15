@@ -14,10 +14,16 @@ import logging
 import os
 import sys
 import datetime
+import yaml
 
 # --- Logging Setup ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE = os.path.join(BASE_DIR, "heartbeat.log")
+
+def get_ollama_endpoint():
+    if os.path.exists("/.dockerenv") or os.environ.get("DOCKER_CONTAINER"):
+        return "http://host.docker.internal:11434"
+    return "http://127.0.0.1:11434"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -43,11 +49,32 @@ def preflight_check() -> bool:
     logging.info("Running pre-flight checks...")
     try:
         import ollama
-        ollama.list()
+        client = ollama.Client(host=get_ollama_endpoint())
+        
+        # 1. Verify Ollama Reachability
+        client.list()
         logging.info("[PRE-FLIGHT OK] Ollama is reachable.")
+        
+        # 2. Verify Critical Agent Models
+        registry_path = os.path.join(BASE_DIR, "agent_registry.yaml")
+        if os.path.exists(registry_path):
+            with open(registry_path, 'r', encoding='utf-8') as f:
+                registry = yaml.safe_load(f)
+            
+            installed = [m.model for m in client.list().models]
+            missing = []
+            for agent_id, data in registry.get('agents', {}).items():
+                primary = data.get('model', {}).get('primary')
+                if primary and not any(primary in name for name in installed):
+                    missing.append(primary)
+            
+            if missing:
+                logging.warning(f"[PRE-FLIGHT WARNING] Missing models: {missing}")
+                # We don't fail pre-flight here, but we log it for the Repair Orchestrator
+        
         return True
     except Exception as e:
-        logging.error(f"[PRE-FLIGHT FAIL] Ollama is not reachable: {e}")
+        logging.error(f"[PRE-FLIGHT FAIL] Core system check failed: {e}")
         logging.error("Heartbeat will retry in 60 seconds.")
         return False
 
@@ -88,30 +115,31 @@ def run_pulse_cycle():
 
     # --- Task 1: Infrastructure Health Check ---
     # Run selfcheck.py in quick mode to verify all systems are operational.
-    # If issues are found, Alex will attempt self-repair.
-    run_task(
-        "Run a quick system health check using selfcheck.py --quick. "
-        "If any agent models are missing, re-create them using their Modelfile. "
-        "If any required directories are missing, create them. "
-        "Write a one-paragraph summary of the system status to system_audit.md."
+    # We use a direct subprocess call here to get the return code.
+    health_check = subprocess.run(
+        [PYTHON_EXE, SELFCHECK_SCRIPT, "--quick"],
+        capture_output=True,
+        text=True,
+        cwd=BASE_DIR
     )
+    if health_check.returncode != 0:
+        logging.critical("INFRASTRUCTURE COLLAPSE DETECTED! Heartbeat stopping to prevent data corruption.")
+        logging.critical(health_check.stdout)
+        sys.exit(1)
+    
+    logging.info("[HEALTH OK] System foundation verified.")
 
-    # --- Task 2: Knowledge Pruning ---
-    # Keep Learnings.md relevant and concise.
-    run_task(
-        "Run knowledge_manager.py in dry-run mode first. "
-        "Review the output. If the pruning looks correct and safe, run it for real. "
-        "If any entries would be incorrectly deleted, skip pruning and log a warning."
-    )
+    # --- Task 2: Autonomous Repair ---
+    # Scan logs for failures and attempt remediation.
+    logging.info("Initiating Autonomous Repair Cycle...")
+    subprocess.run([PYTHON_EXE, os.path.join(BASE_DIR, "tools/repair_orchestrator.py")], cwd=BASE_DIR)
 
-    # --- Task 3: Infrastructure Goal Review ---
-    # Review the hardening task list and identify what to work on next.
-    # NOTE: This is strictly infrastructure review, not business planning.
-    run_task(
-        "Review CURRENT_TASKS.md. Identify the next incomplete infrastructure "
-        "hardening task. If a task is clearly actionable (e.g. a code fix), "
-        "complete it autonomously. Log the result to PHASE_REVIEW.md."
-    )
+    # --- Task 3: Knowledge Pruning ---
+
+    # --- Task 4: Autonomous Rate Engine Audit ---
+    # Refresh NH mortgage rates and auto-deploy if they've changed.
+    logging.info("Initiating Autonomous Rate Audit...")
+    subprocess.run([PYTHON_EXE, os.path.join(BASE_DIR, "tools/daily_rate_audit.py")], cwd=BASE_DIR)
 
     logging.info("=== Pulse cycle complete. ===")
 
@@ -119,9 +147,8 @@ def run_pulse_cycle():
 def main():
     logging.info("Anti-Gravity Heartbeat Daemon Starting...")
 
-    # Audit frequency: every 10 minutes for initial testing.
-    # Increase to 21600 (6 hours) for production.
-    CHECK_INTERVAL = 600
+    # Audit frequency: every 5 minutes (300s) for Zero-Drift compliance.
+    CHECK_INTERVAL = 300
 
     # Pre-flight: Wait until Ollama is available before starting loop
     while not preflight_check():

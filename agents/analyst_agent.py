@@ -2,7 +2,7 @@ from agents.base_agent import BaseAgent
 
 class AnalystAgent(BaseAgent):
     def __init__(self):
-        super().__init__(agent_name="Data Analyst", model_name="anti-analyst")
+        super().__init__(agent_name="Atlas", agent_id="atlas")
 
     def run(self, prompt: str) -> str:
         """Execute a data analysis task with recursive tool execution."""

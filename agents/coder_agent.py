@@ -13,7 +13,7 @@ class CoderAgent(BaseAgent):
     """
 
     def __init__(self):
-        super().__init__(agent_name="Coder", model_name="anti-coder")
+        super().__init__(agent_name="Caleb", agent_id="caleb")
 
     def run(self, prompt: str) -> str:
         """Execute a coding task with Obsidian context augmentation and Reflexion."""

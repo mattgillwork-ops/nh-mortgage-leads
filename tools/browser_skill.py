@@ -4,7 +4,10 @@ import sys
 import os
 import time
 from playwright.async_api import async_playwright
-import browser_manager
+try:
+    from tools import browser_manager
+except ImportError:
+    import browser_manager
 
 async def browser_skill(command):
     """
@@ -101,15 +104,28 @@ async def browser_skill(command):
                         pass
                     return "None"
 
+                # Extract JSON-LD Schema
+                schema_data = []
+                try:
+                    schemas = await page.locator('script[type="application/ld+json"]').all()
+                    for schema in schemas:
+                        text = await schema.inner_text()
+                        if text:
+                            schema_data.append(json.loads(text))
+                except:
+                    pass
+
                 seo_data = {
                     "title": await page.title(),
                     "meta_description": await get_attr_safe('meta[name="description"]', "content"),
                     "canonical": await get_attr_safe('link[rel="canonical"]', "href"),
                     "robots": await get_attr_safe('meta[name="robots"]', "content"),
+                    "viewport": await get_attr_safe('meta[name="viewport"]', "content"),
                     "h1": await page.locator('h1').all_text_contents(),
                     "h2": (await page.locator('h2').all_text_contents())[:10], 
                     "og_title": await get_attr_safe('meta[property="og:title"]', "content"),
                     "og_description": await get_attr_safe('meta[property="og:description"]', "content"),
+                    "schema_org": schema_data,
                     "links_count": await page.locator('a').count(),
                     "images_count": await page.locator('img').count(),
                     "images_without_alt": await page.locator('img:not([alt])').count()

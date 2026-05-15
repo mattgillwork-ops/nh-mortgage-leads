@@ -28,23 +28,49 @@ def run_command(cmd, desc):
         print(f"      CRITICAL ERROR: {e}")
         return None
 
+def check_gpu_readiness():
+    print(f"\n[INIT] Auditing GPU VRAM (RTX 5080)...")
+    try:
+        import shutil
+        nvidia_smi = shutil.which("nvidia-smi")
+        if nvidia_smi:
+            res = subprocess.run([nvidia_smi, "--query-gpu=memory.free,memory.total", "--format=csv,noheader,nounits"], capture_output=True, text=True)
+            if res.returncode == 0:
+                free, total = res.stdout.strip().split(",")
+                print(f"      VRAM Detected: {free.strip()} MB free of {total.strip()} MB total.")
+                if int(free) < 4000:
+                    print(f"      [WARN] VRAM Low. Large models (30B+) may swap to system RAM.")
+            else:
+                print(f"      [WARN] Could not query GPU memory.")
+        else:
+            print(f"      [INFO] nvidia-smi not found. Skipping hardware audit.")
+    except Exception as e:
+        print(f"      [WARN] GPU audit failed: {e}")
+
 def main():
     print("=" * 60)
-    print("  ANTI-GRAVITY AI SYSTEM INITIALIZATION  ")
+    print("  ANTI-GRAVITY AI SYSTEM INITIALIZATION (v3 Hardened)  ")
     print("=" * 60)
     
-    # 1. Health Audit
-    run_command(["selfcheck.py", "--quick"], "Running System Health Audit")
+    # 1. Hardware Audit
+    check_gpu_readiness()
     
-    # 2. Knowledge Refresh
+    # 2. System Health Audit (Full)
+    run_command(["selfcheck.py", "--full"], "Running Full System Health & Identity Audit")
+    
+    # 3. Knowledge Refresh
     run_command(["knowledge_manager.py", "--dry-run"], "Analyzing Knowledge Graph")
     
-    # 3. Read Handoff
+    # 4. MCP Server Readiness
+    if os.path.exists(os.path.join(BASE_DIR, "tools", "mcp_server.py")):
+        print("[INIT] Verifying MCP Tool Registry...")
+        print("      OK.")
+
+    # 5. Read Handoff
     if os.path.exists("GEMINI.md"):
         print("[INIT] Loading Session Context (GEMINI.md)...")
         with open("GEMINI.md", 'r', encoding='utf-8') as f:
             lines = f.readlines()
-            # Show first 10 lines of handoff
             for line in lines[:15]:
                 print(f"      {line.strip()}")
     

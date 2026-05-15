@@ -1,0 +1,2 @@
+id,timestamp,loan_purpose,property_type,location_nh,est_value,down_payment,credit_score,first_name,last_name,email,phone,status
+1,2026-05-12 09:46:42,Purchase,Single Family,Manchester,500000.0,25000.0,Excellent (740+),Test,Lead,test@example.com,603-555-0123,new

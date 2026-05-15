@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NH Mortgage Intelligence | Instant Quote</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="funnel-container">
+        <div class="glass-card">
+            <div class="progress-header">
+                <div class="step-count">Step <span id="current-step-num">1</span> of 6</div>
+                <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+            </div>
+
+            <div id="steps-container">
+                <!-- Step 1: Motivation -->
+                <div class="step active" id="step-1">
+                    <h2>What is your goal?</h2>
+                    <p class="subtitle">Select the option that best describes your situation.</p>
+                    <div class="option-grid">
+                        <button class="option-btn" data-field="loan_purpose" data-value="Purchase">Purchase</button>
+                        <button class="option-btn" data-field="loan_purpose" data-value="Refinance">Refinance</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Property Type -->
+                <div class="step" id="step-2">
+                    <h2>Property usage?</h2>
+                    <p class="subtitle">How will you be using this property?</p>
+                    <div class="option-grid">
+                        <button class="option-btn" data-field="property_type" data-value="Primary">Primary Home</button>
+                        <button class="option-btn" data-field="property_type" data-value="Secondary">Secondary</button>
+                        <button class="option-btn" data-field="property_type" data-value="Investment">Investment</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Financials -->
+                <div class="step" id="step-3">
+                    <h2>Estimate values</h2>
+                    <p class="subtitle">Help us calculate your potential rates.</p>
+                    <label>Purchase Price / Home Value ($)</label>
+                    <input type="number" id="est_value" placeholder="450,000">
+                    <label>Down Payment ($)</label>
+                    <input type="number" id="down_payment" placeholder="20,000">
+                    <button class="btn-next" onclick="nextStep()">Continue</button>
+                </div>
+
+                <!-- Step 4: Credit Range -->
+                <div class="step" id="step-4">
+                    <h2>Credit Profile</h2>
+                    <p class="subtitle">Select your estimated credit score range.</p>
+                    <div class="option-grid">
+                        <button class="option-btn" data-field="credit_score" data-value="Excellent (740+)">Excellent (740+)</button>
+                        <button class="option-btn" data-field="credit_score" data-value="Good (680-739)">Good (680-739)</button>
+                        <button class="option-btn" data-field="credit_score" data-value="Fair (620-679)">Fair (620-679)</button>
+                        <button class="option-btn" data-field="credit_score" data-value="Poor (<620)">Poor (<620)</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Location & Timeline -->
+                <div class="step" id="step-5">
+                    <h2>NH Location</h2>
+                    <p class="subtitle">Where is the property located?</p>
+                    <input type="text" id="location_nh" placeholder="City or County in NH">
+                    <label>Your Timeline</label>
+                    <div class="option-grid">
+                        <button class="option-btn" data-field="timeline" data-value="Immediate">Immediate</button>
+                        <button class="option-btn" data-field="1-3 Months">1-3 Months</button>
+                    </div>
+                </div>
+
+                <!-- Step 6: Contact Info -->
+                <div class="step" id="step-6">
+                    <h2>Final Details</h2>
+                    <p class="subtitle">Where should we send your custom report?</p>
+                    <input type="text" id="first_name" placeholder="First Name">
+                    <input type="text" id="last_name" placeholder="Last Name">
+                    <input type="email" id="email" placeholder="Email Address">
+                    <input type="tel" id="phone" placeholder="Phone Number">
+                    <button class="btn-next" onclick="submitForm()">Get My Custom Quote</button>
+                </div>
+
+                <!-- Success State -->
+                <div class="step" id="step-success">
+                    <div style="text-align: center;">
+                        <h2 style="color: #10b981;">Intelligence Received.</h2>
+                        <p class="subtitle">We are analyzing the NH market for you. A specialist will be in touch within 15 minutes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trust-footer">
+                <div class="trust-item">🔒 Secure SSL</div>
+                <div class="trust-item">🏠 NH Local</div>
+                <div class="trust-item">⚡ Instant Analysis</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

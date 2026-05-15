@@ -1,0 +1,64 @@
+# Antigravity Master Model Registry
+# ---------------------------------------------------------
+# Single source of truth for agent model assignments.
+# Supports 3-layer resilience (Primary -> Fallback -> Powerhouse).
+
+agents:
+  fast_router:
+    primary: "qwen2.5:7b"
+    fallback: "qwen3:8b"
+    description: "Triage and routing specialist"
+
+  alex:
+    primary: "qwen3:14b"
+    fallback: "qwen2.5:14b"
+    description: "Master Orchestrator / CEO"
+
+  deep_thinker:
+    primary: "deepseek-r1:14b"
+    fallback: "qwen3:14b"
+    description: "High-reasoning architectural logic"
+
+  caleb:
+    primary: "qwen2.5-coder:14b"
+    fallback: "qwen2.5-coder:7b"
+    description: "Code Engineering / Frontend & Backend"
+
+  dax:
+    primary: "qwen2.5-coder:14b"
+    fallback: "qwen2.5-coder:7b"
+    description: "DevOps / Docker & CI/CD"
+
+  rowan:
+    primary: "qwen3:14b"
+    fallback: "qwen2.5:14b"
+    description: "Deep Research & Browser Audits"
+
+  atlas:
+    primary: "deepseek-r1:14b"
+    fallback: "qwen3:14b"
+    description: "Security / Data Analysis"
+
+  vera:
+    primary: "deepseek-r1:14b"
+    fallback: "qwen3:14b"
+    description: "QA / Verification / Policy Enforcement"
+
+  aria:
+    primary: "anti-aria:latest"
+    fallback: "llama3.2-vision:latest"
+    description: "UX / UI Vision Designer"
+
+  nova:
+    primary: "qwen3:14b"
+    fallback: "qwen2.5:14b"
+    description: "Marketing / Content Strategy"
+
+  finn:
+    primary: "qwen3:14b"
+    fallback: "qwen2.5:14b"
+    description: "Strategy / Brainstorming"
+
+globals:
+  powerhouse: "gemma2:27b" # System-wide emergency fallback
+  embedding: "nomic-embed-text:latest"

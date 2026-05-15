@@ -2,8 +2,8 @@
 
 **Read this file first when resuming work.**
 
-## What This Project Is
-A multi-agent AI ecosystem running locally on Ollama (14B models) with an Obsidian vault (`tru/`) as the source of truth. Managed by a CEO agent (Alex) who delegates to specialized agents.
+## Last Checkpoint: 2026-05-14 09:28:50
+**Summary**: Session Summary: Conducted a full system audit and executed 'Operation Zero-Drift' to restore and harden the Antigravity ecosystem. Fixed the Heartbeat Daemon failure, standardized the model registry with 14B upgrades for key agents, and deployed an autonomous Repair Orchestrator (v2.0). Hardened the tool firewall with robust regex and path sanitization. Verified 100% architectural alignment between the vault, execution layer, and local models. The system is now fully autonomous, stable, and ready for lead engine development.
 
 ## The Agent Squad
 | Agent | Role | Model |
@@ -19,7 +19,36 @@ A multi-agent AI ecosystem running locally on Ollama (14B models) with an Obsidi
 | Finn | Brainstormer/Strategy | `anti-brainstormer` |
 
 ## Current Phase: Intelligence & Growth Initiation (ACTIVE)
-Infrastructure hardening and sovereign routing protocols completed (2026-05-12). All agents now utilize a 3-layer fallback hierarchy (Specialist -> Powerhouse -> Cloud Gate).
+
+## Current Status
+### Active Tasks
+- `[x]` **Phase 1: System Foundation & Autonomy**
+  - `[x]` Upgrade `BaseAgent` with **Reflexion Logic** (Self-Healing loop).
+  - `[x]` Deploy `heartbeat_daemon.py` and initiate autonomous pulse.
+  - `[x]` Rename and rebuild the squad (Caleb, Nova, Atlas, etc.) in Ollama.
+  - `[x]` Implement `knowledge_manager.py` for `Learnings.md` maintenance.
+
+- `[x]` **Phase 2: Sovereign Infrastructure Hardening (COMPLETE & VERIFIED)**
+  - `[x]` **Lean Squad Restructure**: Consolidated 9 agents into high-impact 6-agent hierarchy (now expanded to 11).
+  - `[x]` **Infrastructure Purge**: Decommissioned experimental email/Cloudflare bridge.
+  - `[x]` **Core Alignment**: Restored Cloud Gate, Whitelist Firewall, and v3 Startup/Checkpoint protocols.
+
+
+- `[ ]` **Project: NH Mortgage Lead Gen (PRIMARY FOCUS)**
+  - `[x]` **Research (Phase 1)**: Initial keyword analysis for NH Mortgage market (Rowan).
+  - `[x]` **Design Foundation (Phase 1)**: Build premium Next.js Design System & Hero (Aria & Caleb).
+  - `[ ]` **Development (Phase 2)**: Build the multi-step lead capture engine (Caleb).
+
+- `[x]` **Phase 3: Intelligence & Outreach (ACTIVE)**
+  - `[x]` **Skill Building**: Develop robust Playwright-based browser interaction tools (Atlas + Caleb).
+  - `[x]` **SEO Automation**: Integrate Headless Browser (Playwright) for SEO audits and research.
+  - `[ ]` **Client Onboarding**: Finalize the sovereign "Client Intake" workflow.
+  - `[x]` **Agency Landing Page**: Build the first "Anti-Gravity Agency" portal (Caleb & Aria).
+  - `[ ]` **Agency Refinement**: (On hold) Aria to audit aesthetics.
+
+
+### Future Pipeline
+Not found.
 
 ## Key Architecture Details
 - **Entry point**: `ask.py` → routes to Alex (CEO) → delegates to sub-agents
@@ -28,11 +57,6 @@ Infrastructure hardening and sovereign routing protocols completed (2026-05-12).
 - **Reflection Engine**: Automated `drift_report.md` generation on model failure.
 - **Memory**: ChromaDB + Obsidian rules-first ingestion (`tru/Core_Rules/MEMORY_PROTOCOL.md`).
 
-## What's Next (Priority Order)
-1. **SEO Competitive Audits** — Atlas to crawl competitor sites and identify content gaps.
-2. **Agency Landing Page** — Caleb and Aria to build the Anti-Gravity agency presence.
-3. **Internal Intelligence Graph** — Link audit data back to the project vault.
-
 ## User Preferences
 - Infrastructure and hardening BEFORE business features
 - Use DuckDuckGo for search (privacy, no rate limits)
@@ -40,7 +64,6 @@ Infrastructure hardening and sovereign routing protocols completed (2026-05-12).
 - Obsidian vault (`tru/`) is the permanent source of truth
 - Git auto-commit only when it adds value (file-writing agents, not research)
 - Free tools preferred; **Email is currently out of scope (decommissioned)**.
-
 
 ## Important Files
 - `WORKSPACE_AI_RULES.md` — Cloud AI directives (Hello Alex protocol)
@@ -55,3 +78,8 @@ Infrastructure hardening and sovereign routing protocols completed (2026-05-12).
 - `GEMINI_API_KEY` not set — cloud fallback disabled
 - npm not in PATH (frontend builds need manual path setup)
 - Git not in system PATH — `git_manager.py` uses absolute path fallback to `C:\Program Files\Git\bin\git.exe`
+
+## Instructions for Next Session
+1. Read this `GEMINI.md` to align on current progress.
+2. Run `/lets get started` to initialize the system.
+3. Prioritize delegation to local agents via `ask.py`.

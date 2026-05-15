@@ -11,7 +11,17 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - .:/workspace
+      # Selective Mounts for Security & Isolation
+      - ./backend:/workspace/backend:rw
+      - ./agents:/workspace/agents:rw
+      - ./tools:/workspace/tools:rw
+      - ./tru/Memory_Logs:/workspace/tru/Memory_Logs:rw
+      - ./tru/Projects:/workspace/tru/Projects:rw
+      - ./tru/Core_Rules:/workspace/tru/Core_Rules:ro  # READ-ONLY IDENTITY
+      - ./model_registry.yaml:/workspace/model_registry.yaml:ro
+      - ./.env:/workspace/.env:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     working_dir: /workspace
     command: python backend/app.py
     restart: unless-stopped

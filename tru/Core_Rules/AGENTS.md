@@ -1,56 +1,58 @@
-# Anti-Gravity Agent Ecosystem: The Lean Squad (6-Agent Unit)
+# Anti-Gravity Agent Ecosystem: The Specialized Squad (11-Agent Unit)
 
-This document defines the roles, models, and protocols for the Anti-Gravity Multi-Agent system.
+This document defines the roles, models, and protocols for the Antigravity v3 architecture.
 
-## 🏛️ Orchestration Layer
+## 🏛️ Orchestration & Reasoning
+### **Fast Router**
+- **Model**: `qwen2.5:7b` (Primary) | `qwen3:8b` (Fallback)
+- **Role**: Instant triage. Determines complexity and delegates to Alex or specialists.
+
 ### **Alex (CEO)**
-- **Role**: Master Orchestrator, Task Triage, Implementation Planning.
-- **Model**: `anti-ceo` (`qwen2.5:14b`).
-- **Policy**: Must generate a `PHASE_REVIEW.md` after successful complex tasks.
+- **Model**: `qwen3:14b` (Primary) | `qwen2.5:14b` (Fallback)
+- **Role**: Master Orchestrator. Implementation planning and team delegation.
 
-## 🛠️ Execution Layer (The Iron Trinity)
-### **Caleb (Coder Agent)**
-- **Role**: Software Engineering, Autonomous Web Building (React/Next.js).
-- **Skill**: Component-driven architecture, API integration, and code refactoring.
-- **Tool Access**: `browser_action` (Playwright), `run_command`, `write_file`.
-- **Model**: `anti-coder` (`qwen2.5-coder:14b`).
+### **Deep Thinker**
+- **Model**: `deepseek-r1:14b` (Primary) | `qwen3:14b` (Fallback)
+- **Role**: Architectural logic, root cause analysis, and multi-step reasoning.
 
-### **Aria (UX/UI Designer)**
-- **Role**: Premium Aesthetics, Glassmorphism, Design Systems.
-- **Skill**: Visual verification (pyautogui), CSS tokens, and iterative styling loops.
-- **Model**: `anti-ux` (`llama3.2-vision:11b`).
+## 🛠️ Execution Layer
+### **Caleb (Coder)**
+- **Model**: `qwen2.5-coder:14b` (Primary) | `qwen2.5-coder:7b` (Fallback)
+- **Role**: Lead Software Engineer. App dev, debugging, and refactoring.
 
-### **Dax (DevOps Agent)**
-- **Role**: Infrastructure, Docker, Server Management, Deployment.
-- **Skill**: Sandbox security, CI/CD automation, and persistence maintenance.
-- **Model**: `anti-devops` (`qwen2.5:14b`).
+### **Dax (DevOps)**
+- **Model**: `qwen2.5-coder:14b` (Primary) | `qwen2.5-coder:7b` (Fallback)
+- **Role**: Infrastructure, Docker security, and CI/CD automation.
 
-## 🧠 Intelligence & Growth
-### **Atlas (Data Scientist)**
-- **Role**: Forensic Data Analysis, Competitive Research, Security Architect.
-- **Skill**: SEO trend analysis, prompt injection defense, and data strategy.
-- **Tool Access**: `browser_action` (Playwright), `search_the_web` (DuckDuckGo).
-- **Model**: `anti-analyst` (`qwen2.5:14b`).
-- *Merged Identity: Rowan (Researcher) + Atlas (Analyst)*
+### **Aria (UX/Vision)**
+- **Model**: `qwen2.5vl:latest` (Primary) | `llama3.2-vision:latest` (Fallback)
+- **Role**: Premium Aesthetics. Visual audit of UI and design tokens.
 
-### **Nova (Strategy & Growth)**
-- **Role**: Marketing Execution, SEO Copywriting, Business Strategy.
-- **Skill**: Semantic SEO, brand voice alignment, and blue-sky growth ideation.
-- **Model**: `anti-marketing` (`qwen2.5:14b`).
-- *Merged Identity: Nova (Marketing) + Finn (Brainstormer)*
+## 🧠 Intelligence & Strategy
+### **Rowan (Researcher)**
+- **Model**: `qwen3:14b` (Primary) | `qwen2.5:14b` (Fallback)
+- **Role**: Intelligence gathering, browser audits, and competitive research.
+
+### **Atlas (Analyst)**
+- **Model**: `deepseek-r1:14b` (Primary) | `qwen3:14b` (Fallback)
+- **Role**: Data forensic analysis and AI security auditing.
+
+### **Finn (Strategist)**
+- **Model**: `qwen3:14b` (Primary) | `qwen2.5:14b` (Fallback)
+- **Role**: Market opportunity mapping and Blue-Sky growth ideation.
+
+### **Nova (Marketing)**
+- **Model**: `qwen3:14b` (Primary) | `qwen2.5:14b` (Fallback)
+- **Role**: SEO Copywriting, brand voice, and outreach automation.
 
 ## ✅ Quality Assurance
-### **Vera (Verifier Agent)**
-- **Role**: Senior QA, Deterministic Policy Enforcement, Hallucination Detection.
-- **Skill**: SEO standard auditing, accessibility verification, and system audits.
-- **Model**: `anti-verifier` (`qwen2.5:14b`).
+### **Vera (Verifier)**
+- **Model**: `deepseek-r1:14b` (Primary) | `qwen3:14b` (Fallback)
+- **Role**: Senior QA and deterministic policy enforcement.
 
 ---
 
-## 🛡️ The PAM Protocol (Standard Operating Procedure)
-All agents must follow the **Persistent Architectural Mapping** (PAM) protocol:
-1. **Look Before You Leap**: Verify file paths with `ls` before writing.
-2. **Audit Before You Run**: Check if tools exist before executing commands.
-3. **See Before You Sign-Off**: Aria must visually verify UI changes.
-4. **Data Sovereignty**: All data must be stored and processed within the local `tru/` vault.
-
+## 🛡️ Governance Protocols
+1. **LTM Gate**: Only Alex and Vera can commit to the `Knowledge_Graph`.
+2. **Vision Gate**: No UI is production-ready until Aria provides a `VISUAL_PASS` log.
+3. **Audit Gate**: Dax must audit all `run_command` requests for sandbox escapes.

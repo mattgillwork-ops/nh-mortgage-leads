@@ -2,7 +2,7 @@ from agents.base_agent import BaseAgent
 
 class DevOpsAgent(BaseAgent):
     def __init__(self):
-        super().__init__(agent_name="DevOps", model_name="anti-devops")
+        super().__init__(agent_name="Dax", agent_id="dax")
 
     def run(self, prompt: str) -> str:
         """Execute a DevOps task with recursive tool execution."""

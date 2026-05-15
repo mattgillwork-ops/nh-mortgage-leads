@@ -4,27 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "50c92989f2fd7fa7",
+        "id": "6d35578af11341b0",
         "type": "tabs",
         "children": [
           {
-            "id": "338bbf5e599b048d",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
-            }
-          }
-        ]
-      },
-      {
-        "id": "6f38647bb0b7c0ea",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "712c818118b49ec2",
+            "id": "a37e9b32285718e7",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -197,12 +181,23 @@
       "bases:Create new base": false
     }
   },
-  "active": "712c818118b49ec2",
+  "active": "a37e9b32285718e7",
   "lastOpenFiles": [
-    "Memory_Logs/log_20260510_174333.md",
+    "Core_Rules/ROUTING_PROTOCOL.md",
     "Core_Rules/RESEARCH.md",
+    "Core_Rules/MEMORY_PROTOCOL.md",
     "Core_Rules/GEMINI.md",
     "Core_Rules/AGENTS.md",
+    "Session_2026-05-11.md",
+    "Strategic_Plan_v2.md",
+    "Phase_1_and_2_Hardening_MOC.md",
+    "Phase_1_and_2_Hardening.md",
+    "Caleb_Coder_MOC.md",
+    "Alex_CEO_MOC.md",
+    "Visual_Logs/browser_audit_session_1778589360.png",
+    "Memory_Logs/log_20260510_174333.md",
+    "Memory_Logs/drift_report_20260512_002549.md",
+    "Research/Agent_Best_Practices_2026.md",
     "Welcome.md",
     "Untitled.base"
   ]

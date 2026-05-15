@@ -14,7 +14,7 @@ class UXAgent(BaseAgent):
     """
 
     def __init__(self):
-        super().__init__(agent_name="Aria (UX)", model_name="anti-ux")
+        super().__init__(agent_name="Aria", agent_id="aria")
 
     def run(self, prompt: str) -> str:
         # Aria always checks for visual context if possible

@@ -1,4 +1,13 @@
 {
+  "name": "anti-sovereign-root",
+  "private": true,
+  "scripts": {
+    "install:mortgage": "cd mortgage-app && npm install",
+    "build:mortgage": "cd mortgage-app && npm run build",
+    "start:mortgage": "cd mortgage-app && npm run start",
+    "build": "npm run build:mortgage",
+    "start": "npm run start:mortgage"
+  },
   "dependencies": {
     "socket.io-client": "^4.8.3"
   }

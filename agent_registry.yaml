@@ -1,0 +1,87 @@
+# Antigravity Master Agent Registry v3.3 (ZERO-DRIFT)
+# ---------------------------------------------------------
+# SECURITY: MCP Tool Whitelists (Least Privilege)
+
+globals:
+  powerhouse: "gemma2:27b"
+  embedding: "nomic-embed-text:latest"
+  tool_security: "STRICT"
+
+agents:
+  fast_router:
+    model: { primary: "anti-fast-router:latest", fallback: "qwen2.5:7b" }
+    permissions:
+      memory: { read: ["metadata"], write_episodic: false, propose_ltm: false, approve_ltm: false }
+      tools: ["triage", "classify"]
+    skills: ["Quick classification", "Routing"]
+
+  alex:
+    model: { primary: "anti-ceo:latest", fallback: "qwen3:14b" }
+    permissions:
+      memory: { read: ["episodic", "ltm", "state", "proposals"], write_episodic: true, propose_ltm: true, approve_ltm: false }
+      tools: ["delegate", "read_file", "list_dir", "create_plan"]
+    skills: ["Goal interpretation", "Task decomposition", "Master Orchestration"]
+
+  deep_thinker:
+    model: { primary: "anti-deep-thinker:latest", fallback: "nemotron3:33b" }
+    context: 32768
+    permissions:
+      memory: { read: ["episodic", "ltm"], write_episodic: true, propose_ltm: true, approve_ltm: false }
+      tools: ["read_file", "list_dir"]
+    skills: ["Complex reasoning", "Architecture"]
+
+  caleb:
+    model: { primary: "qwen2.5-coder:14b", fallback: "qwen2.5-coder:7b" }
+    permissions:
+      memory: { read: ["project", "code", "episodic"], write_episodic: true, propose_ltm: true, approve_ltm: false }
+      tools: ["write_file", "replace_file_content", "read_file", "list_dir", "run_test"]
+    skills: ["Python/JS Dev", "Debugging"]
+
+  dax:
+    model: { primary: "qwen2.5-coder:14b", fallback: "qwen2.5-coder:7b" }
+    permissions:
+      memory: { read: ["infra", "config", "episodic"], write_episodic: true, propose_ltm: true, approve_ltm: false }
+      tools: ["run_command", "docker_ps", "write_file", "read_file"] 
+    skills: ["Docker", "Ollama", "Security Hardening"]
+
+  rowan:
+    model: { primary: "anti-researcher:latest", fallback: "qwen3:14b" }
+    permissions:
+      memory: { read: ["research", "ltm", "episodic"], write_episodic: true, propose_ltm: true, approve_ltm: false }
+      tools: ["browser_action", "search_the_web", "read_file"]
+    skills: ["Web research", "Document review"]
+
+  atlas:
+    model: { primary: "deepseek-r1:14b", fallback: "qwen2.5:7b" }
+    permissions:
+      memory: { read: ["security", "risk", "episodic"], write_episodic: true, propose_ltm: true, approve_ltm: false }
+      tools: ["read_file", "extract_seo", "security_scan"]
+    skills: ["Logic checks", "Math", "Risk analysis"]
+
+  vera:
+    model: { primary: "deepseek-r1:14b", fallback: "qwen2.5:7b" }
+    permissions:
+      memory: { read: ["outputs", "proposals", "ltm"], write_episodic: true, propose_ltm: false, approve_ltm: true }
+      tools: ["read_file", "validate_schema", "commit_ltm"]
+    skills: ["QA Auditing", "Validation"]
+
+  aria:
+    model: { primary: "anti-aria:latest", fallback: "llama3.2-vision:latest" }
+    permissions:
+      memory: { read: ["design", "ui", "episodic"], write_episodic: true, propose_ltm: true, approve_ltm: false }
+      tools: ["view_window", "write_file", "replace_file_content"]
+    skills: ["Visual hierarchy", "Layout critique"]
+
+  nova:
+    model: { primary: "qwen3:14b", fallback: "qwen2.5:14b" }
+    permissions:
+      memory: { read: ["brand", "content", "episodic"], write_episodic: true, propose_ltm: true, approve_ltm: false }
+      tools: ["read_file", "write_file"]
+    skills: ["Copywriting", "SEO Copy"]
+
+  finn:
+    model: { primary: "qwen3:14b", fallback: "qwen2.5:14b" }
+    permissions:
+      memory: { read: ["strategy", "episodic"], write_episodic: true, propose_ltm: true, approve_ltm: false }
+      tools: ["read_file"]
+    skills: ["Brainstorming", "Strategy"]
