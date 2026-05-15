@@ -76,7 +76,7 @@ agents:
     model: { primary: "qwen3:14b", fallback: "qwen2.5:14b" }
     permissions:
       memory: { read: ["brand", "content", "episodic"], write_episodic: true, propose_ltm: true, approve_ltm: false }
-      tools: ["read_file", "write_file"]
+      tools: ["read_file", "write_file", "search_the_web"]
     skills: ["Copywriting", "SEO Copy"]
 
   finn:

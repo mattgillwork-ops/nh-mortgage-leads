@@ -7,7 +7,6 @@ from datetime import datetime
 from functools import wraps
 from dotenv import load_dotenv
 import ollama
-from google import genai
 
 # Initial setup
 load_dotenv()
@@ -95,7 +94,7 @@ class MemoryManager:
             logging.error(f"Failed to log memory: {e}")
 
 class BaseAgent:
-    """Antigravity v3.6 Unified Foundation with Explicit Client Bridge."""
+    """Antigravity v3.8 Sovereign Foundation - 100% Local Web Intelligence."""
     def __init__(self, agent_name, agent_id):
         self.agent_name = agent_name
         self.agent_id = agent_id
@@ -111,9 +110,8 @@ class BaseAgent:
         self.model_name = self.config.get('model', {}).get('primary', 'qwen2.5:7b')
         self.authorized_tools = self.config.get('permissions', {}).get('tools', [])
         
-        # Configure Gemini
-        api_key = os.getenv("GEMINI_API_KEY")
-        self.genai_client = genai.Client(api_key=api_key) if api_key else None
+        # Cloud dependencies REMOVED to enforce sovereignty
+        self.genai_client = None
         
         # Initialize Memory
         self.vault_path = os.path.join(os.getcwd(), "tru")
@@ -143,8 +141,7 @@ class BaseAgent:
         return "ERROR: Cloud fallback is disabled in Sovereign Mode. Local models must be used."
 
     def parse_and_execute_tools(self, response: str) -> str:
-        """v3 Whitelist Firewall: Enforce authorized tools and EXECUTE them."""
-        # Find matches for TOOL: tool_name(arguments) - Tolerance for optional parens and whitespace
+        """v4 Sovereign Firewall: Enforce authorized tools and EXECUTE using local scripts."""
         tool_pattern = re.compile(r"TOOL:\s*(\w+)(?:\((.*?)\))?", re.IGNORECASE)
         tool_matches = tool_pattern.findall(response)
         
@@ -153,30 +150,35 @@ class BaseAgent:
             
         final_response = response
         for tool_name, tool_args in tool_matches:
-            # CHECK: Has this specific tool call already been executed?
-            # (Prevents double execution in delegation chains and firewall alerts for CEO synthesis)
             if f"--- TOOL OUTPUT ({tool_name}) ---" in response:
                 continue
 
-            # CHECK: Is this tool whitelisted for THIS agent?
             if tool_name not in self.authorized_tools:
                 self.logger.error(f"SECURITY ALERT: Blocked unauthorized tool '{tool_name}' from agent '{self.agent_id}'")
                 return f"ERROR: Unauthorized tool call detected: {tool_name}. Access denied by Firewall."
 
             self.logger.info(f"[{self.agent_id}] Executing whitelisted tool: {tool_name}")
             
-            # Execution Logic
             tool_output = ""
             try:
-                if tool_name == "search_the_web" or tool_name == "browser_action":
+                if tool_name == "search_the_web":
                     from tools.web_search import web_search
                     query = tool_args.strip("'\"") if tool_args else ""
                     tool_output = web_search(query)
+                elif tool_name == "browser_action" or tool_name == "extract_seo":
+                    import subprocess
+                    import sys
+                    # Wrap simple string args into JSON for browser_skill
+                    cmd_json = tool_args if tool_args.strip().startswith("{") else json.dumps({"action": "navigate", "url": tool_args.strip("'\"")})
+                    result = subprocess.run(
+                        [sys.executable, "tools/browser_skill.py", cmd_json],
+                        capture_output=True, text=True, timeout=90
+                    )
+                    tool_output = result.stdout if result.returncode == 0 else f"[Browser Error] {result.stderr}"
                 elif tool_name == "read_file":
                     from tools.file_manager import read_file
                     path = tool_args.strip("'\"") if tool_args else ""
-                    # Security: Basic Path Sanitization
-                    if ".." in path or path.startswith("/") or ":" in path[2:]:
+                    if ".." in path or path.startswith("/") or (len(path) > 1 and path[1] == ":"):
                          tool_output = "[SECURITY ERROR] Path traversal or absolute path detected. Access denied."
                     else:
                         tool_output = read_file(path)
@@ -206,8 +208,6 @@ class BaseAgent:
         ctx = self.config.get('context', 4096)
         current_date = datetime.now().strftime("%B %d, %Y")
         system_injection = f"\n\n[SYSTEM INFO: Current Date is {current_date}]\n"
-        
-        # v3.7 structured output handling
         chat_format = 'json' if kwargs.get('json_mode') else ''
         
         response = self.client.chat(

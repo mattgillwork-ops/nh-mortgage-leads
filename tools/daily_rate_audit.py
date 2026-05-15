@@ -32,31 +32,42 @@ async def sync_rates():
             
             source_url = "https://www.freddiemac.com/pmms"
             print(f"[NAVIGATE] Connecting to {source_url}...")
-            await page.goto(source_url, wait_until="networkidle", timeout=60000)
-            
-            # Wait for the rate element to appear
+            # Strategy 1: Verified Selector
             print("[WAIT] Searching for rate elements...")
-            await page.wait_for_selector("p.stat.weight-bold", timeout=20000)
-            
-            stats = await page.query_selector_all("p.stat.weight-bold")
-            rate = None
-            for stat in stats:
-                text = await stat.inner_text()
-                # We expect a number like 6.88
-                clean_text = text.replace('%', '').strip()
-                if "." in clean_text:
-                    try:
-                        rate = float(clean_text)
-                        break
-                    except:
-                        continue
+            try:
+                await page.wait_for_selector("p.stat.weight-bold", timeout=15000)
+                stats = await page.query_selector_all("p.stat.weight-bold")
+                for stat in stats:
+                    text = await stat.inner_text()
+                    clean_text = text.replace('%', '').strip()
+                    if "." in clean_text:
+                        try:
+                            rate = float(clean_text)
+                            print(f"[EXTRACT] Found via selector: {rate}%")
+                            break
+                        except: continue
+            except:
+                print("[WARN] Primary selector failed. Attempting Regex Fallback...")
+
+            # Strategy 2: Regex Fallback (Text-based search)
+            if not rate:
+                body_text = await page.evaluate("() => document.body.innerText")
+                import re
+                # Look for "30-year Fixed-Rate Mortgage" followed by a percentage
+                match = re.search(r"30-year Fixed-Rate Mortgage\s*([\d\.]+)%", body_text, re.IGNORECASE)
+                if match:
+                    rate = float(match.group(1))
+                    print(f"[EXTRACT] Found via regex: {rate}%")
             
             if not rate:
-                # Capture screenshot for debugging in CI artifacts if possible
-                await page.screenshot(path="rate_sync_debug.png")
-                raise Exception("Could not find a valid rate value in the expected elements.")
+                # Capture diagnostic data
+                print("[DIAGNOSTIC] Capturing state for debugging...")
+                await page.screenshot(path="sync_failure.png")
+                with open("sync_failure.html", "w", encoding="utf-8") as f:
+                    f.write(await page.content())
+                raise Exception("Critical: Could not extract mortgage rate from Freddie Mac site.")
 
-            print(f"[EXTRACT] Market Rate Found: {rate}%")
+            print(f"[VERIFIED] Market Rate: {rate}%")
             
             endpoint = f"{SUPABASE_URL}/rest/v1/market_rates"
             headers = {
@@ -72,12 +83,13 @@ async def sync_rates():
                 "last_verified": datetime.now().isoformat()
             }
             
+            print(f"[PUSH] Syncing to Supabase: {endpoint}")
             response = requests.post(endpoint, headers=headers, json=payload)
             
             if response.status_code in [200, 201]:
-                print("[SUCCESS] Market intelligence synced to Supabase instantly via REST.")
+                print("[SUCCESS] Market intelligence synced successfully.")
             else:
-                print(f"[ERROR] Supabase REST API failed: {response.status_code} - {response.text}")
+                print(f"[ERROR] Supabase API Error {response.status_code}: {response.text}")
                 sys.exit(1)
                 
             await browser.close()

@@ -29,10 +29,18 @@ jobs:
           pip install requests playwright
           python -m playwright install chromium
 
-      - name: Run Sync Script
+      - name: Run daily audit
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
-          # We call the script directly. Note: We override env vars from secrets
           python tools/daily_rate_audit.py
+
+      - name: Upload Debug Artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sync-debug-info
+          path: |
+            sync_failure.png
+            sync_failure.html
