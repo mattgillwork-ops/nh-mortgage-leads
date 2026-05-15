@@ -26,7 +26,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install requests playwright
+          pip install requests playwright python-dotenv
           python -m playwright install chromium
 
       - name: Run daily audit

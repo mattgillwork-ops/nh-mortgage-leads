@@ -3,11 +3,11 @@ import sys
 import asyncio
 import requests
 from playwright.async_api import async_playwright
-from dotenv import load_dotenv
-from datetime import datetime
-
-# Load environment variables
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
@@ -32,8 +32,11 @@ async def sync_rates():
             
             source_url = "https://www.freddiemac.com/pmms"
             print(f"[NAVIGATE] Connecting to {source_url}...")
+            await page.goto(source_url, wait_until="networkidle", timeout=60000)
+            
             # Strategy 1: Verified Selector
             print("[WAIT] Searching for rate elements...")
+            rate = None
             try:
                 await page.wait_for_selector("p.stat.weight-bold", timeout=15000)
                 stats = await page.query_selector_all("p.stat.weight-bold")
