@@ -33,7 +33,7 @@ async def sync_rates():
             
             source_url = "https://www.freddiemac.com/pmms"
             print(f"[NAVIGATE] Connecting to {source_url}...")
-            await page.goto(source_url, wait_until="networkidle", timeout=60000)
+            await page.goto(source_url, wait_until="domcontentloaded", timeout=90000)
             
             # Strategy 1: Verified Selector
             print("[WAIT] Searching for rate elements...")
