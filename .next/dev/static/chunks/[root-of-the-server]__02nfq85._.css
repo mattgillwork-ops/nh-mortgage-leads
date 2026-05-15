@@ -1,0 +1,251 @@
+@import "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap";
+/* [next]/internal/font/google/geist_a71539c9.module.css [app-client] (css) */
+@font-face {
+  font-family: Geist;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../media/fef07dbb0973bf53-s.12tyk43_3sh9u.woff2") format("woff2");
+  unicode-range: U+460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+@font-face {
+  font-family: Geist;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../media/8a480f0b521d4e75-s.0jzbimsg8vl84.woff2") format("woff2");
+  unicode-range: U+301, U+400-45F, U+490-491, U+4B0-4B1, U+2116;
+}
+
+@font-face {
+  font-family: Geist;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../media/53b9e256198e5412-s.0-wfv7uh4i7h9.woff2") format("woff2");
+  unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB;
+}
+
+@font-face {
+  font-family: Geist;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../media/7178b3e590c64307-s.0nx0ww8fni_q3.woff2") format("woff2");
+  unicode-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: Geist;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../media/caa3a2e1cccd8315-s.p.09~u27dqhyhd6.woff2") format("woff2");
+  unicode-range: U+??, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: Geist Fallback;
+  src: local(Arial);
+  ascent-override: 95.94%;
+  descent-override: 28.16%;
+  line-gap-override: 0.0%;
+  size-adjust: 104.76%;
+}
+
+.geist_a71539c9-module__T19VSG__className {
+  font-family: Geist, Geist Fallback;
+  font-style: normal;
+}
+
+.geist_a71539c9-module__T19VSG__variable {
+  --font-geist-sans: "Geist", "Geist Fallback";
+}
+
+/* [next]/internal/font/google/geist_mono_8d43a2aa.module.css [app-client] (css) */
+@font-face {
+  font-family: Geist Mono;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../media/5ce348bf30bf5439-s.0ee55_hj9qcer.woff2") format("woff2");
+  unicode-range: U+460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+@font-face {
+  font-family: Geist Mono;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../media/4fa387ec64143e14-s.0.qu-9752pffj.woff2") format("woff2");
+  unicode-range: U+301, U+400-45F, U+490-491, U+4B0-4B1, U+2116;
+}
+
+@font-face {
+  font-family: Geist Mono;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../media/6306c77e7c8268e4-s.0mao5jbfbduzp.woff2") format("woff2");
+  unicode-range: U+2000-2001, U+2004-2008, U+200A, U+23B8-23BD, U+2500-259F;
+}
+
+@font-face {
+  font-family: Geist Mono;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../media/7d817b4c03b0c5f1-s.0uzt.a6d44yda.woff2") format("woff2");
+  unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB;
+}
+
+@font-face {
+  font-family: Geist Mono;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../media/bbc41e54d2fcbd21-s.0mvwgmnhv29no.woff2") format("woff2");
+  unicode-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: Geist Mono;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../media/797e433ab948586e-s.p.09zddjkbdep5a.woff2") format("woff2");
+  unicode-range: U+??, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: Geist Mono Fallback;
+  src: local(Arial);
+  ascent-override: 74.67%;
+  descent-override: 21.92%;
+  line-gap-override: 0.0%;
+  size-adjust: 134.59%;
+}
+
+.geist_mono_8d43a2aa-module__8Li5zG__className {
+  font-family: Geist Mono, Geist Mono Fallback;
+  font-style: normal;
+}
+
+.geist_mono_8d43a2aa-module__8Li5zG__variable {
+  --font-geist-mono: "Geist Mono", "Geist Mono Fallback";
+}
+
+/* [project]/src/app/globals.css [app-client] (css) */
+:root {
+  --nh-slate: 222 47% 11%;
+  --nh-gold: 45 93% 47%;
+  --nh-ice: 199 89% 48%;
+  --nh-granite: 215 16% 47%;
+  --background: 210 40% 98%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-border: 214 32% 91%;
+  --glass: #f8fafccc;
+  --glass-border: #0f172914;
+  --glass-blur: 16px;
+  --font-main: "Inter", sans-serif;
+  --font-display: "Outfit", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(circle at 0% 0%, hsla(var(--nh-ice), .15) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, hsla(var(--nh-gold), .05) 0%, transparent 50%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .display-font {
+  font-family: var(--font-display);
+  letter-spacing: -.02em;
+  font-weight: 700;
+}
+
+.glass-panel {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, hsl(var(--nh-gold)) 0%, #fef3c7 100%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+.btn-primary {
+  background: hsl(var(--nh-gold));
+  color: hsl(var(--nh-slate));
+  cursor: pointer;
+  box-shadow: 0 4px 20px hsla(var(--nh-gold), .3);
+  border: none;
+  border-radius: 12px;
+  padding: .8rem 2rem;
+  font-weight: 600;
+  transition: all .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 8px 30px hsla(var(--nh-gold), .4);
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.badge {
+  background: hsla(var(--nh-gold), .1);
+  color: hsl(var(--nh-gold));
+  border: 1px solid hsla(var(--nh-gold), .2);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  border-radius: 100px;
+  padding: .4rem 1rem;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: .6s ease-out forwards fadeIn;
+}
+
+.nav-link, .nav-link:visited, .nav-link:active {
+  color: #0f1729b3;
+  text-decoration: none;
+  transition: all .2s;
+}
+
+.nav-link:hover {
+  color: #0f1729;
+  opacity: 1;
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=%5Broot-of-the-server%5D__02nfq85._.css.map*/
