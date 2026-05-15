@@ -24,29 +24,21 @@ const GUIDES = [
 
 export default function GuidesPage() {
   return (
-    <main className="container-journal animate-fade-in" style={{ padding: '10rem 0' }}>
-      <div style={{ marginBottom: '6rem', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '4.5rem', marginBottom: '1.5rem', letterSpacing: '-0.02em' }}>
-            Market <span style={{ color: 'hsl(var(--nh-gold))' }}>Intelligence</span>
-        </h1>
-        <p style={{ opacity: 0.6, fontSize: '1.3rem', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>
-            Exclusive resources for the New Hampshire homeowner. Real data. Local expertise. Verified publication.
+    <main style={{ padding: '8rem 8%', minHeight: '100vh', background: 'hsl(var(--background))' }}>
+      <div style={{ marginBottom: '4rem', textAlign: 'center' }}>
+        <h1 className="display-font" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>Market <span className="gold-gradient">Intelligence</span></h1>
+        <p style={{ opacity: 0.6, fontSize: '1.2rem', maxWidth: '700px', margin: '0 auto' }}>
+            Exclusive resources for the New Hampshire homeowner. Real data. Local expertise. No placeholders.
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '3rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
         {GUIDES.map((guide, i) => (
-          <div key={i} className="journal-card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <div style={{ fontSize: '3rem', marginBottom: '2rem' }}>{guide.icon}</div>
-            <h2 style={{ fontSize: '1.8rem', marginBottom: '1.5rem', lineHeight: '1.2' }}>{guide.title}</h2>
-            <p style={{ color: '#475569', fontSize: '1.05rem', marginBottom: '3rem', flexGrow: 1 }}>{guide.excerpt}</p>
-            <Link 
-                href={`/guides/${guide.slug}`} 
-                className="btn-primary" 
-                style={{ width: '100%', textDecoration: 'none', display: 'block', textAlign: 'center' }}
-            >
-                Read Analysis
-            </Link>
+          <div key={i} style={{ padding: '2.5rem', background: 'white', border: '1px solid #f1f5f9', borderRadius: '24px', transition: 'all 0.3s shadow' }}>
+            <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>{guide.icon}</div>
+            <h2 className="display-font" style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'hsl(var(--nh-slate))' }}>{guide.title}</h2>
+            <p style={{ color: 'hsl(var(--nh-granite))', lineHeight: '1.6', marginBottom: '2rem' }}>{guide.excerpt}</p>
+            <Link href={`/guides/${guide.slug}`} className="btn-primary" style={{ width: '100%', textDecoration: 'none', display: 'block', textAlign: 'center' }}>Read Full Guide</Link>
           </div>
         ))}
       </div>

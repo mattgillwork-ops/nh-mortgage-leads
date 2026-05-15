@@ -1,11 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Use public keys for frontend (NEXT_PUBLIC_) or private keys for backend
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+const supabaseUrl = process.env.SUPABASE_URL || '';
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
-if (!supabaseUrl || !supabaseKey) {
-  console.warn('Supabase configuration missing.');
+if (!supabaseUrl || !supabaseServiceRoleKey) {
+  console.warn('Supabase credentials missing. Database operations will fail.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
