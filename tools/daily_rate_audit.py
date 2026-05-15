@@ -8,6 +8,7 @@ try:
     load_dotenv()
 except ImportError:
     pass
+from datetime import datetime
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
