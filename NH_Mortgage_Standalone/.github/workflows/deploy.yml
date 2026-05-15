@@ -1,0 +1,25 @@
+name: Deploy to Public Web
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Deploy to Render (Example)
+        # This is a placeholder for the actual deployment hook
+        # Once you connect your GitHub repo to Render.com, 
+        # every push to 'main' will trigger a live update on your domain.
+        run: |
+          echo "Deploying NH Mortgage Lead Engine to Public URL..."
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}

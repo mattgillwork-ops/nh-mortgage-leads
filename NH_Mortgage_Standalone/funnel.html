@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NH Rate Engine | Secure Quote</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="site-nav">
+        <div class="logo">NH INTELLIGENCE</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/guides">Market Resources</a>
+            <a href="/funnel" class="nav-cta">Get Your Rate</a>
+        </div>
+    </nav>
+
+    <div class="funnel-container">
+        <div class="glass-card">
+            <div class="progress-header" style="margin-bottom: 2rem;">
+                <div class="step-count" style="color: var(--accent); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Step <span id="current-step-num">1</span> of 6</div>
+                <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+            </div>
+
+            <div id="steps-container">
+                <!-- Step 1: Motivation -->
+                <div class="step active" id="step-1">
+                    <h2 style="font-size: 2.2rem; margin-bottom: 2rem;">What is your current objective?</h2>
+                    <div class="option-grid" style="display: grid; gap: 1rem;">
+                        <button class="option-btn" data-field="loan_purpose" data-value="Purchase">I am buying a home</button>
+                        <button class="option-btn" data-field="loan_purpose" data-value="Refinance">I want to refinance</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Property Type -->
+                <div class="step" id="step-2" style="display: none;">
+                    <h2 style="font-size: 2.2rem; margin-bottom: 2rem;">Property classification?</h2>
+                    <div class="option-grid" style="display: grid; gap: 1rem;">
+                        <button class="option-btn" data-field="property_type" data-value="Primary">Primary Residence</button>
+                        <button class="option-btn" data-field="property_type" data-value="Secondary">Secondary/Vacation</button>
+                        <button class="option-btn" data-field="property_type" data-value="Investment">Investment Property</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Financials -->
+                <div class="step" id="step-3" style="display: none;">
+                    <h2 style="font-size: 2.2rem; margin-bottom: 2rem;">Estimated Values</h2>
+                    <div class="input-group">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-dim);">Estimated Purchase Price ($)</label>
+                        <input type="number" id="est_value" placeholder="450,000">
+                    </div>
+                    <div class="input-group">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-dim);">Planned Down Payment ($)</label>
+                        <input type="number" id="down_payment" placeholder="20,000">
+                    </div>
+                    <button class="btn-next" onclick="nextStep()" style="margin-top: 1rem;">Analyze Numbers</button>
+                </div>
+
+                <!-- Step 4: Credit Range -->
+                <div class="step" id="step-4" style="display: none;">
+                    <h2 style="font-size: 2.2rem; margin-bottom: 2rem;">Credit Profile</h2>
+                    <div class="option-grid" style="display: grid; gap: 1rem;">
+                        <button class="option-btn" data-field="credit_score" data-value="Excellent (740+)">Excellent (740+)</button>
+                        <button class="option-btn" data-field="credit_score" data-value="Good (680-739)">Good (680-739)</button>
+                        <button class="option-btn" data-field="credit_score" data-value="Fair (620-679)">Fair (620-679)</button>
+                        <button class="option-btn" data-field="credit_score" data-value="Poor (<620)">Poor (<620)</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Location -->
+                <div class="step" id="step-5" style="display: none;">
+                    <h2 style="font-size: 2.2rem; margin-bottom: 2rem;">NH Location</h2>
+                    <div class="input-group">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-dim);">City or County in New Hampshire</label>
+                        <input type="text" id="location_nh" placeholder="e.g. Manchester, Rockingham">
+                    </div>
+                    <button class="btn-next" onclick="nextStep()" style="margin-top: 1rem;">Confirm Location</button>
+                </div>
+
+                <!-- Step 6: Contact -->
+                <div class="step" id="step-6" style="display: none;">
+                    <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">Final Intelligence</h2>
+                    <p class="subtitle" style="margin-bottom: 2rem;">Where should we send your results?</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <input type="text" id="first_name" placeholder="First Name">
+                        <input type="text" id="last_name" placeholder="Last Name">
+                    </div>
+                    <input type="email" id="email" placeholder="Email Address">
+                    <input type="tel" id="phone" placeholder="Phone Number">
+                    <button class="btn-next" onclick="submitForm()" style="margin-top: 1rem;">Generate Analysis</button>
+                </div>
+
+                <!-- Success -->
+                <div class="step" id="step-success" style="display: none;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
+                        <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--accent);">Intelligence Captured.</h2>
+                        <p class="subtitle">Our NH experts are analyzing your profile. You will receive a secure notification shortly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
