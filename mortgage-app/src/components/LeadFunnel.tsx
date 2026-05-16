@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { calculateMortgageReport, MortgageReport } from '../utils/mortgage_utils';
 
 const STEPS = [
@@ -111,15 +112,21 @@ export default function LeadFunnel() {
     const submissionData = { ...formData, ...calculationReport };
     
     try {
-        await fetch('/api/submit_lead', {
+        const response = await fetch('/api/submit_lead', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(submissionData)
         });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Submission failed');
+        }
+
         setIsSubmitted(true);
-    } catch (e) { 
+    } catch (e: any) { 
         console.error("Lead delivery failed", e);
-        setError("Something went wrong during submission. Please try again.");
+        setError(e.message || "Something went wrong during submission. Please try again.");
     } finally {
         setIsSubmitting(false);
     }
@@ -129,38 +136,52 @@ export default function LeadFunnel() {
     const isPositiveSavings = report.monthly_savings > 0;
     
     return (
-      <div className="glass-panel animate-fade-in" style={{ padding: '4rem', textAlign: 'center', maxWidth: '900px', margin: '2rem auto' }}>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="glass-panel" 
+        style={{ padding: '4rem', textAlign: 'center', maxWidth: '900px', margin: '4rem auto' }}
+      >
         <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🏔️</div>
         <h2 className="gold-gradient" style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>NH Wealth Intelligence Report</h2>
         <p style={{ opacity: 0.7, marginBottom: '3rem' }}>Strategy for <strong>{formData.location_nh}</strong> at <strong>{marketRate.rate}%</strong> Locked Market Rate</p>
         
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '4rem' }}>
-            <div className="glass-panel" style={{ padding: '1.5rem' }}>
-                <div style={{ fontSize: '0.7rem', opacity: 0.5, textTransform: 'uppercase' }}>Monthly P&I</div>
-                <div style={{ fontSize: '1.8rem', fontWeight: 700 }}>${report.monthly_pi}</div>
+        {/* Primary Insight: Positive Pivot Logic */}
+        {!isPositiveSavings ? (
+            <div className="glass-panel" style={{ padding: '2.5rem', marginBottom: '3rem', background: 'hsla(var(--nh-gold), 0.1)', border: '1px solid hsla(var(--nh-gold), 0.5)', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: '-10%', right: '-10%', fontSize: '8rem', opacity: 0.05 }}>🏔️</div>
+                <div style={{ fontSize: '0.9rem', color: 'hsl(var(--nh-gold))', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.5rem' }}>Primary Opportunity Found</div>
+                <div style={{ fontSize: '1.2rem', marginBottom: '1.5rem', fontWeight: 500 }}>While your current payment is lower than market rates, your **30-Year Wealth Trajectory** remains the primary asset driver in NH.</div>
+                <div style={{ fontSize: '4rem', fontWeight: 900 }} className="gold-gradient">${report.equity_30y.toLocaleString()}</div>
+                <div style={{ fontSize: '0.9rem', opacity: 0.7, marginTop: '1rem' }}>Projected Home Equity & Asset Appreciation Value</div>
             </div>
-            
-            <div className="glass-panel" style={{ padding: '1.5rem', border: isPositiveSavings ? '1px solid hsla(var(--nh-gold), 0.3)' : '1px solid rgba(255,255,255,0.05)' }}>
-                <div style={{ fontSize: '0.7rem', opacity: 0.5, textTransform: 'uppercase', color: isPositiveSavings ? 'hsl(var(--nh-gold))' : 'inherit' }}>
-                    {isPositiveSavings ? 'Monthly Savings' : 'Target Monthly Budget'}
+        ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '4rem' }}>
+                <div className="glass-panel" style={{ padding: '1.5rem' }}>
+                    <div style={{ fontSize: '0.7rem', opacity: 0.5, textTransform: 'uppercase' }}>Monthly P&I</div>
+                    <div style={{ fontSize: '1.8rem', fontWeight: 700 }}>${report.monthly_pi}</div>
                 </div>
-                <div style={{ fontSize: '1.8rem', fontWeight: 700, color: isPositiveSavings ? 'hsl(var(--nh-gold))' : 'white' }}>
-                    ${isPositiveSavings ? report.monthly_savings : report.total_monthly_payment}
+                
+                <div className="glass-panel" style={{ padding: '1.5rem', border: '1px solid hsla(var(--nh-gold), 0.3)' }}>
+                    <div style={{ fontSize: '0.7rem', opacity: 0.5, textTransform: 'uppercase', color: 'hsl(var(--nh-gold))' }}>Monthly Savings</div>
+                    <div style={{ fontSize: '1.8rem', fontWeight: 700, color: 'hsl(var(--nh-gold))' }}>${report.monthly_savings}</div>
+                </div>
+
+                <div className="glass-panel" style={{ padding: '1.5rem' }}>
+                    <div style={{ fontSize: '0.7rem', opacity: 0.5, textTransform: 'uppercase' }}>Locked Market Rate</div>
+                    <div style={{ fontSize: '1.8rem', fontWeight: 700 }}>{marketRate.rate}%</div>
                 </div>
             </div>
+        )}
 
-            <div className="glass-panel" style={{ padding: '1.5rem' }}>
-                <div style={{ fontSize: '0.7rem', opacity: 0.5, textTransform: 'uppercase' }}>Current Market Rate</div>
-                <div style={{ fontSize: '1.8rem', fontWeight: 700 }}>{marketRate.rate}%</div>
+        {isPositiveSavings && (
+            <div className="glass-panel" style={{ padding: '2.5rem', marginBottom: '3rem', background: 'hsla(var(--nh-gold), 0.05)', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: '-10%', right: '-10%', fontSize: '8rem', opacity: 0.03 }}>💰</div>
+                <div style={{ fontSize: '0.9rem', opacity: 0.7, marginBottom: '0.5rem' }}>30-Year Wealth Projection (Equity + Asset Growth)</div>
+                <div style={{ fontSize: '4rem', fontWeight: 900 }} className="gold-gradient">${report.equity_30y.toLocaleString()}</div>
+                <p style={{ fontSize: '0.9rem', opacity: 0.5, marginTop: '1rem' }}>Total projected asset value based on NH historical appreciation and principal payoff.</p>
             </div>
-        </div>
-
-        <div className="glass-panel" style={{ padding: '2.5rem', marginBottom: '3rem', background: 'hsla(var(--nh-gold), 0.05)', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', top: '-10%', right: '-10%', fontSize: '8rem', opacity: 0.03 }}>💰</div>
-            <div style={{ fontSize: '0.9rem', opacity: 0.7, marginBottom: '0.5rem' }}>30-Year Wealth Projection (Equity + Asset Growth)</div>
-            <div style={{ fontSize: '4rem', fontWeight: 900 }} className="gold-gradient">${report.equity_30y.toLocaleString()}</div>
-            <p style={{ fontSize: '0.9rem', opacity: 0.5, marginTop: '1rem' }}>Total projected asset value based on NH historical appreciation and principal payoff.</p>
-        </div>
+        )}
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', textAlign: 'left' }}>
             <div className="glass-panel" style={{ padding: '2rem' }}>
@@ -190,78 +211,102 @@ export default function LeadFunnel() {
         >
             Start New Strategy
         </button>
-      </div>
+      </motion.div>
     );
   }
 
   const currentStepData = STEPS[step - 1];
 
   return (
-    <div className="glass-panel animate-fade-in" style={{ padding: '3.5rem', maxWidth: '650px', margin: '2rem auto', position: 'relative' }}>
+    <div className="glass-panel animate-fade-in" style={{ padding: '3.5rem', maxWidth: '650px', margin: '4rem auto', position: 'relative', overflow: 'hidden' }}>
       <div style={{ marginBottom: '2.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div className="badge">Step {step} of {STEPS.length}</div>
             <div style={{ fontSize: '0.8rem', opacity: 0.4 }}>NH Intelligence Engine v3.2</div>
         </div>
         <div style={{ height: '6px', background: 'rgba(255,255,255,0.05)', borderRadius: '3px', marginTop: '1.5rem', overflow: 'hidden' }}>
-          <div style={{ height: '100%', background: 'hsl(var(--nh-gold))', width: `${(step / STEPS.length) * 100}%`, transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 0 15px hsla(var(--nh-gold), 0.5)' }} />
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={{ width: `${(step / STEPS.length) * 100}%` }}
+            transition={{ duration: 0.8, ease: "circOut" }}
+            style={{ height: '100%', background: 'hsl(var(--nh-gold))', boxShadow: '0 0 15px hsla(var(--nh-gold), 0.5)' }} 
+          />
         </div>
       </div>
 
-      <h2 style={{ fontSize: '2.2rem', marginBottom: '2rem' }} className="display-font">{currentStepData.title}</h2>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={step}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          <h2 style={{ fontSize: '2.2rem', marginBottom: '2rem' }} className="display-font">{currentStepData.title}</h2>
 
-      {currentStepData.type === 'choice' ? (
-        <div style={{ display: 'grid', gap: '1.2rem' }}>
-          {currentStepData.options?.map(opt => (
-            <button 
-              key={opt}
-              onClick={() => handleChoice(currentStepData.field!, opt)}
-              className="glass-panel"
-              style={{ 
-                padding: '1.8rem', 
-                textAlign: 'left', 
-                cursor: 'pointer', 
-                fontWeight: 600, 
-                transition: 'all 0.3s ease', 
-                background: formData[currentStepData.field!] === opt ? 'hsl(var(--nh-gold))' : 'rgba(255,255,255,0.02)', 
-                color: formData[currentStepData.field!] === opt ? 'hsl(var(--nh-slate))' : 'white',
-                border: formData[currentStepData.field!] === opt ? '1px solid hsl(var(--nh-gold))' : '1px solid rgba(255,255,255,0.05)'
-              }}
-            >
-              {opt}
-            </button>
-          ))}
-        </div>
-      ) : (
-        <div style={{ display: 'grid', gap: '1.8rem' }}>
-          {currentStepData.fields?.map(f => (
-            <div key={f.name}>
-              <label style={{ display: 'block', fontSize: '0.75rem', opacity: 0.5, marginBottom: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{f.label}</label>
-              <input 
-                type={f.type} 
-                name={f.name}
-                value={formData[f.name] || ''}
-                placeholder={f.placeholder}
-                onChange={handleInputChange}
-                className="glass-panel"
-                style={{ 
-                    width: '100%', 
-                    padding: '1.2rem', 
-                    background: 'rgba(255,255,255,0.03)', 
-                    color: 'white', 
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    fontSize: '1rem'
-                }}
-              />
+          {currentStepData.type === 'choice' ? (
+            <div style={{ display: 'grid', gap: '1.2rem' }}>
+              {currentStepData.options?.map(opt => (
+                <button 
+                  key={opt}
+                  onClick={() => handleChoice(currentStepData.field!, opt)}
+                  className="glass-panel"
+                  style={{ 
+                    padding: '1.8rem', 
+                    textAlign: 'left', 
+                    cursor: 'pointer', 
+                    fontWeight: 600, 
+                    transition: 'all 0.3s ease', 
+                    background: formData[currentStepData.field!] === opt ? 'hsl(var(--nh-gold))' : 'rgba(255,255,255,0.02)', 
+                    color: formData[currentStepData.field!] === opt ? 'hsl(var(--nh-slate))' : 'var(--foreground)',
+                    border: formData[currentStepData.field!] === opt ? '1px solid hsl(var(--nh-gold))' : '1px solid rgba(255,255,255,0.1)'
+                  }}
+                >
+                  {opt}
+                </button>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
+          ) : (
+            <div style={{ display: 'grid', gap: '1.8rem' }}>
+              {currentStepData.fields?.map(f => (
+                <div key={f.name}>
+                  <label style={{ display: 'block', fontSize: '0.75rem', opacity: 0.5, marginBottom: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{f.label}</label>
+                  <input 
+                    type={f.type} 
+                    name={f.name}
+                    value={formData[f.name] || ''}
+                    placeholder={f.placeholder}
+                    onChange={handleInputChange}
+                    className="glass-panel"
+                    style={{ 
+                        width: '100%', 
+                        padding: '1.2rem', 
+                        background: 'rgba(255,255,255,0.05)', 
+                        color: 'var(--foreground)', 
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        fontSize: '1rem'
+                    }}
+                  />
+                  {step === STEPS.length && (
+                    <div style={{ marginTop: '0.5rem', fontSize: '0.7rem', opacity: 0.4, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <span>🛡️</span> 100% Local. No spam. Secured by Antigravity v3.
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
 
       {error && (
-        <div style={{ marginTop: '1.5rem', color: '#f87171', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{ marginTop: '1.5rem', color: '#f87171', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+        >
             <span>⚠️</span> {error}
-        </div>
+        </motion.div>
       )}
 
       <div style={{ display: 'flex', gap: '1rem', marginTop: '3rem' }}>
