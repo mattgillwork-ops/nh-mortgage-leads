@@ -258,7 +258,7 @@ export default function LeadFunnel() {
                     fontWeight: 600, 
                     transition: 'all 0.3s ease', 
                     background: formData[currentStepData.field!] === opt ? 'hsl(var(--nh-gold))' : 'rgba(255,255,255,0.02)', 
-                    color: formData[currentStepData.field!] === opt ? 'hsl(var(--nh-slate))' : 'var(--foreground)',
+                    color: formData[currentStepData.field!] === opt ? 'hsl(var(--nh-slate))' : 'hsl(var(--nh-blue-foreground))',
                     border: formData[currentStepData.field!] === opt ? '1px solid hsl(var(--nh-gold))' : '1px solid rgba(255,255,255,0.1)'
                   }}
                 >
@@ -282,7 +282,7 @@ export default function LeadFunnel() {
                         width: '100%', 
                         padding: '1.2rem', 
                         background: 'rgba(255,255,255,0.05)', 
-                        color: 'var(--foreground)', 
+                        color: 'hsl(var(--nh-blue-foreground))', 
                         border: '1px solid rgba(255,255,255,0.1)',
                         fontSize: '1rem'
                     }}

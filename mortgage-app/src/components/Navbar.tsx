@@ -20,12 +20,12 @@ export default function Navbar() {
       borderRadius: '16px'
     }}>
       <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <div style={{ fontWeight: 800, fontSize: '1.4rem', letterSpacing: '-0.04em', color: 'hsl(var(--nh-slate))' }} className="display-font">
+        <div style={{ fontWeight: 800, fontSize: '1.4rem', letterSpacing: '-0.04em', color: 'white' }} className="display-font">
           NH <span style={{ color: 'hsl(var(--nh-gold))' }}>MORTGAGE</span> JOURNAL
         </div>
       </Link>
       <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-        <Link href="/guides" className="nav-link" style={{ fontSize: '0.95rem', fontWeight: 500 }}>Market Intelligence</Link>
+        <Link href="/guides" className="nav-link" style={{ fontSize: '0.95rem', fontWeight: 500, color: 'rgba(255,255,255,0.8)' }}>Market Intelligence</Link>
         <Link href="/funnel" className="btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem', textDecoration: 'none' }}>Get Your Rate</Link>
       </div>
     </nav>
