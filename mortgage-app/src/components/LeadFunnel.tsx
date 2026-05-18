@@ -198,7 +198,6 @@ export default function LeadFunnel() {
                 <h3 style={{ marginBottom: '1.5rem', fontSize: '1.1rem' }}>Concierge Next Steps:</h3>
                 <ul style={{ listStyle: 'none', display: 'grid', gap: '1.2rem' }}>
                     <li style={{ display: 'flex', gap: '1rem' }}><span style={{ color: 'hsl(var(--nh-gold))' }}>⚜️</span> <div><strong>Priority Onboarding</strong>: Your {formData.credit_score} profile has been flagged for immediate asset verification.</div></li>
-                    <li style={{ display: 'flex', gap: '1rem' }}><span style={{ color: 'hsl(var(--nh-gold))' }}>⚜️</span> <div><strong>Intelligence Briefing</strong>: A comprehensive NH Market Strategy guide has been sent to {formData.email}.</div></li>
                     <li style={{ display: 'flex', gap: '1rem' }}><span style={{ color: 'hsl(var(--nh-gold))' }}>📞</span> <div><strong>Strategy Call</strong>: A Manchester senior analyst will call {formData.phone} within 24 hours to review your asset growth plan.</div></li>
                 </ul>
             </div>
