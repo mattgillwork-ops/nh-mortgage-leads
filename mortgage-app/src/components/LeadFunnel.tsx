@@ -183,7 +183,7 @@ export default function LeadFunnel() {
             </div>
         )}
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', textAlign: 'left' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', textAlign: 'left', marginBottom: '3rem' }}>
             <div className="glass-panel" style={{ padding: '2rem' }}>
                 <h3 style={{ marginBottom: '1.5rem', fontSize: '1.1rem', color: 'hsl(var(--nh-gold))' }}>Payment Breakdown</h3>
                 <ul style={{ listStyle: 'none', display: 'grid', gap: '0.8rem', fontSize: '0.9rem' }}>
@@ -200,6 +200,33 @@ export default function LeadFunnel() {
                     <li style={{ display: 'flex', gap: '1rem' }}><span style={{ color: 'hsl(var(--nh-gold))' }}>⚜️</span> <div><strong>Priority Onboarding</strong>: Your {formData.credit_score} profile has been flagged for immediate asset verification.</div></li>
                     <li style={{ display: 'flex', gap: '1rem' }}><span style={{ color: 'hsl(var(--nh-gold))' }}>📞</span> <div><strong>Strategy Call</strong>: A Manchester senior analyst will call {formData.phone} within 24 hours to review your asset growth plan.</div></li>
                 </ul>
+            </div>
+        </div>
+
+        {/* Affiliate Integrations */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', textAlign: 'left', marginBottom: '2rem' }}>
+            {(formData.credit_score.includes('<620') || formData.credit_score.includes('Fair')) && (
+                <div className="glass-panel" style={{ padding: '2rem', border: '1px solid #ef4444', background: 'rgba(239, 68, 68, 0.05)' }}>
+                    <h3 style={{ color: '#ef4444', fontSize: '1.2rem', marginBottom: '0.5rem' }}>⚠️ Action Required: Optimize Your Credit Score</h3>
+                    <p style={{ opacity: 0.8, fontSize: '0.95rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
+                        Your current score ({formData.credit_score}) will result in significantly higher interest rates or denial from wholesale lenders. 
+                        We highly recommend enrolling in a rapid credit repair program before your strategy call to secure the lowest possible rate.
+                    </p>
+                    <a href="https://www.lexingtonlaw.com/?affiliate=nhfr-lead" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ display: 'inline-block', background: '#ef4444', textDecoration: 'none' }}>
+                        Start Credit Repair (Lexington Law)
+                    </a>
+                </div>
+            )}
+
+            <div className="glass-panel" style={{ padding: '2rem', border: '1px solid #3b82f6', background: 'rgba(59, 130, 246, 0.05)' }}>
+                <h3 style={{ color: '#60a5fa', fontSize: '1.2rem', marginBottom: '0.5rem' }}>🛡️ Step 3: Secure Your Investment</h3>
+                <p style={{ opacity: 0.8, fontSize: '0.95rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
+                    Lenders require proof of Homeowners Insurance before clearing you to close. 
+                    Get an instant, digital quote right now to avoid delays in your closing timeline.
+                </p>
+                <a href="https://www.lemonade.com/homeowners?affiliate=nhfr-lead" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ display: 'inline-block', background: '#3b82f6', textDecoration: 'none' }}>
+                    Get Instant Insurance Quote (Lemonade)
+                </a>
             </div>
         </div>
 
