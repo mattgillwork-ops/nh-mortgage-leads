@@ -3,6 +3,7 @@ services:
     name: nh-mortgage-leads
     runtime: node
     plan: free
+    rootDir: mortgage-app
     buildCommand: npm install && npm run build
     startCommand: npm run start
     envVars:
