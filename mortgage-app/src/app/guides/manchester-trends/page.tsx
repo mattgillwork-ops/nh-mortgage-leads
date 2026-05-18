@@ -1,5 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Manchester NH Mortgage Trends & ROI 2026 | NH Mortgage Journal",
+  description: "ROI audit of Manchester NH's North End appreciation spikes and West Side multi-family cash-flow opportunities. Direct access to local NH lenders.",
+};
 
 export default function ManchesterTrendsGuide() {
   return (

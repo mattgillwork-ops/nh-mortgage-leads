@@ -1,5 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Lakes Region NH Cash-Out Refinance Guide | NH Mortgage Journal",
+  description: "Leverage lakefront home appreciation in Winnipesaukee, Squam, and Meredith. Get cash-out refinance and seasonal income Jumbo loan guidelines.",
+};
 
 export default function LakesRegionRefiGuide() {
   return (

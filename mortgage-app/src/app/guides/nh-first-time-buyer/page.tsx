@@ -1,5 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "First-Time Homebuyer NH Programs & Loans | NH Mortgage Journal",
+  description: "Complete guide to NH Housing Finance Authority (NHHFA) 'Home Start' advantages, FHA loans, and zero down payment programs for NH first-time buyers.",
+};
 
 export default function FirstTimeBuyerGuide() {
   return (
