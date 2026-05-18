@@ -1,0 +1,29 @@
+[
+  {
+    "slug": "manchester",
+    "name": "Manchester",
+    "state": "NH",
+    "medianHomePrice": "$482,500",
+    "marketPace": "36 days on market",
+    "description": "Manchester's real estate market remains competitive with tight inventory. The North End continues to see strong appreciation, while the West Side offers multi-family cash-flow opportunities. High demand makes fast pre-approval essential.",
+    "programs": ["NHHFA Home Start", "Manchester Specific First-Time Buyer Programs", "FHA & VA Loans"]
+  },
+  {
+    "slug": "nashua",
+    "name": "Nashua",
+    "state": "NH",
+    "medianHomePrice": "$510,000",
+    "marketPace": "26 days on market",
+    "description": "Nashua is a very hot market characterized by high demand and limited inventory. Homes frequently sell above listing price. Being prepared with pre-approvals and understanding non-negotiable priorities is crucial.",
+    "programs": ["NHHFA Home Start", "Conventional Loans", "VA Loans"]
+  },
+  {
+    "slug": "concord",
+    "name": "Concord",
+    "state": "NH",
+    "medianHomePrice": "$420,000",
+    "marketPace": "25 days on market",
+    "description": "Concord features a steady, seller-driven market. Its relatively accessible median prices compared to Southern NH make it attractive, though inventory remains lean, sustaining firm home values.",
+    "programs": ["NHHFA Home Start", "USDA Rural Development Loans", "FHA Loans"]
+  }
+]

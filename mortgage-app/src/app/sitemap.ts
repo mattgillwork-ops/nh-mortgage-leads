@@ -1,6 +1,14 @@
 import { MetadataRoute } from 'next';
+import locationsData from '@/data/locations.json';
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const locationRoutes: MetadataRoute.Sitemap = locationsData.map((loc) => ({
+    url: `https://nh-mortgage-leads.onrender.com/locations/${loc.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }));
+
   return [
     {
       url: 'https://nh-mortgage-leads.onrender.com',
@@ -38,5 +46,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.7,
     },
+    ...locationRoutes,
   ];
 }
