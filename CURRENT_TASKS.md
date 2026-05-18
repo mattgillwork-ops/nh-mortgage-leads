@@ -10,10 +10,11 @@
   - `[x]` **Core Alignment**: Restored Cloud Gate, Whitelist Firewall, and v3 Startup/Checkpoint protocols.
 
 
-- `[ ]` **Project: NH Mortgage Lead Gen (PRIMARY FOCUS)**
+- `[x]` **Project: NH Mortgage Lead Gen (PRIMARY FOCUS)**
   - `[x]` **Research (Phase 1)**: Initial keyword analysis for NH Mortgage market (Rowan).
   - `[x]` **Design Foundation (Phase 1)**: Build premium Next.js Design System & Hero (Aria & Caleb).
-  - `[ ]` **Development (Phase 2)**: Build the multi-step lead capture engine (Caleb).
+  - `[x]` **Development (Phase 2)**: Build the multi-step lead capture engine (Caleb).
+  - `[x]` **Verification (Phase 3)**: Full E2E funnel walkthrough verified (2026-05-18). All 6 steps, API submission, and Wealth Report render confirmed.
 
 - `[x]` **Phase 3: Intelligence & Outreach (ACTIVE)**
   - `[x]` **Skill Building**: Develop robust Playwright-based browser interaction tools (Atlas + Caleb).

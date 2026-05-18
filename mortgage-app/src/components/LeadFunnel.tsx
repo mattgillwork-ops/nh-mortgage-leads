@@ -151,7 +151,7 @@ export default function LeadFunnel() {
             <div className="glass-panel" style={{ padding: '2.5rem', marginBottom: '3rem', background: 'hsla(var(--nh-gold), 0.1)', border: '1px solid hsla(var(--nh-gold), 0.5)', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: '-10%', right: '-10%', fontSize: '8rem', opacity: 0.05 }}>🏔️</div>
                 <div style={{ fontSize: '0.9rem', color: 'hsl(var(--nh-gold))', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.5rem' }}>Primary Opportunity Found</div>
-                <div style={{ fontSize: '1.2rem', marginBottom: '1.5rem', fontWeight: 500 }}>While your current payment is lower than market rates, your **30-Year Wealth Trajectory** remains the primary asset driver in NH.</div>
+                <div style={{ fontSize: '1.2rem', marginBottom: '1.5rem', fontWeight: 500 }}>While your current payment is lower than market rates, your <strong>30-Year Wealth Trajectory</strong> remains the primary asset driver in NH.</div>
                 <div style={{ fontSize: '4rem', fontWeight: 900 }} className="gold-gradient">${report.equity_30y.toLocaleString()}</div>
                 <div style={{ fontSize: '0.9rem', opacity: 0.7, marginTop: '1rem' }}>Projected Home Equity & Asset Appreciation Value</div>
             </div>

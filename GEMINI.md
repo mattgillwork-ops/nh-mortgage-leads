@@ -2,8 +2,8 @@
 
 **Read this file first when resuming work.**
 
-## Last Checkpoint: 2026-05-14 09:28:50
-**Summary**: Session Summary: Conducted a full system audit and executed 'Operation Zero-Drift' to restore and harden the Antigravity ecosystem. Fixed the Heartbeat Daemon failure, standardized the model registry with 14B upgrades for key agents, and deployed an autonomous Repair Orchestrator (v2.0). Hardened the tool firewall with robust regex and path sanitization. Verified 100% architectural alignment between the vault, execution layer, and local models. The system is now fully autonomous, stable, and ready for lead engine development.
+## Last Checkpoint: 2026-05-18 13:56:00
+**Summary**: Session: Full ecosystem re-alignment. Ran session_start.py and selfcheck.py diagnostics (48/50 pass, 2 intentional sovereign-mode flags). Archived 472 stale memory logs (672→200, back under 500 threshold). Launched mortgage-app Next.js dev server and performed full 6-step lead funnel E2E walkthrough — all steps, validation, API submission, and Wealth Intelligence Report render verified. Fixed SEO metadata in layout.tsx (was default 'Create Next App'). Fixed markdown rendering bug in LeadFunnel.tsx Positive Pivot section. System fully operational.
 
 ## The Agent Squad
 | Agent | Role | Model |
@@ -38,6 +38,7 @@
   - `[x]` **Research (Phase 1)**: Initial keyword analysis for NH Mortgage market (Rowan).
   - `[x]` **Design Foundation (Phase 1)**: Build premium Next.js Design System & Hero (Aria & Caleb).
   - `[x]` **Development (Phase 2)**: Build the multi-step lead capture engine with 'Positive Pivot' UX logic (Caleb & Aria).
+  - `[x]` **Verification (Phase 3)**: Full E2E funnel walkthrough verified (2026-05-18). SEO metadata & markdown rendering bugs fixed.
 
 - `[x]` **Phase 3: Intelligence & Outreach (ACTIVE)**
   - `[x]` **Skill Building**: Develop robust Playwright-based browser interaction tools (Atlas + Caleb).
