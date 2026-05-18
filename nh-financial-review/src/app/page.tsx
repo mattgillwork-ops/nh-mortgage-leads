@@ -278,6 +278,55 @@ export default function Home() {
           ))}
         </div>
         
+        <div style={{ marginTop: '4rem', paddingTop: '3rem', borderTop: '2px solid #e5e7eb' }}>
+          <h2 style={{ fontSize: '2.2rem', marginBottom: '1.5rem', fontFamily: 'Georgia, serif', fontWeight: 700, color: '#111827' }}>
+            The Ultimate Guide to Choosing a Mortgage Lender in New Hampshire (2026)
+          </h2>
+          
+          <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.8, marginBottom: '2rem' }}>
+            New Hampshire’s real estate market has seen unprecedented shifts heading into 2026. With inventory remaining tight across major hubs like <strong>Manchester, Nashua, and Portsmouth</strong>, and the Seacoast becoming increasingly competitive, homebuyers are facing a landscape where speed and reliability are just as crucial as securing a low interest rate. 
+            Whether you are a first-time homebuyer looking to leverage state assistance programs, or an experienced investor eyeing a multi-family property, selecting the right mortgage lender is the single most important financial decision you will make in this process.
+          </p>
+
+          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Georgia, serif', fontWeight: 700, color: '#111827' }}>
+            Understanding the NH Market Dynamics
+          </h3>
+          <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.8, marginBottom: '2rem' }}>
+            Unlike national averages, the Granite State has a highly localized housing economy. Property taxes vary wildly from town to town, and rural properties may qualify for specialized USDA loans that suburban properties in Hillsborough County cannot access. A lender with a deep understanding of New Hampshire can help structure your loan to account for these local nuances, potentially saving you thousands in unnecessary escrow buffers or PMI (Private Mortgage Insurance) overcharges.
+          </p>
+
+          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Georgia, serif', fontWeight: 700, color: '#111827' }}>
+            What is the NHHFA (New Hampshire Housing Finance Authority)?
+          </h3>
+          <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.8, marginBottom: '1.5rem' }}>
+            If you are a first-time homebuyer, or haven't owned a home in the last three years, you should strongly prioritize lenders who are approved to originate NH Housing loans. The NHHFA offers several vital programs:
+          </p>
+          <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', color: '#4b5563', fontSize: '1.1rem', lineHeight: 1.8, marginBottom: '2rem' }}>
+            <li style={{ marginBottom: '0.5rem' }}><strong>Home Start Program:</strong> Offers cash assistance for down payments and closing costs, structured as a forgivable loan over a short duration.</li>
+            <li style={{ marginBottom: '0.5rem' }}><strong>First-Time Homebuyer Tax Credit:</strong> A federal Mortgage Credit Certificate (MCC) that allows eligible NH buyers to claim up to $2,000 per year as a direct tax credit for the life of the loan.</li>
+            <li style={{ marginBottom: '0.5rem' }}><strong>Home Flex Plus:</strong> Government-insured loans (FHA, VA, Rural Development) paired with down payment assistance.</li>
+          </ul>
+
+          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Georgia, serif', fontWeight: 700, color: '#111827' }}>
+            Local Brokers vs. National Retail Lenders
+          </h3>
+          <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.8, marginBottom: '1.5rem' }}>
+            You generally have three options when securing financing:
+          </p>
+          <ol style={{ paddingLeft: '1.5rem', color: '#4b5563', fontSize: '1.1rem', lineHeight: 1.8, marginBottom: '2rem' }}>
+            <li style={{ marginBottom: '1rem' }}><strong>Independent Mortgage Brokers (Like our #1 pick):</strong> Brokers don't lend their own money. Instead, they shop your profile across dozens of wholesale lenders to find the lowest possible rate. Because they have lower overhead and access to wholesale pricing, brokers almost always beat retail banks on rate and closing costs.</li>
+            <li style={{ marginBottom: '1rem' }}><strong>Direct Retail Lenders (Like Rocket Mortgage):</strong> These institutions lend their own funds. They offer highly polished digital experiences and fast pre-approvals, but because you are going direct to the source, you are paying retail margins.</li>
+            <li style={{ marginBottom: '1rem' }}><strong>Local Credit Unions (Like St. Mary's Bank):</strong> Credit unions are member-owned and often hold loans in their own portfolio rather than selling them to Fannie Mae or Freddie Mac. This allows them to offer creative financing for unique properties (like a multi-family with mixed-use commercial space) that national lenders would immediately deny.</li>
+          </ol>
+
+          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Georgia, serif', fontWeight: 700, color: '#111827' }}>
+            How to Compare Your Offers
+          </h3>
+          <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.8, marginBottom: '2rem' }}>
+            Never look at the interest rate in a vacuum. A lender offering a 5.99% rate might be charging you $10,000 in upfront "discount points" to get that rate, while a lender offering 6.25% might be giving you a lender credit to cover your closing costs. Always request a <strong>Loan Estimate (LE)</strong> from at least three lenders. The LE is a standardized, federally mandated document that makes it mathematically impossible for lenders to hide junk fees. Compare the "Box A" origination charges across all three LEs to find the true cost of the loan.
+          </p>
+        </div>
+
         <div style={{ marginTop: '3rem', padding: '2rem 0', borderTop: '1px solid #e5e7eb', color: '#6b7280', fontSize: '0.75rem', lineHeight: 1.5, textAlign: 'center' }}>
           <p style={{ marginBottom: '1rem', opacity: 0.8 }}>
             <em><strong>Advertiser Disclosure:</strong> Many of the offers that appear on this site are from companies from which NH Financial Review receives compensation. This compensation may impact how and where products appear on this site (including, for example, the order in which they appear). However, this does not influence our evaluations. Our opinions are our own.</em>
