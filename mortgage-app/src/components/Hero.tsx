@@ -13,6 +13,10 @@ export default function Hero() {
       position: 'relative',
       overflow: 'hidden'
     }}>
+      {/* Impact.com Text Verification - visually hidden, required by Impact bot */}
+      <span style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }}>
+        Impact-Site-Verification: cd7c222f-cec2-474f-87c4-586f0847f263
+      </span>
       {/* Localized Intelligence Backdrop */}
       <div style={{
         position: 'absolute',
