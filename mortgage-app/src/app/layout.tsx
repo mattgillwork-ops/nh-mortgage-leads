@@ -45,7 +45,6 @@ export default function RootLayout({
       <head>
         {/* Impact.com Affiliate Verification */}
         <meta name="impact-site-verification" content="cd7c222f-cec2-474f-87c4-586f0847f263" />
-        <meta name="impact-site-verification" value="cd7c222f-cec2-474f-87c4-586f0847f263" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
