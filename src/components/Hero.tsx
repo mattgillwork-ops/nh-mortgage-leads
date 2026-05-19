@@ -5,7 +5,11 @@ import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <section className="hero-container" style={{ padding: '10rem 2rem 6rem', display: 'flex', justifyContent: 'center', background: 'white' }}>
+    <section className="hero-container" style={{ padding: '10rem 2rem 6rem', display: 'flex', justifyContent: 'center', background: 'white', position: 'relative' }}>
+      {/* Visual Verification String for Impact.com Bot (visually hidden) */}
+      <span style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
+        Impact-Site-Verification: cd7c222f-cec2-474f-87c4-586f0847f263
+      </span>
       <div className="animate-fade-in" style={{ maxWidth: '900px', textAlign: 'center' }}>
         <div style={{ marginBottom: '2.5rem' }}>
           <span className="badge" style={{ background: 'hsla(var(--nh-ice), 0.1)', color: 'hsl(var(--nh-ice))', border: '1px solid hsla(var(--nh-ice), 0.2)' }}>
