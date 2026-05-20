@@ -46,6 +46,82 @@ const posts = [
         <path d="M30 35 H70 M30 50 H70 M30 65 H50" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       </svg>
     )
+  },
+  {
+    slug: "manchester-nh-mortgage-guide",
+    title: "Navigating the Manchester, NH Housing Market: A Complete Guide",
+    excerpt: "An in-depth guide to buying a home in the Queen City, covering North End vs. West Side, school districts, property taxes, and regional pre-approval options.",
+    date: "May 20, 2026",
+    readTime: "7 min read",
+    category: "Local Guides",
+    gradient: "from-slate-900 to-sky-900",
+    pattern: (
+      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M10 20 H90 V80 H10 Z" stroke="currentColor" strokeWidth="2" />
+        <path d="M25 80 V50 M50 80 V35 M75 80 V60" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    )
+  },
+  {
+    slug: "nashua-nh-homebuyer-handbook",
+    title: "The Nashua Homebuyer Handbook: Commuting, Taxes, and Mortgages",
+    excerpt: "A detailed analysis of Nashua's housing market, Boston commuter routes, Bicentennial school district, tax rates, and conventional loan guidelines.",
+    date: "May 20, 2026",
+    readTime: "6 min read",
+    category: "Local Guides",
+    gradient: "from-blue-900 to-indigo-950",
+    pattern: (
+      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M10 50 L30 20 H70 L90 50 L70 80 H30 Z" stroke="currentColor" strokeWidth="2" />
+        <circle cx="50" cy="50" r="15" stroke="currentColor" strokeWidth="2" />
+      </svg>
+    )
+  },
+  {
+    slug: "concord-nh-real-estate-guide",
+    title: "Buying a Home in Concord, NH: The Capital City Mortgage Guide",
+    excerpt: "Discover what makes Concord one of NH's most stable housing markets. Property tax rates, school details, and USDA/FHA financing programs.",
+    date: "May 20, 2026",
+    readTime: "6 min read",
+    category: "Local Guides",
+    gradient: "from-slate-900 to-emerald-950",
+    pattern: (
+      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M50 10 L90 40 V80 H10 V40 Z" stroke="currentColor" strokeWidth="2" />
+        <path d="M35 80 V50 H65 V80" stroke="currentColor" strokeWidth="2" />
+      </svg>
+    )
+  },
+  {
+    slug: "portsmouth-coastal-buyer-guide",
+    title: "Portsmouth, NH Coastal Buyer Guide: Luxury Real Estate & Jumbo Loans",
+    excerpt: "A guide to New Hampshire's premium coastal market. Historic South End, low property tax rates, and how to navigate jumbo mortgage financing.",
+    date: "May 20, 2026",
+    readTime: "8 min read",
+    category: "Local Guides",
+    gradient: "from-teal-950 to-blue-900",
+    pattern: (
+      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M10 80 C 30 70, 40 90, 60 80 C 80 70, 90 90, 100 80" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M50 20 L25 60 H75 Z" stroke="currentColor" strokeWidth="2" />
+        <line x1="50" y1="20" x2="50" y2="60" stroke="currentColor" strokeWidth="1.5" />
+      </svg>
+    )
+  },
+  {
+    slug: "hanover-nh-homeowners-guide",
+    title: "Hanover, NH Homeowners Guide: Dartmouth Area Financing & Real Estate",
+    excerpt: "Navigating the Upper Valley's most exclusive market. Local school ratings, home values, and mortgage strategies for academic and medical professionals.",
+    date: "May 20, 2026",
+    readTime: "7 min read",
+    category: "Local Guides",
+    gradient: "from-emerald-950 to-stone-900",
+    pattern: (
+      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <rect x="20" y="20" width="60" height="60" rx="10" stroke="currentColor" strokeWidth="2" />
+        <path d="M35 35 L65 65 M65 35 L35 65" stroke="currentColor" strokeWidth="2" />
+      </svg>
+    )
   }
 ];
 

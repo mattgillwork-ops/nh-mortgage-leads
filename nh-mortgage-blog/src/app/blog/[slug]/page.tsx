@@ -225,6 +225,241 @@ const articles: Record<string, Article> = {
         </ul>
       </div>
     )
+  },
+  "manchester-nh-mortgage-guide": {
+    slug: "manchester-nh-mortgage-guide",
+    title: "Navigating the Manchester, NH Housing Market: A Complete Guide",
+    excerpt: "An in-depth guide to buying a home in the Queen City, covering North End vs. West Side, school districts, property taxes, and regional pre-approval options.",
+    date: "May 20, 2026",
+    readTime: "7 min read",
+    category: "Local Guides",
+    gradient: "from-slate-900 to-sky-900",
+    content: (
+      <div className="space-y-6">
+        <p>
+          As New Hampshire’s largest city, <strong>Manchester</strong> (known affectionately as the "Queen City") is the economic and cultural hub of the Granite State. Offering a mix of historic brick mill buildings, bustling downtown districts, and quiet suburban neighborhoods, Manchester appeals to a diverse range of buyers—from young professionals to growing families.
+        </p>
+        <p>
+          However, buying a home in Manchester requires navigating a fast-paced market, varying property tax rates, and distinct neighborhood characteristics. In this comprehensive guide, we analyze what you need to know about buying a home and securing a mortgage in Manchester, NH.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">1. Neighborhood Breakdown & Vibe Checks</h2>
+        <p>
+          Manchester is divided into several neighborhoods, each with its own character, price range, and housing stock:
+        </p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li><strong>The North End:</strong> The city's premier residential area. Lined with mature trees, historic Victorian homes, and sprawling colonial properties, the North End offers a quiet suburban feel just minutes from downtown. Prices here are among the city’s highest, frequently exceeding $550,000.</li>
+          <li><strong>The West Side:</strong> Located across the Merrimack River, the West Side is historically working-class and features a high concentration of multi-family homes (two-family and three-family buildings). It is an excellent area for first-time buyers looking for house-hacking opportunities or entry-level single-family homes under $380,000.</li>
+          <li><strong>South Union / Bakersville:</strong> Positioned south of downtown, this area offers quick access to Interstate 293 and Route 3, making it popular for commuters heading south into Massachusetts.</li>
+        </ul>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">2. Real Estate Prices & Property Taxes</h2>
+        <p>
+          As of mid-2026, the median sales price for a single-family home in Manchester hovers around <strong>$425,000</strong>. While more affordable than Portsmouth or the Massachusetts border towns, inventory remains tight, and homes often sell within a week.
+        </p>
+        <p>
+          Property taxes are a major consideration in New Hampshire since the state has no income or sales tax. Manchester's tax rate is approximately <strong>$18.50 per $1,000</strong> of assessed value. For a home valued at $400,000, your annual property tax bill will be roughly <strong>$7,400</strong>, adding about $616 per month to your mortgage escrow payment.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">3. Local School Districts & Amenities</h2>
+        <p>
+          Manchester offers a range of educational options, including several public high schools (Central, West, and Memorial) and renowned private institutions like The Derryfield School. Residents enjoy close proximity to the Currier Museum of Art, concert events at the SNHU Arena, and outdoor recreation at Massabesic Lake.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">4. Mortgage Programs & Pre-Approval</h2>
+        <p>
+          First-time buyers in Manchester should look closely at the <strong>NHHFA Home Start</strong> program. NHHFA provides excellent down payment assistance grants (up to 4% of the purchase price) that can cover your closing costs or down payment. Because Manchester has designated "target areas," income limits are higher, and the first-time homebuyer requirement is waived for certain neighborhoods.
+        </p>
+      </div>
+    )
+  },
+  "nashua-nh-homebuyer-handbook": {
+    slug: "nashua-nh-homebuyer-handbook",
+    title: "The Nashua Homebuyer Handbook: Commuting, Taxes, and Mortgages",
+    excerpt: "A detailed analysis of Nashua's housing market, Boston commuter routes, Bicentennial school district, tax rates, and conventional loan guidelines.",
+    date: "May 20, 2026",
+    readTime: "6 min read",
+    category: "Local Guides",
+    gradient: "from-blue-900 to-indigo-950",
+    content: (
+      <div className="space-y-6">
+        <p>
+          Known as the "Gate City," <strong>Nashua</strong> sits directly on the Massachusetts border, making it one of the most desirable communities for commuters. Residents enjoy the ultimate balance: working in the high-paying Boston tech corridor while living in New Hampshire, where there is no personal state income tax.
+        </p>
+        <p>
+          Because of this strategic location, Nashua’s real estate market is highly competitive. Let's break down the neighborhood layouts, tax implications, and mortgage configurations you need to know.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">1. Top Residential Hubs in Nashua</h2>
+        <p>
+          Nashua features several distinct pockets, depending on your lifestyle and budget:
+        </p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li><strong>The North End (Bicentennial Area):</strong> Home to the Bicentennial Elementary School district, this neighborhood is highly coveted by families. Homes here are primarily single-family colonials and split-levels, ranging from $475,000 to $650,000.</li>
+          <li><strong>South Nashua:</strong> Located right off Route 3 (Exit 1 and 2), South Nashua offers retail convenience (Pheasant Lane Mall) and the fastest commute into Massachusetts. It features a mix of condominiums, townhouses, and suburban subdivisions.</li>
+          <li><strong>Downtown Nashua:</strong> Perfect for those who prefer an urban lifestyle. Featuring historic homes and walkable streets close to Main Street's craft breweries and restaurants.</li>
+        </ul>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">2. Housing Valuations & Tax Rates</h2>
+        <p>
+          The median home price in Nashua is currently <strong>$465,000</strong>. Competition from out-of-state buyers remains high, leading to frequent bidding wars on properties priced under $500,000.
+        </p>
+        <p>
+          Nashua's tax rate is approximately <strong>$17.20 per $1,000</strong> of assessed value. For a home valued at $450,000, your annual property tax bill is approximately <strong>$7,740</strong>. Establishing a proper escrow account with your lender is essential to handle quarterly tax payments.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">3. Education and Quality of Life</h2>
+        <p>
+          Nashua School District boasts excellent programs, with Nashua High School North and Nashua High School South serving the community. The city is also famous for Mine Falls Park, a 325-acre park in the heart of the city offering trails, boating, and scenic river views.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">4. Financing & Mortgage Options</h2>
+        <p>
+          Commuters with strong income profiles often utilize <strong>Conventional Loans</strong> with as little as 3% down. Additionally, for buyers who don't meet conventional guidelines, FHA financing is widely accepted by local Nashua sellers. When shopping for a mortgage, getting pre-approved by a lender with local underwriting presence is crucial to make your offer stand out against cash-heavy Massachusetts buyers.
+        </p>
+      </div>
+    )
+  },
+  "concord-nh-real-estate-guide": {
+    slug: "concord-nh-real-estate-guide",
+    title: "Buying a Home in Concord, NH: The Capital City Mortgage Guide",
+    excerpt: "Discover what makes Concord one of NH's most stable housing markets. Property tax rates, school details, and USDA/FHA financing programs.",
+    date: "May 20, 2026",
+    readTime: "6 min read",
+    category: "Local Guides",
+    gradient: "from-slate-900 to-emerald-950",
+    content: (
+      <div className="space-y-6">
+        <p>
+          As the capital of New Hampshire, <strong>Concord</strong> offers a unique blend of historic charm, political significance, and community-centered living. Positioned centrally in the Merrimack Valley, Concord provides easy access to the White Mountains to the north and the urban centers to the south.
+        </p>
+        <p>
+          Concord's housing market is known for its stability. Supported by a large workforce of state government, healthcare, and education professionals, the local economy remains robust.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">1. Where to Live in Concord</h2>
+        <p>
+          Concord offers diverse neighborhoods, each catering to different preferences:
+        </p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li><strong>The West End:</strong> Lined with historic Victorian and Craftsman homes, the West End is one of Concord's most sought-after neighborhoods. It is highly walkable, close to White Park, and lies within the top-rated Concord High School district. Single-family homes here range from $420,000 to $600,000+.</li>
+          <li><strong>East Concord:</strong> Located across the Merrimack River, East Concord offers a more rural and spacious feel, featuring split-levels, ranch homes, and newer construction.</li>
+          <li><strong>Penacook:</strong> A village in the northern part of Concord, Penacook provides more budget-friendly entry points for first-time buyers, with single-family homes and townhomes often available under $350,000.</li>
+        </ul>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">2. Property Taxes & Purchase Prices</h2>
+        <p>
+          The median sales price for single-family homes in Concord is <strong>$395,000</strong>, making it one of the more accessible markets in southern/central New Hampshire.
+        </p>
+        <p>
+          However, buyers must account for Concord's property tax rate, which is on the higher side at approximately <strong>$25.20 per $1,000</strong> of assessed value. On a $400,000 home, the annual tax bill is roughly <strong>$10,085</strong> ($840 per month). Working with your mortgage professional to calculate your exact debt-to-income (DTI) ratio is critical to ensure taxes don't impact your pre-approval limits.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">3. Local Amenities & Schools</h2>
+        <p>
+          Concord features a beautifully revitalized downtown Main Street filled with local shops, theaters, and dining options. The Capital School District is highly rated, and the city is home to the UNH Franklin Pierce School of Law.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">4. Financing Options in Concord</h2>
+        <p>
+          Because of Concord's proximity to rural areas, some surrounding towns (such as Hopkinton, Bow, and Loudon) are eligible for <strong>USDA Rural Development Loans</strong>. USDA loans offer <strong>100% financing</strong> (zero down payment) and lower mortgage insurance rates. For homes within city limits, standard FHA and NHHFA programs remain highly popular.
+        </p>
+      </div>
+    )
+  },
+  "portsmouth-coastal-buyer-guide": {
+    slug: "portsmouth-coastal-buyer-guide",
+    title: "Portsmouth, NH Coastal Buyer Guide: Luxury Real Estate & Jumbo Loans",
+    excerpt: "A guide to New Hampshire's premium coastal market. Historic South End, low property tax rates, and how to navigate jumbo mortgage financing.",
+    date: "May 20, 2026",
+    readTime: "8 min read",
+    category: "Local Guides",
+    gradient: "from-teal-950 to-blue-900",
+    content: (
+      <div className="space-y-6">
+        <p>
+          Located on the Piscataqua River near the Atlantic Ocean, <strong>Portsmouth</strong> is New Hampshire’s historic coastal gem. Known for its world-class dining scene, historic brick downtown, and waterfront parks, Portsmouth is one of the most desirable—and expensive—places to live in New England.
+        </p>
+        <p>
+          The Portsmouth real estate market behaves differently than the rest of New Hampshire. High demand, luxury properties, and unique tax dynamics require a specialized buying strategy.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">1. Premier Neighborhoods in Portsmouth</h2>
+        <p>
+          Portsmouth offers historic charm and modern luxury:
+        </p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li><strong>The South End:</strong> Portsmouth's historic district, featuring 18th-century colonial homes, narrow streets, and Prescott Park views. Properties here are highly sought after and often sell for over $1,000,000.</li>
+          <li><strong>Little Harbor / Elwyn Park:</strong> Popular suburban neighborhoods that offer excellent single-family homes, great school access, and a family-friendly environment. Homes range from $650,000 to $900,000.</li>
+          <li><strong>Downtown Condominiums:</strong> Luxury new-construction condos overlooking the water or nestled in Market Square. These properties cater to buyers looking for a low-maintenance, walkable lifestyle.</li>
+        </ul>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">2. Valuations & Tax Rate Advantages</h2>
+        <p>
+          The median sales price for single-family homes in Portsmouth is approximately <strong>$745,000</strong>, with luxury properties easily pushing past the million-dollar mark.
+        </p>
+        <p>
+          The major financial benefit of Portsmouth is its exceptionally low property tax rate, currently around <strong>$15.05 per $1,000</strong> of assessed value. Because property values are high, the city can maintain a lower tax rate than neighboring towns. On a $700,000 home, the annual tax bill is <strong>$10,535</strong>.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">3. Schools and Lifestyle</h2>
+        <p>
+          Portsmouth High School is highly regarded statewide, offering excellent academic and athletic programs. Residents enjoy a rich cultural scene, including theater at the Music Hall and strolls through Strawberry Banke Museum.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">4. Financing with Jumbo Mortgages</h2>
+        <p>
+          Because home prices in Portsmouth often exceed standard conforming loan limits (which are around $766,550 in most counties for conforming loans in 2026), many buyers must qualify for a <strong>Jumbo Loan</strong>. Jumbo loans have stricter requirements, including higher credit scores (typically 700+), lower debt-to-income ratios, and asset reserve requirements (often 6 to 12 months of mortgage payments). Having a detailed asset verification file prepared is essential.
+        </p>
+      </div>
+    )
+  },
+  "hanover-nh-homeowners-guide": {
+    slug: "hanover-nh-homeowners-guide",
+    title: "Hanover, NH Homeowners Guide: Dartmouth Area Financing & Real Estate",
+    excerpt: "Navigating the Upper Valley's most exclusive market. Local school ratings, home values, and mortgage strategies for academic and medical professionals.",
+    date: "May 20, 2026",
+    readTime: "7 min read",
+    category: "Local Guides",
+    gradient: "from-emerald-950 to-stone-900",
+    content: (
+      <div className="space-y-6">
+        <p>
+          Situated in the scenic Upper Valley along the Connecticut River, <strong>Hanover</strong> is home to Dartmouth College and represents one of the most exclusive real estate markets in New Hampshire. The town offers a vibrant intellectual atmosphere, a historic downtown, and top-tier public education.
+        </p>
+        <p>
+          Due to the presence of Dartmouth College and the Dartmouth-Hitchcock Medical Center, demand for housing is consistently fueled by academic, research, and medical professionals.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">1. Hanover Neighborhood Profiles</h2>
+        <p>
+          Hanover features unique geographical zones:
+        </p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li><strong>Downtown Hanover:</strong> Highly walkable and adjacent to the Dartmouth Green. Historic properties here command premium prices and are rarely on the market.</li>
+          <li><strong>Etna:</strong> A picturesque historic village within Hanover, offering larger lots, historic farmhouse colonials, and scenic mountain views. This area is highly popular for those seeking privacy while remaining a 10-minute drive from campus.</li>
+          <li><strong>Lyme Road Corridor:</strong> Home to many quiet residential developments, close to the Storrs Pond Recreation Area.</li>
+        </ul>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">2. High Valuations & Tax Details</h2>
+        <p>
+          The median sales price for a single-family home in Hanover is approximately <strong>$950,000</strong>, with premium properties on large lots easily exceeding $1.5 million.
+        </p>
+        <p>
+          Hanover's property tax rate stands at approximately <strong>$22.05 per $1,000</strong> of assessed value. For a home valued at $900,000, your annual property tax is <strong>$19,845</strong> ($1,653 per month). For buyers in these price brackets, matching tax obligations with appropriate financing structures is a primary component of pre-qualification.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">3. Top-Tier Education System</h2>
+        <p>
+          Hanover belongs to the unique Dresden School District (the first interstate school district in the nation, shared with Norwich, Vermont). Hanover High School is consistently ranked as the #1 public high school in New Hampshire, offering collegiate-level coursework and exceptional Ivy League placement rates.
+        </p>
+        
+        <h2 className="text-2xl font-bold font-sans text-slate-900 pt-4">4. Specialized Mortgage Structures</h2>
+        <p>
+          Given the high price point, buyers in Hanover heavily utilize <strong>Jumbo Loans</strong> or <strong>Private Wealth Portfolio Financing</strong>. Some institutions offer specialized mortgage products for incoming Dartmouth faculty or resident physicians at Dartmouth-Hitchcock. These programs may feature low down payments and waived PMI for qualifying medical professionals.
+        </p>
+      </div>
+    )
   }
 };
 

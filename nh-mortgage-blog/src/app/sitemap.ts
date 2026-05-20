@@ -28,5 +28,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/blog/manchester-nh-mortgage-guide`,
+      lastModified: new Date('2026-05-20'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/nashua-nh-homebuyer-handbook`,
+      lastModified: new Date('2026-05-20'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/concord-nh-real-estate-guide`,
+      lastModified: new Date('2026-05-20'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/portsmouth-coastal-buyer-guide`,
+      lastModified: new Date('2026-05-20'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/hanover-nh-homeowners-guide`,
+      lastModified: new Date('2026-05-20'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
   ];
 }
