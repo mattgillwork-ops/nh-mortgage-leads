@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   description: "Your trusted source for New Hampshire mortgage guides, local interest rate updates, NHHFA home start qualifications, and closing cost breakdowns.",
   keywords: ["NH Mortgage", "New Hampshire mortgage rates", "NHHFA Home Start", "NH closing costs", "lender reviews"],
   authors: [{ name: "Anti-Gravity Financial Editorial" }],
+  other: {
+    "fo-verify": "201efa5d-8e8e-40dc-bc9f-cbcab045d651",
+  },
 };
 
 export default function RootLayout({
@@ -23,10 +26,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${outfit.variable} h-full antialiased`}>
-      <head>
-        {/* Lemonade Affiliate Verification */}
-        <meta name="fo-verify" content="201efa5d-8e8e-40dc-bc9f-cbcab045d651" />
-      </head>
       <body className="min-h-full flex flex-col bg-[#f8fafc] text-[#0f172a]">{children}</body>
     </html>
   );
