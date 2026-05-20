@@ -1,11 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Top 10 Best Mortgage Lenders in NH (2026 Reviews) | NH Financial Review',
-  description: 'Compare the top 10 mortgage lenders in New Hampshire for 2026. See our top picks for first-time buyers, refinancing, and fast local closings.',
-};
 
 const lenders = [
   {
@@ -14,10 +7,10 @@ const lenders = [
     rating: 5.0,
     badge: 'Best Overall in NH',
     description: 'Our top recommendation. An independent, Nashua-based engine that compares rates across wholesale channels to find the absolute lowest APR for NH residents. Exceptional local knowledge and access to NHHFA Home Start programs.',
-    pros: ['Direct access to wholesale rates', 'NHHFA approved', 'Sovereign pre-approval engine', 'Extremely fast local closing times'],
+    pros: ['Direct access to wholesale rates', 'NHHFA approved & first-time buyer experts', 'Sovereign pre-approval engine', 'Extremely fast local closing times'],
     cons: ['Limited to NH and surrounding New England states'],
     ctaText: 'Calculate Your NH Rate',
-    ctaLink: 'https://nh-mortgage-leads.onrender.com/funnel',
+    ctaLink: 'http://localhost:3001/?utm_source=nh-financial-review&utm_medium=listicle&utm_campaign=top-10-lenders',
     isPrimary: true,
   },
   {
@@ -29,7 +22,7 @@ const lenders = [
     pros: ['Excellent mobile app', 'Fast online pre-approval', 'Customizable loan terms'],
     cons: ['Can have higher fees', 'Lacks localized NH market expertise'],
     ctaText: 'Check Rocket Rates',
-    ctaLink: 'https://www.rocketmortgage.com/?affiliate=nhfr-lead',
+    ctaLink: '/out/rocket',
     isPrimary: false,
   },
   {
@@ -41,7 +34,7 @@ const lenders = [
     pros: ['No origination or lender fees', 'Fast underwriting', '24/7 customer support'],
     cons: ['Online only (no physical branches)', 'May not support complex financial situations'],
     ctaText: 'Check Better Rates',
-    ctaLink: 'https://better.com/mortgage/?affiliate=nhfr-lead',
+    ctaLink: '/out/better',
     isPrimary: false,
   },
   {
@@ -53,7 +46,7 @@ const lenders = [
     pros: ['Innovative loan options', 'Good local presence', 'First-time buyer friendly'],
     cons: ['Rates can sometimes be higher than wholesale brokers'],
     ctaText: 'Check CMG Rates',
-    ctaLink: 'https://www.cmghomeloans.com/?affiliate=nhfr-lead',
+    ctaLink: '/out/cmg',
     isPrimary: false,
   },
   {
@@ -65,7 +58,7 @@ const lenders = [
     pros: ['Industry-leading VA loan rates', 'No PMI requirements', 'Excellent customer service'],
     cons: ['Requires military affiliation to join', 'Physical branches are scarce in NH'],
     ctaText: 'Check Navy Federal Rates',
-    ctaLink: 'https://www.navyfederal.org/loans-cards/mortgage.html',
+    ctaLink: '/out/navyfederal',
     isPrimary: false,
   },
   {
@@ -77,7 +70,7 @@ const lenders = [
     pros: ['Low rates for jumbo loans', 'Flexible down payment options', 'Member discounts available'],
     cons: ['Strict credit requirements (typically 680+)', 'No physical branches'],
     ctaText: 'Check SoFi Rates',
-    ctaLink: 'https://www.sofi.com/home-loans/?affiliate=nhfr-lead',
+    ctaLink: '/out/sofi',
     isPrimary: false,
   },
   {
@@ -89,7 +82,7 @@ const lenders = [
     pros: ['Low down payment programs', 'Homebuyer grants available', 'Robust online dashboard'],
     cons: ['Slower underwriting times', 'Rates often higher than wholesale'],
     ctaText: 'Check Chase Rates',
-    ctaLink: 'https://mortgage.chase.com/',
+    ctaLink: '/out/chase',
     isPrimary: false,
   },
   {
@@ -101,7 +94,7 @@ const lenders = [
     pros: ['Highly localized NH presence', 'Fast closing guarantees', 'Great for FHA/USDA loans'],
     cons: ['Higher origination fees', 'Servicing is often transferred'],
     ctaText: 'Check Fairway Rates',
-    ctaLink: 'https://www.fairwayindependentmc.com/',
+    ctaLink: '/out/fairway',
     isPrimary: false,
   },
   {
@@ -113,7 +106,7 @@ const lenders = [
     pros: ['Incredible local customer service', 'Portfolio lending for unique properties', 'Low fees'],
     cons: ['Must become a member', 'Slower technology interface'],
     ctaText: "Check St. Mary's Rates",
-    ctaLink: 'https://www.stmarysbank.com/Personal/Mortgages',
+    ctaLink: '/out/stmarys',
     isPrimary: false,
   },
   {
@@ -125,217 +118,281 @@ const lenders = [
     pros: ['Discounts for existing customers', 'Grants for low-income buyers', 'Massive branch network'],
     cons: ['Slowest closing times', 'Rigid underwriting standards'],
     ctaText: 'Check BoA Rates',
-    ctaLink: 'https://www.bankofamerica.com/mortgage/',
+    ctaLink: '/out/boa',
     isPrimary: false,
   },
 ];
 
 export default function Home() {
   return (
-    <main style={{ minHeight: '100vh', background: '#f9fafb', color: '#111827', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-      <header style={{ background: '#ffffff', padding: '1rem 2rem', borderBottom: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05)' }}>
-        <div style={{ fontSize: '1.2rem', fontWeight: 800, fontFamily: 'Georgia, serif', color: '#111827' }}>NH Financial Review</div>
-        <div style={{ fontSize: '0.75rem', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Independent Mortgage Analysis</div>
+    <div className="flex-1 flex flex-col font-sans">
+      {/* Navbar */}
+      <header className="sticky top-0 z-50 glass-panel border-b border-slate-200/80">
+        <div className="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-navy-900 to-blue-800 flex items-center justify-center text-white font-extrabold text-lg shadow-sm">
+              FR
+            </div>
+            <div>
+              <span className="font-extrabold text-xl tracking-tight text-slate-900 block">NH Financial Review</span>
+              <span className="text-[10px] uppercase font-bold tracking-widest text-blue-800 block -mt-1">Independent Mortgage Analysis</span>
+            </div>
+          </div>
+          
+          <nav className="flex items-center gap-6">
+            <a 
+              href="http://localhost:3004" 
+              className="text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+            >
+              Blog Guides
+            </a>
+          </nav>
+        </div>
       </header>
-      
-      <div style={{ margin: '0 auto', padding: '2rem 1.5rem', maxWidth: '800px', lineHeight: '1.6' }}>
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', fontFamily: 'Georgia, serif', fontWeight: 700, color: '#111827', lineHeight: 1.2 }}>
-          Top 10 Best Mortgage Lenders in New Hampshire (2026)
-        </h1>
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', borderBottom: '1px solid #e5e7eb', paddingBottom: '1rem' }}>
-          <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>
-            NR
+
+      {/* Hero Header */}
+      <section className="bg-gradient-to-b from-slate-100 to-[#f8fafc] border-b border-slate-200/50 py-12">
+        <div className="max-w-4xl mx-auto px-6">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-950 font-serif leading-tight mb-6">
+            Top 10 Best Mortgage Lenders in New Hampshire (2026)
+          </h1>
+          
+          <div className="flex items-center gap-4 border-b border-slate-200/80 pb-6">
+            <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 text-sm">
+              FR
+            </div>
+            <div className="flex flex-col text-xs font-semibold">
+              <span className="text-slate-900">By NHFR Editorial Review Team</span>
+              <span className="text-slate-400">Updated: May 19, 2026 • 7 min read</span>
+            </div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontSize: '0.85rem', color: '#111827', fontWeight: 600 }}>By NHFR Review Team</span>
-            <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>Updated: May 18, 2026 • 7 min read</span>
+
+          <div className="mt-6 text-slate-700 text-base md:text-lg leading-relaxed space-y-4">
+            <p>
+              When you're buying a home in New Hampshire, securing the right mortgage is just as important as finding the perfect property. A lower interest rate can save you tens of thousands of dollars over the life of your loan, while a highly responsive lender can mean the difference between winning a bidding war in Manchester or missing out entirely.
+            </p>
+            <p>
+              To help you navigate the highly competitive 2026 Granite State housing market, our editorial team analyzed dozens of national and local lenders. We weighed current rates, access to NHHFA Home Start programs, closing speeds, and customer satisfaction to bring you our definitive top picks.
+            </p>
           </div>
         </div>
+      </section>
 
-
-        
-        <div style={{ marginBottom: '2.5rem' }}>
-          <p style={{ fontSize: '1.1rem', color: '#374151', margin: '0 0 1rem 0' }}>
-            When you're buying a home in New Hampshire, securing the right mortgage is just as important as finding the perfect property. A lower interest rate can save you tens of thousands of dollars over the life of your loan, while a highly responsive lender can mean the difference between winning a bidding war in Manchester or missing out entirely.
-          </p>
-          <p style={{ fontSize: '1.1rem', color: '#374151', margin: 0 }}>
-            To help you navigate the highly competitive 2026 Granite State housing market, our editorial team analyzed dozens of national and local lenders. We weighed current rates, access to NHHFA Home Start programs, closing speeds, and customer satisfaction to bring you our definitive top picks.
-          </p>
+      {/* Sticky Table of Contents Jump Links */}
+      <div className="sticky top-20 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm py-4">
+        <div className="max-w-4xl mx-auto px-6 flex items-center gap-3 overflow-x-auto whitespace-nowrap scrollbar-none">
+          <span className="text-xs uppercase font-extrabold tracking-widest text-slate-400 mr-2">Top 5 Picks:</span>
+          {lenders.slice(0, 5).map((lender, i) => (
+            <a 
+              key={lender.id}
+              href={`#${lender.id}`}
+              className="inline-flex items-center px-3 h-8 rounded-lg bg-slate-50 border border-slate-200/60 text-xs font-bold text-blue-800 hover:bg-blue-50 hover:border-blue-200 transition-colors"
+            >
+              #{i+1} {lender.name.split(' (')[0]}
+            </a>
+          ))}
         </div>
+      </div>
 
-        <div style={{ background: '#f3f4f6', padding: '1.5rem', borderRadius: '8px', marginBottom: '3rem', border: '1px solid #e5e7eb' }}>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1rem', color: '#111827', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Jump to our top picks:
-          </h3>
-          <ul style={{ listStyleType: 'none', padding: 0, margin: 0, display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem' }}>
-            {lenders.slice(0, 5).map(lender => (
-              <li key={lender.id}>
-                <a href={`#${lender.id}`} style={{ textDecoration: 'none', color: '#1d4ed8', fontWeight: 600, fontSize: '0.95rem' }}>
-                  {lender.name} — <span style={{ color: '#4b5563', fontWeight: 400 }}>{lender.badge}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      {/* Comparison List Content */}
+      <div className="max-w-4xl mx-auto px-6 py-12 space-y-8">
+        <div className="flex flex-col gap-8">
           {lenders.map((lender, index) => (
-            <div id={lender.id} key={index} style={{ 
-              padding: '1.5rem', 
-              border: lender.isPrimary ? '2px solid #1d4ed8' : '1px solid #e5e7eb',
-              background: '#ffffff',
-              borderRadius: '8px',
-              boxShadow: lender.isPrimary ? '0 4px 6px -1px rgba(29, 78, 216, 0.1)' : '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-              position: 'relative',
-              overflow: 'hidden'
-            }}>
+            <article 
+              id={lender.id} 
+              key={lender.id} 
+              className={`relative overflow-hidden rounded-2xl border bg-white p-8 hover-lift ${
+                lender.isPrimary 
+                  ? 'border-blue-800 shadow-md shadow-blue-800/5 ring-1 ring-blue-800/10' 
+                  : 'border-slate-200/80 shadow-sm'
+              }`}
+            >
+              {/* Top Rated Ribbon */}
               {lender.isPrimary && (
-                <div style={{
-                  position: 'absolute',
-                  top: '0.75rem',
-                  right: '-2rem',
-                  background: '#1d4ed8',
-                  color: 'white',
-                  padding: '0.25rem 2.5rem',
-                  transform: 'rotate(45deg)',
-                  fontWeight: 'bold',
-                  fontSize: '0.65rem',
-                  letterSpacing: '0.05em',
-                  zIndex: 10,
-                }}>
-                  #1 RATED
+                <div className="absolute top-0 right-0 bg-blue-800 text-white font-extrabold text-[10px] tracking-widest uppercase px-6 py-1.5 rounded-bl-xl border-l border-b border-blue-900/10 shadow-sm">
+                  #1 RATED LENDER
                 </div>
               )}
               
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-                <div>
-                  <h2 style={{ fontSize: '1.5rem', margin: '0 0 0.25rem 0', fontFamily: 'Georgia, serif', color: '#111827', fontWeight: 700 }}>
+              <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
+                <div className="space-y-2">
+                  <h2 className="text-xl md:text-2xl font-extrabold tracking-tight text-slate-900 font-serif leading-snug">
                     {index + 1}. {lender.name}
                   </h2>
-                  <span style={{ 
-                    display: 'inline-block', 
-                    padding: '0.15rem 0.5rem', 
-                    background: lender.isPrimary ? '#eff6ff' : '#f3f4f6', 
-                    borderRadius: '4px',
-                    fontSize: '0.75rem',
-                    fontWeight: 600,
-                    color: lender.isPrimary ? '#1d4ed8' : '#4b5563',
-                    textTransform: 'uppercase'
-                  }}>
+                  <span className={`inline-flex px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider uppercase border ${
+                    lender.isPrimary 
+                      ? 'bg-blue-50 border-blue-100 text-blue-800' 
+                      : 'bg-slate-50 border-slate-200 text-slate-600'
+                  }`}>
                     {lender.badge}
                   </span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <span style={{ fontSize: '1rem', color: '#fbbf24' }}>★★★★★</span>
-                  <span style={{ fontSize: '1rem', fontWeight: 700, color: '#111827' }}>{lender.rating}</span>
+                
+                {/* Rating Block */}
+                <div className="flex items-center gap-1.5 self-start bg-slate-50 border border-slate-200/60 px-3 py-1.5 rounded-xl">
+                  <span className="text-amber-500 font-bold text-sm">★</span>
+                  <span className="text-slate-900 font-extrabold text-sm leading-none">{lender.rating.toFixed(1)}</span>
+                  <span className="text-slate-400 text-xs font-bold">/ 5.0</span>
                 </div>
               </div>
 
-              <p style={{ fontSize: '1rem', margin: '0 0 1rem 0', color: '#4b5563', lineHeight: 1.6 }}>
+              <p className="text-slate-600 font-medium text-sm md:text-base leading-relaxed mb-6">
                 {lender.description}
               </p>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem', background: '#f9fafb', padding: '1rem', borderRadius: '6px' }}>
+              {/* Pros & Cons Card */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 border border-slate-100 p-6 rounded-xl mb-6">
                 <div>
-                  <h3 style={{ color: '#16a34a', margin: '0 0 0.5rem 0', fontSize: '0.9rem', fontWeight: 700 }}>Pros</h3>
-                  <ul style={{ listStyleType: 'none', padding: 0, margin: 0, color: '#374151', fontSize: '0.9rem' }}>
+                  <h3 className="text-xs uppercase font-extrabold tracking-wider text-emerald-600 mb-3">Pros</h3>
+                  <ul className="space-y-2 text-xs font-semibold text-slate-700">
                     {lender.pros.map((pro, i) => (
-                      <li key={i} style={{ marginBottom: '0.25rem', display: 'flex', gap: '0.35rem' }}>
-                        <span style={{ color: '#16a34a' }}>✓</span> {pro}
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-emerald-500 font-extrabold">✓</span>
+                        <span className="leading-snug">{pro}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <h3 style={{ color: '#dc2626', margin: '0 0 0.5rem 0', fontSize: '0.9rem', fontWeight: 700 }}>Cons</h3>
-                  <ul style={{ listStyleType: 'none', padding: 0, margin: 0, color: '#374151', fontSize: '0.9rem' }}>
+                  <h3 className="text-xs uppercase font-extrabold tracking-wider text-rose-600 mb-3">Cons</h3>
+                  <ul className="space-y-2 text-xs font-semibold text-slate-700">
                     {lender.cons.map((con, i) => (
-                      <li key={i} style={{ marginBottom: '0.25rem', display: 'flex', gap: '0.35rem' }}>
-                        <span style={{ color: '#dc2626' }}>✗</span> {con}
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-rose-500 font-extrabold">✗</span>
+                        <span className="leading-snug">{con}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
 
-              <a href={lender.ctaLink} style={{ 
-                textDecoration: 'none', 
-                display: 'block',
-                padding: '0.75rem 1.5rem',
-                background: lender.isPrimary ? '#1d4ed8' : '#ffffff',
-                color: lender.isPrimary ? '#ffffff' : '#111827',
-                borderRadius: '6px',
-                fontWeight: 700,
-                border: lender.isPrimary ? 'none' : '1px solid #d1d5db',
-                textAlign: 'center',
-                fontSize: '1rem',
-                transition: 'all 0.2s ease-in-out'
-              }}>
-                {lender.ctaText}
-              </a>
-            </div>
+              {/* Call to Action Button */}
+              {lender.isPrimary ? (
+                <a 
+                  href={lender.ctaLink}
+                  className="w-full inline-flex items-center justify-center px-6 h-12 rounded-xl bg-amber-600 text-white font-extrabold text-sm hover:bg-amber-700 transition-all shadow-md shadow-amber-600/15 text-center"
+                >
+                  {lender.ctaText} <span>&nbsp;→</span>
+                </a>
+              ) : (
+                <a 
+                  href={lender.ctaLink}
+                  rel="nofollow"
+                  className="w-full inline-flex items-center justify-center px-6 h-11 rounded-xl border border-slate-200 font-extrabold text-sm text-slate-700 bg-white hover:bg-slate-50 hover:text-slate-900 transition-colors text-center"
+                >
+                  {lender.ctaText}
+                </a>
+              )}
+            </article>
           ))}
         </div>
-        
-        <div style={{ marginTop: '4rem', paddingTop: '3rem', borderTop: '2px solid #e5e7eb' }}>
-          <h2 style={{ fontSize: '2.2rem', marginBottom: '1.5rem', fontFamily: 'Georgia, serif', fontWeight: 700, color: '#111827' }}>
-            The Ultimate Guide to Choosing a Mortgage Lender in New Hampshire (2026)
+
+        {/* Editorial Guide Section (Georgia Serif) */}
+        <section className="pt-12 border-t-2 border-slate-200/80 space-y-8">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-950 font-serif">
+            The Ultimate Guide to Choosing a Mortgage Lender in New Hampshire
           </h2>
           
-          <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.8, marginBottom: '2rem' }}>
-            New Hampshire’s real estate market has seen unprecedented shifts heading into 2026. With inventory remaining tight across major hubs like <strong>Manchester, Nashua, and Portsmouth</strong>, and the Seacoast becoming increasingly competitive, homebuyers are facing a landscape where speed and reliability are just as crucial as securing a low interest rate. 
-            Whether you are a first-time homebuyer looking to leverage state assistance programs, or an experienced investor eyeing a multi-family property, selecting the right mortgage lender is the single most important financial decision you will make in this process.
-          </p>
+          <div className="font-serif text-slate-700 text-base md:text-lg leading-relaxed space-y-6">
+            <p>
+              New Hampshire’s real estate market has seen unprecedented shifts heading into 2026. With inventory remaining tight across major hubs like <strong>Manchester, Nashua, and Portsmouth</strong>, and the Seacoast becoming increasingly competitive, homebuyers are facing a landscape where speed and reliability are just as crucial as securing a low interest rate. 
+              Whether you are a first-time homebuyer looking to leverage state assistance programs, or an experienced investor eyeing a multi-family property, selecting the right mortgage lender is the single most important financial decision you will make in this process.
+            </p>
 
-          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Georgia, serif', fontWeight: 700, color: '#111827' }}>
-            Understanding the NH Market Dynamics
-          </h3>
-          <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.8, marginBottom: '2rem' }}>
-            Unlike national averages, the Granite State has a highly localized housing economy. Property taxes vary wildly from town to town, and rural properties may qualify for specialized USDA loans that suburban properties in Hillsborough County cannot access. A lender with a deep understanding of New Hampshire can help structure your loan to account for these local nuances, potentially saving you thousands in unnecessary escrow buffers or PMI (Private Mortgage Insurance) overcharges.
-          </p>
+            <h3 className="text-xl md:text-2xl font-bold text-slate-900 font-sans pt-4">
+              Understanding the NH Market Dynamics
+            </h3>
+            <p>
+              Unlike national averages, the Granite State has a highly localized housing economy. Property taxes vary wildly from town to town, and rural properties may qualify for specialized USDA loans that suburban properties in Hillsborough County cannot access. A lender with a deep understanding of New Hampshire can help structure your loan to account for these local nuances, potentially saving you thousands in unnecessary escrow buffers or PMI (Private Mortgage Insurance) overcharges.
+            </p>
 
-          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Georgia, serif', fontWeight: 700, color: '#111827' }}>
-            What is the NHHFA (New Hampshire Housing Finance Authority)?
-          </h3>
-          <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.8, marginBottom: '1.5rem' }}>
-            If you are a first-time homebuyer, or haven't owned a home in the last three years, you should strongly prioritize lenders who are approved to originate NH Housing loans. The NHHFA offers several vital programs:
-          </p>
-          <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', color: '#4b5563', fontSize: '1.1rem', lineHeight: 1.8, marginBottom: '2rem' }}>
-            <li style={{ marginBottom: '0.5rem' }}><strong>Home Start Program:</strong> Offers cash assistance for down payments and closing costs, structured as a forgivable loan over a short duration.</li>
-            <li style={{ marginBottom: '0.5rem' }}><strong>First-Time Homebuyer Tax Credit:</strong> A federal Mortgage Credit Certificate (MCC) that allows eligible NH buyers to claim up to $2,000 per year as a direct tax credit for the life of the loan.</li>
-            <li style={{ marginBottom: '0.5rem' }}><strong>Home Flex Plus:</strong> Government-insured loans (FHA, VA, Rural Development) paired with down payment assistance.</li>
-          </ul>
+            {/* In-text Editorial Callout Box linking to the new Blog */}
+            <div className="glass-panel border-l-4 border-emerald-500 rounded-r-xl p-6 font-sans space-y-3 shadow-sm my-6">
+              <span className="inline-flex px-2 py-0.5 rounded bg-emerald-50 border border-emerald-100 text-emerald-700 text-[10px] font-bold uppercase tracking-wider">
+                First-Time Buyer Guide
+              </span>
+              <h4 className="text-base font-extrabold text-slate-950">
+                Are you looking to qualify for down payment assistance?
+              </h4>
+              <p className="text-slate-600 font-medium text-xs md:text-sm leading-relaxed">
+                The New Hampshire Housing Finance Authority provides substantial grants for qualified buyers. Read our full analysis:
+              </p>
+              <a 
+                href="http://localhost:3004/blog/nhhfa-home-start-qualification-2026" 
+                className="inline-flex items-center gap-1.5 text-xs font-extrabold text-blue-800 hover:underline"
+              >
+                How to Qualify for the NHHFA Home Start Program in 2026 <span>→</span>
+              </a>
+            </div>
 
-          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Georgia, serif', fontWeight: 700, color: '#111827' }}>
-            Local Brokers vs. National Retail Lenders
-          </h3>
-          <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.8, marginBottom: '1.5rem' }}>
-            You generally have three options when securing financing:
-          </p>
-          <ol style={{ paddingLeft: '1.5rem', color: '#4b5563', fontSize: '1.1rem', lineHeight: 1.8, marginBottom: '2rem' }}>
-            <li style={{ marginBottom: '1rem' }}><strong>Independent Mortgage Brokers (Like our #1 pick):</strong> Brokers don't lend their own money. Instead, they shop your profile across dozens of wholesale lenders to find the lowest possible rate. Because they have lower overhead and access to wholesale pricing, brokers almost always beat retail banks on rate and closing costs.</li>
-            <li style={{ marginBottom: '1rem' }}><strong>Direct Retail Lenders (Like Rocket Mortgage):</strong> These institutions lend their own funds. They offer highly polished digital experiences and fast pre-approvals, but because you are going direct to the source, you are paying retail margins.</li>
-            <li style={{ marginBottom: '1rem' }}><strong>Local Credit Unions (Like St. Mary's Bank):</strong> Credit unions are member-owned and often hold loans in their own portfolio rather than selling them to Fannie Mae or Freddie Mac. This allows them to offer creative financing for unique properties (like a multi-family with mixed-use commercial space) that national lenders would immediately deny.</li>
-          </ol>
+            <h3 className="text-xl md:text-2xl font-bold text-slate-900 font-sans pt-4">
+              What is the NHHFA (New Hampshire Housing Finance Authority)?
+            </h3>
+            <p>
+              If you are a first-time homebuyer, or haven't owned a home in the last three years, you should strongly prioritize lenders who are approved to originate NH Housing loans. The NHHFA offers several vital programs:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-sm md:text-base">
+              <li><strong>Home Start Program:</strong> Offers cash assistance for down payments and closing costs, structured as a forgivable loan over a short duration.</li>
+              <li><strong>First-Time Homebuyer Tax Credit:</strong> A federal Mortgage Credit Certificate (MCC) that allows eligible NH buyers to claim up to $2,000 per year as a direct tax credit for the life of the loan.</li>
+              <li><strong>Home Flex Plus:</strong> Government-insured loans (FHA, VA, Rural Development) paired with down payment assistance.</li>
+            </ul>
 
-          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Georgia, serif', fontWeight: 700, color: '#111827' }}>
-            How to Compare Your Offers
-          </h3>
-          <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.8, marginBottom: '2rem' }}>
-            Never look at the interest rate in a vacuum. A lender offering a 5.99% rate might be charging you $10,000 in upfront "discount points" to get that rate, while a lender offering 6.25% might be giving you a lender credit to cover your closing costs. Always request a <strong>Loan Estimate (LE)</strong> from at least three lenders. The LE is a standardized, federally mandated document that makes it mathematically impossible for lenders to hide junk fees. Compare the "Box A" origination charges across all three LEs to find the true cost of the loan.
-          </p>
-        </div>
+            <h3 className="text-xl md:text-2xl font-bold text-slate-900 font-sans pt-4">
+              Local Brokers vs. National Retail Lenders
+            </h3>
+            <p>
+              You generally have three options when securing financing:
+            </p>
+            <ol className="list-decimal pl-6 space-y-4 text-sm md:text-base">
+              <li>
+                <strong>Independent Mortgage Brokers (Like our #1 pick):</strong> Brokers don't lend their own money. Instead, they shop your profile across dozens of wholesale lenders to find the lowest possible rate. Because they have lower overhead and access to wholesale pricing, brokers almost always beat retail banks on rate and closing costs.
+              </li>
+              <li>
+                <strong>Direct Retail Lenders (Like Rocket Mortgage):</strong> These institutions lend their own funds. They offer highly polished digital experiences and fast pre-approvals, but because you are going direct to the source, you are paying retail margins.
+              </li>
+              <li>
+                <strong>Local Credit Unions (Like St. Mary's Bank):</strong> Credit unions are member-owned and often hold loans in their own portfolio rather than selling them to Fannie Mae or Freddie Mac. This allows them to offer creative financing for unique properties (like a multi-family with mixed-use commercial space) that national lenders would immediately deny.
+              </li>
+            </ol>
 
-        <div style={{ marginTop: '3rem', padding: '2rem 0', borderTop: '1px solid #e5e7eb', color: '#6b7280', fontSize: '0.75rem', lineHeight: 1.5, textAlign: 'center' }}>
-          <p style={{ marginBottom: '1rem', opacity: 0.8 }}>
+            {/* Secondary Editorial Link Callout Box */}
+            <div className="glass-panel border-l-4 border-blue-800 rounded-r-xl p-6 font-sans space-y-3 shadow-sm my-6">
+              <span className="inline-flex px-2 py-0.5 rounded bg-blue-50 border border-blue-100 text-blue-800 text-[10px] font-bold uppercase tracking-wider">
+                Closing Costs Guide
+              </span>
+              <h4 className="text-base font-extrabold text-slate-950">
+                Don't get surprised by NH Transfer Taxes
+              </h4>
+              <p className="text-slate-600 font-medium text-xs md:text-sm leading-relaxed">
+                New Hampshire levies a transfer tax on all sales. Learn what fees to expect and how to calculate them:
+              </p>
+              <a 
+                href="http://localhost:3004/blog/estimated-closing-costs-nh" 
+                className="inline-flex items-center gap-1.5 text-xs font-extrabold text-blue-800 hover:underline"
+              >
+                Granite State Closing Costs: Estimated Breakdown & Examples <span>→</span>
+              </a>
+            </div>
+
+            <h3 className="text-xl md:text-2xl font-bold text-slate-900 font-sans pt-4">
+              How to Compare Your Offers
+            </h3>
+            <p>
+              Never look at the interest rate in a vacuum. A lender offering a 5.99% rate might be charging you $10,000 in upfront "discount points" to get that rate, while a lender offering 6.25% might be giving you a lender credit to cover your closing costs. Always request a <strong>Loan Estimate (LE)</strong> from at least three lenders. The LE is a standardized, federally mandated document that makes it mathematically impossible for lenders to hide junk fees. Compare the "Box A" origination charges across all three LEs to find the true cost of the loan.
+            </p>
+          </div>
+        </section>
+
+        {/* Disclaimer Footer */}
+        <div className="mt-12 pt-8 border-t border-slate-200/80 text-slate-400 text-[10px] md:text-xs leading-relaxed text-center space-y-4">
+          <p className="max-w-2xl mx-auto">
             <em><strong>Advertiser Disclosure:</strong> Many of the offers that appear on this site are from companies from which NH Financial Review receives compensation. This compensation may impact how and where products appear on this site (including, for example, the order in which they appear). However, this does not influence our evaluations. Our opinions are our own.</em>
           </p>
-          <p>
-            © 2026 NH Financial Review. All rights reserved.
+          <p className="font-semibold">
+            © {new Date().getFullYear()} NH Financial Review. All rights reserved.
           </p>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

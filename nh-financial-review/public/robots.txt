@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /out/
+Allow: /
+
+Sitemap: https://nh-financial-review.onrender.com/sitemap.xml
