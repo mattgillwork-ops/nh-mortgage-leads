@@ -8,13 +8,7 @@ const posts = [
     date: "May 19, 2026",
     readTime: "6 min read",
     category: "First-Time Buyer",
-    gradient: "from-slate-900 to-blue-900",
-    pattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <path d="M0 100 L50 20 L100 100 Z" stroke="currentColor" strokeWidth="2" />
-        <path d="M20 100 L50 50 L80 100 Z" stroke="currentColor" strokeWidth="2" />
-      </svg>
-    )
+    image: "/images/first_home_keys.png"
   },
   {
     slug: "nh-mortgage-credit-score-requirements",
@@ -23,14 +17,7 @@ const posts = [
     date: "May 18, 2026",
     readTime: "5 min read",
     category: "Credit & Finance",
-    gradient: "from-blue-900 to-emerald-900",
-    pattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="2" />
-        <path d="M10 50 H90" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M50 10 V90" stroke="currentColor" strokeWidth="1.5" />
-      </svg>
-    )
+    image: "/images/credit_dashboard.png"
   },
   {
     slug: "estimated-closing-costs-nh",
@@ -39,13 +26,7 @@ const posts = [
     date: "May 15, 2026",
     readTime: "7 min read",
     category: "Closing Costs",
-    gradient: "from-indigo-950 to-amber-950",
-    pattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <rect x="15" y="15" width="70" height="70" rx="5" stroke="currentColor" strokeWidth="2" />
-        <path d="M30 35 H70 M30 50 H70 M30 65 H50" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    )
+    image: "/images/closing_workspace.png"
   },
   {
     slug: "manchester-nh-mortgage-guide",
@@ -54,13 +35,7 @@ const posts = [
     date: "May 20, 2026",
     readTime: "7 min read",
     category: "Local Guides",
-    gradient: "from-slate-900 to-sky-900",
-    pattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <path d="M10 20 H90 V80 H10 Z" stroke="currentColor" strokeWidth="2" />
-        <path d="M25 80 V50 M50 80 V35 M75 80 V60" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    )
+    image: "/images/manchester_sunset.png"
   },
   {
     slug: "nashua-nh-homebuyer-handbook",
@@ -69,13 +44,7 @@ const posts = [
     date: "May 20, 2026",
     readTime: "6 min read",
     category: "Local Guides",
-    gradient: "from-blue-900 to-indigo-950",
-    pattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <path d="M10 50 L30 20 H70 L90 50 L70 80 H30 Z" stroke="currentColor" strokeWidth="2" />
-        <circle cx="50" cy="50" r="15" stroke="currentColor" strokeWidth="2" />
-      </svg>
-    )
+    image: "/images/nashua_neighborhood.png"
   },
   {
     slug: "concord-nh-real-estate-guide",
@@ -84,13 +53,7 @@ const posts = [
     date: "May 20, 2026",
     readTime: "6 min read",
     category: "Local Guides",
-    gradient: "from-slate-900 to-emerald-950",
-    pattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <path d="M50 10 L90 40 V80 H10 V40 Z" stroke="currentColor" strokeWidth="2" />
-        <path d="M35 80 V50 H65 V80" stroke="currentColor" strokeWidth="2" />
-      </svg>
-    )
+    image: "/images/concord_statehouse.png"
   },
   {
     slug: "portsmouth-coastal-buyer-guide",
@@ -99,14 +62,7 @@ const posts = [
     date: "May 20, 2026",
     readTime: "8 min read",
     category: "Local Guides",
-    gradient: "from-teal-950 to-blue-900",
-    pattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <path d="M10 80 C 30 70, 40 90, 60 80 C 80 70, 90 90, 100 80" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        <path d="M50 20 L25 60 H75 Z" stroke="currentColor" strokeWidth="2" />
-        <line x1="50" y1="20" x2="50" y2="60" stroke="currentColor" strokeWidth="1.5" />
-      </svg>
-    )
+    image: "/images/portsmouth_waterfront.png"
   },
   {
     slug: "hanover-nh-homeowners-guide",
@@ -115,13 +71,7 @@ const posts = [
     date: "May 20, 2026",
     readTime: "7 min read",
     category: "Local Guides",
-    gradient: "from-emerald-950 to-stone-900",
-    pattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-10" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <rect x="20" y="20" width="60" height="60" rx="10" stroke="currentColor" strokeWidth="2" />
-        <path d="M35 35 L65 65 M65 35 L35 65" stroke="currentColor" strokeWidth="2" />
-      </svg>
-    )
+    image: "/images/hanover_downtown.png"
   }
 ];
 
@@ -182,8 +132,13 @@ export default function Home() {
             
             <article className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white hover-lift">
               {/* Graphic Banner */}
-              <div className={`relative h-64 w-full bg-gradient-to-r ${featuredPost.gradient} flex items-center justify-center overflow-hidden text-white`}>
-                {featuredPost.pattern}
+              <div className="relative h-64 w-full flex items-center justify-center overflow-hidden text-white">
+                <img 
+                  src={featuredPost.image} 
+                  alt={featuredPost.title}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                />
+                <div className="absolute inset-0 bg-slate-950/60 transition-opacity group-hover:opacity-70"></div>
                 <div className="relative z-10 text-center px-8 max-w-lg">
                   <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-xs font-semibold tracking-wide backdrop-blur-sm border border-white/20 mb-4">
                     {featuredPost.category}
@@ -229,8 +184,13 @@ export default function Home() {
                 <article key={post.slug} className="group flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white hover-lift">
                   <div>
                     {/* Graphic Thumbnail */}
-                    <div className={`relative h-40 w-full bg-gradient-to-br ${post.gradient} rounded-t-xl flex items-center justify-center overflow-hidden text-white`}>
-                      {post.pattern}
+                    <div className="relative h-40 w-full rounded-t-xl flex items-center justify-center overflow-hidden text-white">
+                      <img 
+                        src={post.image} 
+                        alt={post.title}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      />
+                      <div className="absolute inset-0 bg-slate-950/60 transition-opacity group-hover:opacity-75"></div>
                       <span className="relative z-10 inline-block px-3 py-1 rounded-full bg-white/10 text-[10px] font-bold tracking-wide backdrop-blur-sm border border-white/20">
                         {post.category}
                       </span>

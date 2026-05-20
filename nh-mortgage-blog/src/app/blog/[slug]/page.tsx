@@ -9,7 +9,7 @@ interface Article {
   date: string;
   readTime: string;
   category: string;
-  gradient: string;
+  image: string;
   content: React.ReactNode;
 }
 
@@ -22,7 +22,7 @@ const articles: Record<string, Article> = {
     date: "May 19, 2026",
     readTime: "6 min read",
     category: "First-Time Buyer",
-    gradient: "from-slate-900 to-blue-900",
+    image: "/images/first_home_keys.png",
     content: (
       <div className="space-y-6">
         <p>
@@ -109,7 +109,7 @@ const articles: Record<string, Article> = {
     date: "May 18, 2026",
     readTime: "5 min read",
     category: "Credit & Finance",
-    gradient: "from-blue-900 to-emerald-900",
+    image: "/images/credit_dashboard.png",
     content: (
       <div className="space-y-6">
         <p>
@@ -167,7 +167,7 @@ const articles: Record<string, Article> = {
     date: "May 15, 2026",
     readTime: "7 min read",
     category: "Closing Costs",
-    gradient: "from-indigo-950 to-amber-950",
+    image: "/images/closing_workspace.png",
     content: (
       <div className="space-y-6">
         <p>
@@ -233,7 +233,7 @@ const articles: Record<string, Article> = {
     date: "May 20, 2026",
     readTime: "7 min read",
     category: "Local Guides",
-    gradient: "from-slate-900 to-sky-900",
+    image: "/images/manchester_sunset.png",
     content: (
       <div className="space-y-6">
         <p>
@@ -280,7 +280,7 @@ const articles: Record<string, Article> = {
     date: "May 20, 2026",
     readTime: "6 min read",
     category: "Local Guides",
-    gradient: "from-blue-900 to-indigo-950",
+    image: "/images/nashua_neighborhood.png",
     content: (
       <div className="space-y-6">
         <p>
@@ -327,7 +327,7 @@ const articles: Record<string, Article> = {
     date: "May 20, 2026",
     readTime: "6 min read",
     category: "Local Guides",
-    gradient: "from-slate-900 to-emerald-950",
+    image: "/images/concord_statehouse.png",
     content: (
       <div className="space-y-6">
         <p>
@@ -374,7 +374,7 @@ const articles: Record<string, Article> = {
     date: "May 20, 2026",
     readTime: "8 min read",
     category: "Local Guides",
-    gradient: "from-teal-950 to-blue-900",
+    image: "/images/portsmouth_waterfront.png",
     content: (
       <div className="space-y-6">
         <p>
@@ -421,7 +421,7 @@ const articles: Record<string, Article> = {
     date: "May 20, 2026",
     readTime: "7 min read",
     category: "Local Guides",
-    gradient: "from-emerald-950 to-stone-900",
+    image: "/images/hanover_downtown.png",
     content: (
       <div className="space-y-6">
         <p>
@@ -528,8 +528,13 @@ export default async function ArticlePage({ params }: PageProps) {
           </div>
 
           {/* Graphic Banner */}
-          <div className={`w-full h-48 md:h-64 rounded-2xl bg-gradient-to-tr ${article.gradient} flex items-center justify-center overflow-hidden text-white border border-slate-200/50 shadow-inner relative`}>
-            <div className="absolute inset-0 w-full h-full opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+          <div className="w-full h-48 md:h-64 rounded-2xl flex items-center justify-center overflow-hidden text-white border border-slate-200/50 shadow-inner relative">
+            <img 
+              src={article.image} 
+              alt={article.title}
+              className="absolute inset-0 w-full h-full object-cover" 
+            />
+            <div className="absolute inset-0 bg-slate-950/60"></div>
             <div className="text-center px-6 relative z-10 max-w-md">
               <p className="text-lg font-medium opacity-90 leading-relaxed font-sans italic">
                 "{article.excerpt}"
