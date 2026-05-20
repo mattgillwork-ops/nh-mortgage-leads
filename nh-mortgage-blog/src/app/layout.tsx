@@ -23,6 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${outfit.variable} h-full antialiased`}>
+      <head>
+        {/* Lemonade Affiliate Verification */}
+        <meta name="fo-verify" content="201efa5d-8e8e-40dc-bc9f-cbcab045d651" />
+      </head>
       <body className="min-h-full flex flex-col bg-[#f8fafc] text-[#0f172a]">{children}</body>
     </html>
   );
