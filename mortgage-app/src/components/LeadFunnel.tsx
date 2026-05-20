@@ -38,6 +38,23 @@ export default function LeadFunnel() {
       .then(res => res.json())
       .then(data => setMarketRate(data))
       .catch(() => console.warn('Using fallback market rates'));
+
+    // Capture UTM parameters from URL search query on mount
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const utmSource = params.get('utm_source');
+      const utmMedium = params.get('utm_medium');
+      const utmCampaign = params.get('utm_campaign');
+
+      if (utmSource || utmMedium || utmCampaign) {
+        setFormData((prev: any) => ({
+          ...prev,
+          ...(utmSource ? { utm_source: utmSource } : {}),
+          ...(utmMedium ? { utm_medium: utmMedium } : {}),
+          ...(utmCampaign ? { utm_campaign: utmCampaign } : {}),
+        }));
+      }
+    }
   }, []);
 
   const validateStep = () => {
@@ -206,7 +223,7 @@ export default function LeadFunnel() {
         {/* Affiliate Integrations */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', textAlign: 'left', marginBottom: '2rem' }}>
             {(formData.credit_score.includes('<620') || formData.credit_score.includes('Fair')) && (
-                <div className="glass-panel" style={{ padding: '2rem', border: '1px solid #ef4444', background: 'rgba(239, 68, 68, 0.05)' }}>
+                <div className="glass-panel" style={{ padding: '2rem', border: '1px solid #ef4444', background: 'rgba(239, 68, 68, 0.05)', textAlign: 'center' }}>
                     <h3 style={{ color: '#ef4444', fontSize: '1.2rem', marginBottom: '0.5rem' }}>⚠️ Action Required: Optimize Your Credit Score</h3>
                     <p style={{ opacity: 0.8, fontSize: '0.95rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
                         Your current score ({formData.credit_score}) will result in significantly higher interest rates or denial from wholesale lenders. 
@@ -218,8 +235,8 @@ export default function LeadFunnel() {
                 </div>
             )}
 
-            <div className="glass-panel" style={{ padding: '2rem', border: '1px solid #3b82f6', background: 'rgba(59, 130, 246, 0.05)' }}>
-                <h3 style={{ color: '#60a5fa', fontSize: '1.2rem', marginBottom: '0.5rem' }}>🛡️ Step 3: Secure Your Investment</h3>
+            <div className="glass-panel" style={{ padding: '2rem', border: '1px solid #3b82f6', background: 'rgba(59, 130, 246, 0.05)', textAlign: 'center' }}>
+                <h3 style={{ color: '#60a5fa', fontSize: '1.2rem', marginBottom: '0.5rem' }}>Secure Your Investment</h3>
                 <p style={{ opacity: 0.8, fontSize: '0.95rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
                     Lenders require proof of Homeowners Insurance before clearing you to close. 
                     Get an instant, digital quote right now to avoid delays in your closing timeline.
@@ -313,11 +330,7 @@ export default function LeadFunnel() {
                         fontSize: '1rem'
                     }}
                   />
-                  {step === STEPS.length && (
-                    <div style={{ marginTop: '0.5rem', fontSize: '0.7rem', opacity: 0.4, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                        <span>🛡️</span> 100% Local. No spam. Secured by Antigravity v3.
-                    </div>
-                  )}
+
                 </div>
               ))}
             </div>
