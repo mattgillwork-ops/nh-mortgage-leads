@@ -10,7 +10,7 @@ const lenders = [
     pros: ['Direct access to wholesale rates', 'NHHFA approved & first-time buyer experts', 'Sovereign pre-approval engine', 'Extremely fast local closing times'],
     cons: ['Limited to NH and surrounding New England states'],
     ctaText: 'Calculate Your NH Rate',
-    ctaLink: 'http://localhost:3001/?utm_source=nh-financial-review&utm_medium=listicle&utm_campaign=top-10-lenders',
+    ctaLink: 'https://nh-mortgage-leads.onrender.com/funnel?utm_source=nh-financial-review&utm_medium=listicle&utm_campaign=top-10-lenders',
     isPrimary: true,
   },
   {
@@ -141,7 +141,7 @@ export default function Home() {
           
           <nav className="flex items-center gap-6">
             <a 
-              href="http://localhost:3004" 
+              href="https://nh-mortgage-blog.onrender.com" 
               className="text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors"
             >
               Blog Guides
@@ -318,7 +318,7 @@ export default function Home() {
                 The New Hampshire Housing Finance Authority provides substantial grants for qualified buyers. Read our full analysis:
               </p>
               <a 
-                href="http://localhost:3004/blog/nhhfa-home-start-qualification-2026" 
+                href="https://nh-mortgage-blog.onrender.com/blog/nhhfa-home-start-qualification-2026" 
                 className="inline-flex items-center gap-1.5 text-xs font-extrabold text-blue-800 hover:underline"
               >
                 How to Qualify for the NHHFA Home Start Program in 2026 <span>→</span>
@@ -367,7 +367,7 @@ export default function Home() {
                 New Hampshire levies a transfer tax on all sales. Learn what fees to expect and how to calculate them:
               </p>
               <a 
-                href="http://localhost:3004/blog/estimated-closing-costs-nh" 
+                href="https://nh-mortgage-blog.onrender.com/blog/estimated-closing-costs-nh" 
                 className="inline-flex items-center gap-1.5 text-xs font-extrabold text-blue-800 hover:underline"
               >
                 Granite State Closing Costs: Estimated Breakdown & Examples <span>→</span>
