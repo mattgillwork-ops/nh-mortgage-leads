@@ -68,7 +68,8 @@ async def sync_rates():
                 print("[DIAGNOSTIC] Capturing state for debugging...")
                 await page.screenshot(path="sync_failure.png")
                 with open("sync_failure.html", "w", encoding="utf-8") as f:
-                    f.write(await page.content())
+                    html_content = await page.evaluate("() => document.documentElement.outerHTML")
+                    f.write(html_content)
                 raise Exception("Critical: Could not extract mortgage rate from Freddie Mac site.")
 
             print(f"[VERIFIED] Market Rate: {rate}%")

@@ -133,8 +133,8 @@ def run_qa(target_path: str):
         py_files = [target_path]
     else:
         for root, dirs, files in os.walk(target_path):
-            # Skip __pycache__, .git, and venv
-            dirs[:] = [d for d in dirs if d not in ('__pycache__', '.git', 'venv')]
+            # Skip __pycache__, .git, and any venv directories
+            dirs[:] = [d for d in dirs if d not in ('__pycache__', '.git') and not d.startswith('venv')]
             for f in files:
                 if f.endswith('.py') and f not in ('qa_check.py', 'agent_router.py'):
                     py_files.append(os.path.join(root, f))

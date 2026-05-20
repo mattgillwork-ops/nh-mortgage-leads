@@ -36,7 +36,7 @@ def update_supabase(rate_data):
     
     try:
         # Check if entry for today exists
-        res = requests.post(url, headers=headers, json=payload)
+        res = requests.post(url, headers=headers, json=payload, timeout=10)
         if res.status_code in [200, 201]:
             print("Successfully synced rates to Supabase.")
         else:
@@ -50,7 +50,7 @@ def fetch_current_rates():
     headers = {'User-Agent': 'Mozilla/5.0'}
     
     try:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=10)
         soup = BeautifulSoup(response.text, 'html.parser')
         
         # Refined scraping for Mortgage News Daily

@@ -19,7 +19,7 @@ def check_links():
     for path in TEST_PATHS:
         url = f"{BASE_URL}{path}"
         try:
-            response = requests.get(url)
+            response = requests.get(url, timeout=5)
             if response.status_code == 200:
                 print(f"[PASS] {path} (200 OK)")
             else:
