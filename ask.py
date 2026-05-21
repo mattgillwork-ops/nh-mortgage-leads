@@ -79,32 +79,12 @@ def main():
 
     # Parse arguments
     args = sys.argv[1:]
-    force_agent = None
 
-    if args[0] == "--code":
-        force_agent = "coder"
-        args = args[1:]
-    elif args[0] == "--marketing":
-        force_agent = "marketing"
-        args = args[1:]
-    elif args[0] == "--thinker":
-        force_agent = "thinker"
-        args = args[1:]
-    elif args[0] == "--researcher":
-        force_agent = "researcher"
-        args = args[1:]
-    elif args[0] == "--analyst":
-        force_agent = "analyst"
-        args = args[1:]
-    elif args[0] == "--devops":
-        force_agent = "devops"
-        args = args[1:]
-    elif args[0] == "--ux":
-        force_agent = "ux"
-        args = args[1:]
-    elif args[0] == "--quick":
-        # Skip verification for maximum speed
-        force_agent = "quick"
+    # STRICT PROTOCOL: All bypass flags are deprecated.
+    legacy_flags = ["--code", "--marketing", "--thinker", "--researcher", "--analyst", "--devops", "--ux", "--quick"]
+    if len(args) > 0 and args[0] in legacy_flags:
+        print(f"\n[WARNING] Direct delegation via {args[0]} is strictly prohibited under the Alex First Protocol.")
+        print("[SYSTEM] Re-routing task to Alex (CEO Orchestrator) for proper decomposition...\n")
         args = args[1:]
     
     skip_check = False
@@ -158,45 +138,10 @@ def main():
         "thinker": deep_thinker
     })
 
-    if force_agent == "coder":
-        print("[LOCAL] Routing directly to Coder Agent (anti-coder)...\n")
-        response = coder.run(prompt)
-        print(response)
-    elif force_agent == "marketing":
-        print("[LOCAL] Routing directly to Marketing Agent (anti-marketing)...\n")
-        response = marketing.run(prompt)
-        print(response)
-    elif force_agent == "thinker":
-        print("[LOCAL] Routing directly to Deep Thinker Agent (anti-deep-thinker)...\n")
-        response = deep_thinker.run(prompt)
-        print(response)
-    elif force_agent == "researcher":
-        print("[LOCAL] Routing directly to Researcher Agent (anti-researcher)...\n")
-        response = researcher.run(prompt)
-        print(response)
-    elif force_agent == "analyst":
-        print("[LOCAL] Routing directly to Analyst Agent (anti-analyst)...\n")
-        response = analyst.run(prompt)
-        print(response)
-    elif force_agent == "devops":
-        print("[LOCAL] Routing directly to DevOps Agent (anti-devops)...\n")
-        response = devops.run(prompt)
-        print(response)
-    elif force_agent == "ux":
-        print("[LOCAL] Routing directly to UX Agent (anti-ux)...\n")
-        response = ux.run(prompt)
-        print(response)
-    elif force_agent == "quick":
-        # Use the fast router model directly, no verification
-        print("[LOCAL] Quick mode (anti-fast-router, no verification)...\n")
-        import ollama
-        result = ollama.chat(model="anti-fast-router", messages=[{"role": "user", "content": prompt}])
-        print(result["message"]["content"])
-    else:
-        # Full CEO pipeline
-        print("[LOCAL] Routing through Alex (CEO Orchestrator)...\n")
-        response = ceo.run(prompt)
-        print(response)
+    # Full CEO pipeline - Alex First Protocol Enforced
+    print("[LOCAL] Routing through Alex (CEO Orchestrator)...\n")
+    response = ceo.run(prompt)
+    print(response)
 
 
 if __name__ == "__main__":

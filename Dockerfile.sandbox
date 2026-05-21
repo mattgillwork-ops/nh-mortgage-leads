@@ -23,7 +23,12 @@ RUN pip install --no-cache-dir \
     pyyaml \
     playwright \
     mcp[cli] \
-    pyrit
+    pyrit \
+    ollama \
+    google-genai \
+    python-dotenv \
+    pillow \
+    openai
 
 # Install Playwright browsers and system dependencies
 RUN playwright install --with-deps chromium

@@ -3,8 +3,62 @@ import MortgageCalculator from "./components/MortgageCalculator";
 
 const posts = [
   {
+    slug: "masshousing-grant-eligibility-2025",
+    title: "Do You Qualify for the $25,000 MassHousing Grant in 2025?",
+    excerpt: "Everything you need to know about the MassHousing and ONE Mortgage down payment assistance programs, income limits, and eligibility.",
+    date: "May 21, 2026",
+    readTime: "6 min read",
+    category: "First-Time Buyer",
+    image: "/images/first_home_keys.png"
+  },
+  {
+    slug: "nhhfa-homebuyer-grants-2025",
+    title: "Do You Qualify for NH Homebuyer Grants in 2025? (Check Eligibility)",
+    excerpt: "Learn how the Home Flex Plus and First-Generation Homebuyer programs can cover your down payment in New Hampshire.",
+    date: "May 21, 2026",
+    readTime: "5 min read",
+    category: "Grants & Assistance",
+    image: "/images/first_home_keys.png"
+  },
+  {
+    slug: "nh-vs-ma-property-taxes-buying-power",
+    title: "NH vs. MA: How Much House Can You Actually Afford in 2025?",
+    excerpt: "Understand how the difference between MA purchase prices and NH property taxes changes your true mortgage buying power.",
+    date: "May 21, 2026",
+    readTime: "7 min read",
+    category: "Financial Strategy",
+    image: "/images/closing_workspace.png"
+  },
+  {
+    slug: "moving-ma-to-nh-mortgage-guide",
+    title: "Moving from MA to NH: The 2025 Mortgage Guide for Out-of-State Buyers",
+    excerpt: "Everything you need to know about remote work verification, primary residence rules, and cross-state financing when relocating to New Hampshire.",
+    date: "May 21, 2026",
+    readTime: "6 min read",
+    category: "Relocation",
+    image: "/images/nashua_neighborhood.png"
+  },
+  {
+    slug: "3-percent-down-mortgage-new-england",
+    title: "How to Buy a House in New England with Only 3% Down",
+    excerpt: "A guide to 3% down conventional loans, 3.5% down FHA loans, and how to combine them with state grants to minimize your out-of-pocket costs.",
+    date: "May 21, 2026",
+    readTime: "6 min read",
+    category: "First-Time Buyer",
+    image: "/images/first_home_keys.png"
+  },
+  {
+    slug: "minimum-credit-score-mortgage-new-england",
+    title: "Can You Get a Mortgage in New England with a 620 Credit Score?",
+    excerpt: "The truth about minimum credit score requirements for FHA, Conventional, and state grant programs in Massachusetts and New Hampshire.",
+    date: "May 21, 2026",
+    readTime: "5 min read",
+    category: "Credit & Finance",
+    image: "/images/credit_dashboard.png"
+  },
+  {
     slug: "nhhfa-home-start-qualification-2026",
-    title: "How to Qualify for the NHHFA Home Start Program in 2026",
+    title: "First-Time Homebuyer Programs in New Hampshire 2026: NHHFA Home Start",
     excerpt: "Everything you need to know about qualifying for New Hampshire Housing's premier first-time homebuyer program, including income limits, credit scores, and down payment assistance.",
     date: "May 19, 2026",
     readTime: "6 min read",

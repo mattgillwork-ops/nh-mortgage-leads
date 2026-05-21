@@ -30,6 +30,9 @@ est_value: ${data.est_value}
 down_payment: ${data.down_payment}
 monthly_savings: ${data.monthly_savings}
 equity_30y: ${data.equity_30y}
+utm_source: ${data.utm_source || ''}
+utm_medium: ${data.utm_medium || ''}
+utm_campaign: ${data.utm_campaign || ''}
 captured_at: ${new Date().toISOString()}
 ---
 
@@ -46,6 +49,11 @@ captured_at: ${new Date().toISOString()}
 - **Loan Amount**: $${(data.est_value - data.down_payment).toLocaleString()}
 - **Monthly Savings**: $${data.monthly_savings}
 - **30-Year Wealth Projection**: $${data.equity_30y.toLocaleString()}
+
+## 📊 Marketing Attribution
+- **UTM Source**: ${data.utm_source || 'direct'}
+- **UTM Medium**: ${data.utm_medium || 'none'}
+- **UTM Campaign**: ${data.utm_campaign || 'none'}
 
 ## 🛠️ Strategy Notes
 - **Grade**: ${data.grade}

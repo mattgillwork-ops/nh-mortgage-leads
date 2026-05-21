@@ -1,0 +1,4 @@
+TIMESTAMP,FIRST_NAME,LAST_NAME,EMAIL,PHONE,LOAN_PURPOSE,PROPERTY_TYPE,LOCATION_NH,EST_VALUE,DOWN_PAYMENT,CREDIT_SCORE,GRADE,SOURCE
+2026-05-18T16:55:45.397Z,Test,User,test@example.com,603-555-0199,Purchase,Primary Residence,Manchester,450000.0,90000.0,Excellent (740+),A,Vault (.md)
+2026-05-16T14:39:23.971Z,Test,User,test@example.com,603-555-0199,Purchase,Primary Residence,Manchester,450000.0,20000.0,Excellent (740+),C,Vault (.md)
+2026-05-12 10:01:26,HighValue,Prospect,prospect@example.com,603-555-9999,Purchase,Single Family,Portsmouth,850000.0,100000.0,Excellent (740+),HOT,SQLite (db)

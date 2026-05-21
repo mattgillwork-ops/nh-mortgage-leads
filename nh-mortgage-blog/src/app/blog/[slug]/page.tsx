@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import MortgageCalculator from "../../components/MortgageCalculator";
+import { newArticles, newTakeaways } from "../data/newArticles";
 
 // Define the article structure
 interface Article {
@@ -16,10 +17,10 @@ interface Article {
 }
 
 // 3 fully written high-quality articles
-const articles: Record<string, Article> = {
+const baseArticles: Record<string, Article> = {
   "nhhfa-home-start-qualification-2026": {
     slug: "nhhfa-home-start-qualification-2026",
-    title: "How to Qualify for the NHHFA Home Start Program in 2026",
+    title: "First-Time Homebuyer Programs in New Hampshire 2026: NHHFA Home Start",
     excerpt: "Everything you need to know about qualifying for New Hampshire Housing's premier first-time homebuyer program, including income limits, credit scores, and down payment assistance.",
     date: "May 19, 2026",
     readTime: "6 min read",
@@ -465,6 +466,11 @@ const articles: Record<string, Article> = {
   }
 };
 
+const articles: Record<string, Article> = {
+  ...baseArticles,
+  ...newArticles,
+};
+
 export async function generateStaticParams() {
   return Object.keys(articles).map((slug) => ({
     slug: slug,
@@ -559,7 +565,12 @@ export default async function ArticlePage({ params }: PageProps) {
     ]
   };
 
-  const takeaways = takeawaysMap[slug] || [];
+  const allTakeawaysMap = {
+    ...takeawaysMap,
+    ...newTakeaways,
+  };
+
+  const takeaways = allTakeawaysMap[slug] || [];
 
   const articleSchema = {
     "@context": "https://schema.org",

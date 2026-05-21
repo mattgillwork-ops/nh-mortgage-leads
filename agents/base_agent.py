@@ -128,6 +128,8 @@ class BaseAgent:
             return {}
 
     def _check_availability(self, model_name: str) -> bool:
+        if model_name.startswith("openai:"):
+            return True
         try:
             installed = [m.model for m in self.client.list().models]
             return any(model_name in name for name in installed)
@@ -186,6 +188,50 @@ class BaseAgent:
                     from tools.file_manager import list_dir
                     path = tool_args.strip("'\"") if tool_args else "."
                     tool_output = list_dir(path)
+                elif tool_name == "write_file":
+                    from tools.file_manager import write_file
+                    import ast
+                    try:
+                        parsed = ast.literal_eval(f"({tool_args})")
+                        if isinstance(parsed, tuple) and len(parsed) >= 2:
+                            path = parsed[0].strip()
+                            content = parsed[1]
+                        else:
+                            path = tool_args.strip("'\"")
+                            content = ""
+                    except Exception:
+                        parts = tool_args.split(",", 1)
+                        path = parts[0].strip("'\" ")
+                        content = parts[1].strip("'\" ") if len(parts) > 1 else ""
+                    
+                    if ".." in path or path.startswith("/") or (len(path) > 1 and path[1] == ":"):
+                         tool_output = "[SECURITY ERROR] Path traversal or absolute path detected. Access denied."
+                    else:
+                         tool_output = write_file(path, content)
+                elif tool_name == "replace_file_content":
+                    from tools.file_manager import replace_file_content
+                    import ast
+                    try:
+                        parsed = ast.literal_eval(f"({tool_args})")
+                        if isinstance(parsed, tuple) and len(parsed) >= 3:
+                            path = parsed[0].strip()
+                            target = parsed[1]
+                            replacement = parsed[2]
+                        else:
+                            path = ""
+                            target = ""
+                            replacement = ""
+                    except Exception:
+                        path = ""
+                        target = ""
+                        replacement = ""
+                        
+                    if ".." in path or path.startswith("/") or (len(path) > 1 and path[1] == ":"):
+                         tool_output = "[SECURITY ERROR] Path traversal or absolute path detected. Access denied."
+                    elif not path or not target:
+                         tool_output = "[FileManager ERROR] Invalid parameters for replace_file_content."
+                    else:
+                         tool_output = replace_file_content(path, target, replacement)
                 else:
                     tool_output = f"[Error: Tool '{tool_name}' logic not yet mapped in BaseAgent. Current whitelist: {self.authorized_tools}]"
             except Exception as e:
@@ -208,6 +254,33 @@ class BaseAgent:
         ctx = self.config.get('context', 4096)
         current_date = datetime.now().strftime("%B %d, %Y")
         system_injection = f"\n\n[SYSTEM INFO: Current Date is {current_date}]\n"
+        
+        if active_model and active_model.startswith("openai:"):
+            import openai
+            api_key = os.getenv("OPENAI_API_KEY")
+            if not api_key:
+                return "ERROR: OPENAI_API_KEY is not set in .env"
+            
+            openai_client = openai.OpenAI(api_key=api_key)
+            model_id = active_model.split(":")[1]
+            
+            try:
+                response_format = {"type": "json_object"} if kwargs.get('json_mode') else {"type": "text"}
+                messages = [{'role': 'user', 'content': system_injection + prompt}]
+                if kwargs.get('json_mode') and "json" not in prompt.lower():
+                    messages[0]['content'] += "\nPlease format your response in JSON."
+                
+                response = openai_client.chat.completions.create(
+                    model=model_id,
+                    messages=messages,
+                    response_format=response_format
+                )
+                return response.choices[0].message.content
+            except Exception as e:
+                self.logger.warning(f"OpenAI unavailable ({type(e).__name__}): {e}")
+                self.logger.info(f"[{self.agent_id}] Falling back to local model...")
+                raise  # Triggers resilience_module fallback to local model
+
         chat_format = 'json' if kwargs.get('json_mode') else ''
         
         response = self.client.chat(

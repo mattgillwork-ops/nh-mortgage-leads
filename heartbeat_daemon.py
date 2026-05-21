@@ -40,6 +40,9 @@ PYTHON_EXE = sys.executable
 ASK_SCRIPT = os.path.join(BASE_DIR, "ask.py")
 SELFCHECK_SCRIPT = os.path.join(BASE_DIR, "selfcheck.py")
 
+# Windows: Suppress console window flashing for subprocess calls
+_CREATE_NO_WINDOW = 0x08000000 if sys.platform == 'win32' else 0
+
 
 def preflight_check() -> bool:
     """
@@ -91,7 +94,8 @@ def run_task(prompt: str) -> str:
             capture_output=True,
             text=True,
             cwd=BASE_DIR,
-            timeout=300  # 5-minute timeout per task to prevent hangs
+            timeout=300,  # 5-minute timeout per task to prevent hangs
+            creationflags=_CREATE_NO_WINDOW
         )
         if result.returncode != 0:
             logging.warning(f"Task exited with code {result.returncode}. stderr: {result.stderr[:200]}")
@@ -104,42 +108,52 @@ def run_task(prompt: str) -> str:
         return str(e)
 
 
+# Track consecutive health check failures across cycles
+_consecutive_failures = 0
+
 def run_pulse_cycle():
     """
     Executes one full heartbeat cycle.
     Priority: Infrastructure Health > Knowledge Maintenance > Goal Review.
     Business tasks are NOT in this loop — that is for Phase 2 (later).
     """
+    global _consecutive_failures
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     logging.info(f"=== Pulse Check at {timestamp} ===")
 
     # --- Task 1: Infrastructure Health Check ---
     # Run selfcheck.py in quick mode to verify all systems are operational.
-    # We use a direct subprocess call here to get the return code.
     health_check = subprocess.run(
         [PYTHON_EXE, SELFCHECK_SCRIPT, "--quick"],
         capture_output=True,
         text=True,
-        cwd=BASE_DIR
+        cwd=BASE_DIR,
+        creationflags=_CREATE_NO_WINDOW
     )
     if health_check.returncode != 0:
-        logging.critical("INFRASTRUCTURE COLLAPSE DETECTED! Heartbeat stopping to prevent data corruption.")
-        logging.critical(health_check.stdout)
-        sys.exit(1)
+        _consecutive_failures += 1
+        logging.error(f"Health check FAILED ({_consecutive_failures}/5 consecutive failures)")
+        logging.error(health_check.stdout[-500:] if health_check.stdout else "(no output)")
+        if _consecutive_failures >= 5:
+            logging.critical("5 CONSECUTIVE HEALTH FAILURES. Pausing heartbeat for 30 minutes.")
+            time.sleep(1800)
+            _consecutive_failures = 0
+        logging.info("=== Pulse cycle complete (degraded). ===")
+        return  # Skip repair tasks but don't die
     
+    _consecutive_failures = 0
     logging.info("[HEALTH OK] System foundation verified.")
 
     # --- Task 2: Autonomous Repair ---
     # Scan logs for failures and attempt remediation.
     logging.info("Initiating Autonomous Repair Cycle...")
-    subprocess.run([PYTHON_EXE, os.path.join(BASE_DIR, "tools/repair_orchestrator.py")], cwd=BASE_DIR)
+    subprocess.run([PYTHON_EXE, os.path.join(BASE_DIR, "tools/repair_orchestrator.py")], cwd=BASE_DIR, creationflags=_CREATE_NO_WINDOW)
 
     # --- Task 3: Knowledge Pruning ---
+    # (Reserved for future autonomous knowledge_manager.py integration)
 
-    # --- Task 4: Autonomous Rate Engine Audit ---
-    # Refresh NH mortgage rates and auto-deploy if they've changed.
-    logging.info("Initiating Autonomous Rate Audit...")
-    subprocess.run([PYTHON_EXE, os.path.join(BASE_DIR, "tools/daily_rate_audit.py")], cwd=BASE_DIR)
+    # NOTE: daily_rate_audit.py removed from local heartbeat.
+    # Rate syncs require cloud credentials and run via CI/CD (GitHub Actions).
 
     logging.info("=== Pulse cycle complete. ===")
 

@@ -31,7 +31,7 @@ agents:
     skills: ["Complex reasoning", "Architecture"]
 
   caleb:
-    model: { primary: "qwen2.5-coder:14b", fallback: "qwen2.5-coder:7b" }
+    model: { primary: "openai:gpt-4o", fallback: "anti-coder:latest" }
     permissions:
       memory: { read: ["project", "code", "episodic"], write_episodic: true, propose_ltm: true, approve_ltm: false }
       tools: ["write_file", "replace_file_content", "read_file", "list_dir", "run_test"]

@@ -56,3 +56,4 @@ This document defines the roles, models, and protocols for the Antigravity v3 ar
 1. **LTM Gate**: Only Alex and Vera can commit to the `Knowledge_Graph`.
 2. **Vision Gate**: No UI is production-ready until Aria provides a `VISUAL_PASS` log.
 3. **Audit Gate**: Dax must audit all `run_command` requests for sandbox escapes.
+4. **Alex First Protocol**: ALL user prompts MUST be routed to Alex (CEO) first. Direct delegation to sub-agents from the user is strictly prohibited. Alex owns goal interpretation and task decomposition.

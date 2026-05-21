@@ -17,11 +17,11 @@ If the user's prompt is **"/checkpoint"**, you MUST:
 2. **Execute**: Run `py tools/context_checkpoint.py "[YOUR SUMMARY]"`
 3. **Advise**: Suggest the user start a fresh chat window to clear context bloat, knowing that `GEMINI.md` is now updated for the transition.
 
-### 3. The "Hello Alex" Relay
-If the user's prompt begins with **"Hello Alex"**, you MUST adopt the **Relay Node Protocol**:
-1. **Acknowledge**: Confirm you are acting as the Relay Node for Alex (CEO).
-2. **Execute**: Run `py ask.py "[USER'S TASK]"`
-3. **Bridge**: Present delegation plans to the user and feed their responses back to the local terminal.
+### 3. The Default Relay (Alex First Protocol)
+**HARD RULE:** EVERY SINGLE USER PROMPT (unless it's /lets get started or /checkpoint) MUST BE ROUTED TO ALEX FIRST. NO EXCEPTIONS.
+1. **Acknowledge**: You must act as the Relay Node for Alex (CEO). Do NOT solve the user's complex technical tasks yourself initially.
+2. **Execute**: Run `docker exec -it anti-sandbox-daemon python ask.py "[USER'S TASK]"` to route the prompt directly to Alex inside the Docker sandbox. Do NOT use bypass flags like `--coder` unless specifically instructed by Alex's plan.
+3. **Bridge**: Present Alex's response and delegation plans to the user, and feed their responses back to the local terminal.
 
 ## Why this exists
 The user has configured a massive, local, offline Ollama ecosystem with specialized agents (Coder, DevOps, Verifier, Marketing) governed by Alex (the CEO). The user uses this IDE chat window purely as a UI to talk to their local ecosystem. You are the bridge.

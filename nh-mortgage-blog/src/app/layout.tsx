@@ -10,9 +10,9 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nh-mortgage-blog.onrender.com"),
-  title: "New Hampshire Mortgage Blog & Homeowner Guide",
-  description: "Your trusted source for New Hampshire mortgage guides, local interest rate updates, NHHFA home start qualifications, and closing cost breakdowns.",
-  keywords: ["NH Mortgage", "New Hampshire mortgage rates", "NHHFA Home Start", "NH closing costs", "lender reviews"],
+  title: "New Hampshire Mortgage Blog & Homeowner Guide | Buying a home in NH",
+  description: "Your trusted source for New Hampshire mortgage guides, local interest rate updates, an accurate NH mortgage calculator, and closing cost breakdowns.",
+  keywords: ["NH Mortgage", "New Hampshire mortgage rates", "NHHFA Home Start", "NH closing costs", "lender reviews", "buying a home in NH", "NH mortgage calculator", "first-time homebuyer programs NH"],
   authors: [{ name: "Anti-Gravity Financial Editorial" }],
   other: {
     "fo-verify": "201efa5d-8e8e-40dc-bc9f-cbcab045d651",

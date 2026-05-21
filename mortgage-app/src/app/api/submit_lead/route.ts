@@ -30,7 +30,11 @@ export async function POST(request: Request) {
     const grade = scoreLead(data);
     data.grade = grade;
 
-    console.log(`API: Processing Lead Intelligence [Grade ${grade}]:`, data.email);
+    console.log(`API: Processing Lead Intelligence [Grade ${grade}]:`, data.email, {
+        utm_source: data.utm_source || 'direct',
+        utm_medium: data.utm_medium || 'none',
+        utm_campaign: data.utm_campaign || 'none'
+    });
 
     // 2. SOVEREIGN PERSISTENCE (Local Vault)
     // We attempt this first as it's the primary sovereign requirement
@@ -55,6 +59,9 @@ export async function POST(request: Request) {
             lifetime_roi: data.equity_30y, // Using equity_30y as lifetime_roi
             grade: grade,
             vault_sync: vaultSaved,
+            utm_source: data.utm_source || null,
+            utm_medium: data.utm_medium || null,
+            utm_campaign: data.utm_campaign || null,
             created_at: new Date().toISOString()
         }]);
 

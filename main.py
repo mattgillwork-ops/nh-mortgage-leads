@@ -71,16 +71,9 @@ def main():
             print("\n⏳ Processing...\n")
 
             # Run the full CEO pipeline
-            response, model_used, verification = ceo.run(user_input)
+            response = ceo.run(user_input)
 
             # Display results
-            print("\n" + "=" * 56)
-            print(f"  MODEL USED:   {model_used}")
-            print(f"  VERIFICATION: {verification.get('verdict', 'N/A')} "
-                  f"(confidence: {verification.get('confidence', 'N/A')})")
-            if verification.get('issues'):
-                print(f"  ISSUES:       {verification['issues']}")
-            print("=" * 56)
             print("\n📋 RESPONSE:\n")
             print(response)
             print("\n" + "=" * 56)
@@ -94,7 +87,4 @@ def main():
 
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-
     main()

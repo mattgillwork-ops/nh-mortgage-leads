@@ -140,5 +140,31 @@ def find_files(pattern: str, base_path: str = ".") -> str:
         return f"[FileManager ERROR] {e}"
 
 
+def replace_file_content(path: str, target: str, replacement: str) -> str:
+    """Safely replace a target string inside a file with a replacement string."""
+    try:
+        full_path = _safe_path(path)
+        if not os.path.exists(full_path):
+            return f"[FileManager ERROR] File not found: {path}"
+            
+        with open(full_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+            
+        if target not in content:
+            return f"[FileManager ERROR] Target content not found in file: {path}"
+            
+        # Perform single replacement for surgical safety
+        new_content = content.replace(target, replacement, 1)
+        
+        with open(full_path, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+        logger.info(f"Surgically replaced content in: {path}")
+        return f"[FileManager OK] Successfully replaced content in {path}"
+    except PermissionError as e:
+        return f"[FileManager BLOCKED] {e}"
+    except Exception as e:
+        return f"[FileManager ERROR] Failed to replace content in {path}: {e}"
+
+
 if __name__ == "__main__":
     print(list_dir("."))

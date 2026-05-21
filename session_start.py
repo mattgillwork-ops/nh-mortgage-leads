@@ -66,7 +66,21 @@ def main():
         print("[INIT] Verifying MCP Tool Registry...")
         print("      OK.")
 
-    # 5. Read Handoff
+    # 5. Launch Heartbeat Daemon (Autonomous Pulse)
+    print("\n[INIT] Launching Heartbeat Daemon...")
+    try:
+        # Launch detached so it survives the session script ending
+        flags = getattr(subprocess, 'DETACHED_PROCESS', 0x00000008) | getattr(subprocess, 'CREATE_NEW_PROCESS_GROUP', 0x00000200)
+        subprocess.Popen(
+            [PYTHON_EXE, "heartbeat_daemon.py"],
+            cwd=BASE_DIR,
+            creationflags=flags
+        )
+        print("      OK (Running in background).")
+    except Exception as e:
+        print(f"      [WARN] Could not launch heartbeat daemon: {e}")
+
+    # 6. Read Handoff
     if os.path.exists("GEMINI.md"):
         print("[INIT] Loading Session Context (GEMINI.md)...")
         with open("GEMINI.md", 'r', encoding='utf-8') as f:

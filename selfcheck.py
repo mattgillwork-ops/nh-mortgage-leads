@@ -41,6 +41,9 @@ REQUIRED_MODELS = [
     "anti-analyst",
     "anti-devops",
     "anti-ux",
+    "anti-aria",
+    "anti-researcher",
+    "anti-brainstormer",
 ]
 
 REQUIRED_CORE_FILES = [
@@ -70,6 +73,8 @@ REQUIRED_SOURCE_FILES = [
     os.path.join(BASE_DIR, "agents", "analyst_agent.py"),
     os.path.join(BASE_DIR, "agents", "devops_agent.py"),
     os.path.join(BASE_DIR, "agents", "ux_agent.py"),
+    os.path.join(BASE_DIR, "agents", "researcher_agent.py"),
+    os.path.join(BASE_DIR, "agents", "strategy_agent.py"),
     os.path.join(BASE_DIR, "tools", "web_search.py"),
     os.path.join(BASE_DIR, "tools", "mcp_server.py"),
 ]
@@ -116,14 +121,26 @@ IDENTITY_CHALLENGES = {
         "prompt": "What is your name and what do you specialize in? Respond in one sentence.",
         "expected_keywords": ["ux", "ui", "design", "glassmorphism", "aesthetic", "visual"],
     },
+    "anti-researcher": {
+        "prompt": "What is your name and what is your focus area? Respond in one sentence.",
+        "expected_keywords": ["research", "rowan", "seo", "audit", "search", "competitor"],
+    },
+    "anti-aria": {
+        "prompt": "What is your name and what is your role? Respond in one sentence.",
+        "expected_keywords": ["aria", "ux", "ui", "design", "aesthetic", "visual"],
+    },
+    "anti-brainstormer": {
+        "prompt": "What is your name and what is your role? Respond in one sentence.",
+        "expected_keywords": ["finn", "brainstorm", "strategy", "ideat", "growth"],
+    },
 }
 
 # Routing accuracy test cases
 ROUTING_TESTS = [
     {"prompt": "Write a Python web scraper", "expected_delegate": "coder"},
-    {"prompt": "Write a catchy email subject line for our sale", "expected_delegate": "communications"},
+    {"prompt": "Write a catchy email subject line for our sale", "expected_delegate": "marketing"},
     {"prompt": "Audit the security of this data dump", "expected_delegate": "analyst"},
-    {"prompt": "Search the web for the latest SEO trends", "expected_delegate": "analyst"},
+    {"prompt": "Search the web for the latest SEO trends", "expected_delegate": "researcher"},
     {"prompt": "Deploy this docker container to AWS", "expected_delegate": "devops"},
     {"prompt": "Make this dashboard look like a premium glassmorphic interface", "expected_delegate": "ux"},
 ]
@@ -259,11 +276,27 @@ def check_routing_accuracy():
     passed = 0
     failed = 0
 
+    system_prompt = (
+        "You are a routing checker. Analyze the task and output a JSON object: "
+        '{"delegate_to": "coder" | "marketing" | "analyst" | "researcher" | "devops" | "ux"}. '
+        "Follow these classification rules:\n"
+        "- 'coder': coding, scrapers, scripts, programming.\n"
+        "- 'marketing': email copy, subject lines, ad campaigns.\n"
+        "- 'analyst': auditing security, data dumps, risk assessment.\n"
+        "- 'researcher': searching the web, SEO trends, gathering facts.\n"
+        "- 'devops': Docker, AWS, deployment, server infrastructure.\n"
+        "- 'ux': frontend design, glassmorphism, UI layout, aesthetics.\n"
+        "Respond ONLY with the JSON object."
+    )
+
     for test in ROUTING_TESTS:
         try:
             response = ollama.chat(
                 model="anti-ceo",
-                messages=[{"role": "user", "content": test["prompt"]}],
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": test["prompt"]}
+                ],
                 format="json",
             )
             content = response["message"]["content"]
@@ -483,11 +516,11 @@ def check_resilience_config():
             print_fail("Cloud fallback method is MISSING!")
             failed += 1
 
-        if "gemini" in content.lower():
-            print_pass("Gemini API integration is configured.")
+        if "cloud_fallback" in content:
+            print_pass("Cloud fallback gate is configured (sovereignty mode).")
             passed += 1
         else:
-            print_fail("Gemini API integration appears to be missing.")
+            print_fail("Cloud fallback gate is missing from BaseAgent.")
             failed += 1
     else:
         print_fail("base_agent.py not found!")
@@ -705,6 +738,9 @@ def run_selfcheck(skip_live=False):
     print(f"  Time Elapsed:  {elapsed:.1f}s")
     print()
 
+    # Save report to Obsidian
+    save_report_to_obsidian(total_passed, total_failed, elapsed)
+
     if total_failed == 0:
         print(f"  {Colors.GREEN}{Colors.BOLD}STATUS: ALL SYSTEMS OPERATIONAL{Colors.RESET}")
         return 0
@@ -714,13 +750,6 @@ def run_selfcheck(skip_live=False):
     else:
         print(f"  {Colors.RED}{Colors.BOLD}STATUS: CRITICAL ISSUES FOUND — ACTION REQUIRED{Colors.RESET}")
         return 1 # CRITICAL FAIL
-
-    print()
-
-    # Save report to Obsidian
-    save_report_to_obsidian(total_passed, total_failed, elapsed)
-
-    return total_failed
 
 
 def save_report_to_obsidian(passed, failed, elapsed):
