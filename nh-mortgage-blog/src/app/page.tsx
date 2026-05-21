@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MortgageCalculator from "./components/MortgageCalculator";
 
 const posts = [
   {
@@ -272,6 +273,9 @@ export default function Home() {
               </p>
             </div>
           </div>
+
+          {/* Live Mortgage Payment Estimator Widget */}
+          <MortgageCalculator articleSlug="home" />
 
           {/* NH Mortgage List Site Promo Card */}
           <div className="rounded-2xl border border-slate-200/80 bg-white p-8 space-y-6">
