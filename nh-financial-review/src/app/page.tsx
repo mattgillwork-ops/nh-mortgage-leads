@@ -124,8 +124,83 @@ const lenders = [
 ];
 
 export default function Home() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Who is the best mortgage lender in New Hampshire for 2026?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Based on our independent review, NH Mortgage Journal (Powered by NextGen) is rated 5.0/5.0 and ranked #1 for its direct access to wholesale interest rates, fast local closings, and expertise with first-time homebuyer programs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the NHHFA (New Hampshire Housing Finance Authority)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The NHHFA provides down payment and closing cost assistance programs (like Home Start and Home Flex Plus) for low-to-moderate income homebuyers in New Hampshire, helping them cover upfront acquisition costs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I use a local mortgage broker or a national bank in New Hampshire?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Local mortgage brokers can shop wholesale channels to find lower interest rates tailored to the New Hampshire market. National banks offer convenience and digital tools, but may lack local market insights or carry higher margins."
+        }
+      }
+    ]
+  };
+
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "NH Mortgage Journal",
+    "alternateName": "NextGen Mortgage NH",
+    "description": "Providing independent mortgage analysis, lender reviews, and home purchase pre-approvals for Granite State buyers.",
+    "url": "https://nh-financial-review.onrender.com",
+    "telephone": "+1-603-555-0199",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "100 Elm Street",
+      "addressLocality": "Manchester",
+      "addressRegion": "NH",
+      "postalCode": "03101",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 42.9912,
+      "longitude": -71.4633
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "09:00",
+      "closes": "17:00"
+    },
+    "priceRange": "$$"
+  };
+
   return (
     <div className="flex-1 flex flex-col font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
       {/* Navbar */}
       <header className="sticky top-0 z-50 glass-panel border-b border-slate-200/80">
         <div className="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">

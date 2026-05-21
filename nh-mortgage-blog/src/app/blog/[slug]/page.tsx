@@ -1,5 +1,7 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import MortgageCalculator from "../../components/MortgageCalculator";
 
 // Define the article structure
 interface Article {
@@ -473,6 +475,39 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const article = articles[slug];
+  if (!article) {
+    return {
+      title: "Article Not Found | NH Mortgage Journal",
+      description: "The requested mortgage article could not be found."
+    };
+  }
+  return {
+    title: `${article.title} | NH Mortgage Journal`,
+    description: article.excerpt,
+    openGraph: {
+      title: article.title,
+      description: article.excerpt,
+      url: `https://nh-mortgage-blog.onrender.com/blog/${slug}`,
+      type: "article",
+      images: [
+        {
+          url: `https://nh-mortgage-blog.onrender.com${article.image}`,
+          alt: article.title,
+        }
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.excerpt,
+      images: [`https://nh-mortgage-blog.onrender.com${article.image}`],
+    }
+  };
+}
+
 export default async function ArticlePage({ params }: PageProps) {
   const { slug } = await params;
   const article = articles[slug];
@@ -481,8 +516,111 @@ export default async function ArticlePage({ params }: PageProps) {
     notFound();
   }
 
+  const takeawaysMap: Record<string, string[]> = {
+    "nhhfa-home-start-qualification-2026": [
+      "NHHFA Home Start requires a minimum credit score of 620 (640 for higher debt-to-income limits).",
+      "Income limits vary by county: e.g., Hillsborough is capped at $115,200 (1-2 person) and Rockingham at $125,500.",
+      "Can be paired with Home Flex Plus for 3% to 4% cash assistance toward down payment and closing costs."
+    ],
+    "nh-mortgage-credit-score-requirements": [
+      "FHA loans in NH allow scores down to 580 with a 3.5% down payment.",
+      "Conventional loans require a minimum score of 620, with 740+ securing the best rates and lowest PMI.",
+      "USDA rural loans require a 640 minimum credit score for automated underwriting approval."
+    ],
+    "estimated-closing-costs-nh": [
+      "NH closing costs average 2% to 4% of the purchase price ($8,000 to $16,000 on a $400,000 home).",
+      "NH transfer tax is $15 per $1,000 of purchase price, split equally between buyer and seller ($7.50/$1,000 each).",
+      "Prepaid escrows are high in NH due to property tax rates, requiring 3-6 months of tax reserves at closing."
+    ],
+    "manchester-nh-mortgage-guide": [
+      "Manchester median single-family home price is $425,000 as of mid-2026.",
+      "Property tax rate is high at ~$18.50 per $1,000 of assessed value ($7,400/yr on a $400k home).",
+      "Target areas in Manchester waive the first-time homebuyer requirement for NHHFA programs."
+    ],
+    "nashua-nh-homebuyer-handbook": [
+      "Nashua median single-family home price is $465,000, heavily influenced by Boston commuters.",
+      "Nashua tax rate is ~$17.20 per $1,000 of assessed value.",
+      "Fast commutes via Route 3 make conforming conventional and FHA financing highly competitive."
+    ],
+    "concord-nh-real-estate-guide": [
+      "Concord offers a stable housing market with a median home price of $395,000.",
+      "Tax rate is high at ~$25.20 per $1,000 of assessed value.",
+      "Surrounding towns like Bow and Hopkinton are eligible for 100% financing USDA rural loans."
+    ],
+    "portsmouth-coastal-buyer-guide": [
+      "Portsmouth is NH's premium coastal market with a median single-family price of $745,000.",
+      "Portsmouth property tax rate is exceptionally low at ~$15.05 per $1,000 of assessed value.",
+      "High purchase prices often require Jumbo loans with strict 700+ score and asset reserve criteria."
+    ],
+    "hanover-nh-homeowners-guide": [
+      "Hanover is the Upper Valley's most exclusive market with a median price of $950,000.",
+      "Dresden school district is Dresden/Norwich interstate, and property tax rate is ~$22.05 per $1,000.",
+      "Specialized mortgage programs (physician/faculty loans) are widely used near Dartmouth-Hitchcock."
+    ]
+  };
+
+  const takeaways = takeawaysMap[slug] || [];
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": article.title,
+    "description": article.excerpt,
+    "image": [
+      `https://nh-mortgage-blog.onrender.com${article.image}`
+    ],
+    "datePublished": new Date(article.date).toISOString(),
+    "dateModified": new Date(article.date).toISOString(),
+    "author": [{
+      "@type": "Organization",
+      "name": "Anti-Gravity Financial Editorial",
+      "url": "https://nh-mortgage-blog.onrender.com"
+    }]
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the minimum credit score for the NHHFA Home Start program?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "NHHFA generally requires a minimum credit score of 620 for standard loan options. For higher debt-to-income limits, a 640 or higher may be required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the income limits for the NHHFA Home Start program in 2026?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For Hillsborough County, the income limit is $115,200 for 1-2 person households and $132,400 for 3+ person households. For Rockingham County, it is $125,500 (1-2 person) and $144,300 (3+ person)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does NHHFA offer down payment assistance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, NHHFA provides up to 3% to 4% of the loan amount in cash assistance through programs like Home Flex Plus or Cash Up Front, which can cover down payments or closing costs."
+        }
+      }
+    ]
+  };
+
   return (
     <div className="flex-1 flex flex-col font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      {slug === "nhhfa-home-start-qualification-2026" && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       {/* Navbar */}
       <header className="sticky top-0 z-50 glass-panel border-b border-slate-200/80">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -542,6 +680,26 @@ export default async function ArticlePage({ params }: PageProps) {
             </div>
           </div>
 
+          {/* AI-Optimized Key Takeaways Summary Box */}
+          {takeaways.length > 0 && (
+            <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-6 space-y-3 font-sans shadow-sm">
+              <div className="flex items-center gap-2">
+                <span className="flex h-2 w-2 rounded-full bg-blue-600 animate-pulse"></span>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-blue-800">
+                  AI Summary & Key Takeaways
+                </span>
+              </div>
+              <ul className="space-y-2 text-slate-700 text-xs md:text-sm font-medium list-none pl-0">
+                {takeaways.map((point, index) => (
+                  <li key={index} className="flex items-start gap-2.5">
+                    <span className="text-blue-600 font-extrabold mt-0.5">•</span>
+                    <span className="leading-relaxed">{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Editorial Content (Georgia Serif) */}
           <div className="font-serif text-slate-700 text-lg leading-relaxed space-y-6 max-w-none prose prose-slate">
             {article.content}
@@ -576,6 +734,9 @@ export default async function ArticlePage({ params }: PageProps) {
               </a>
             </div>
           </div>
+
+          {/* Interactive Mortgage Calculator widget */}
+          <MortgageCalculator articleSlug={article.slug} />
 
           {/* Secondary CTA: Top 10 Lender List */}
           <div className="rounded-2xl border border-slate-200/80 bg-white p-8 space-y-5 shadow-sm">
