@@ -13,6 +13,8 @@ export async function GET() {
 
   // We loop through the articles to create the feed
   for (const [slug, data] of Object.entries(newArticles)) {
+    if (!data || !data.content) continue;
+    
     const articleUrl = `${site_url}/blog/${slug}`;
     const title = data.content.title;
 
@@ -20,7 +22,7 @@ export async function GET() {
     let descriptionText = `🚨 New Update: ${title}\n\n`;
     
     if (data.takeaways && data.takeaways.length > 0) {
-      data.takeaways.forEach((t) => {
+      data.takeaways.forEach((t: string) => {
         descriptionText += `✅ ${t}\n`;
       });
     } else {
