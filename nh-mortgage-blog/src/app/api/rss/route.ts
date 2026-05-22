@@ -12,21 +12,23 @@ export async function GET() {
 `;
 
   // We loop through the articles to create the feed
-  for (const [slug, data] of Object.entries(newArticles)) {
+  for (const [slug, rawData] of Object.entries(newArticles)) {
+    const data = rawData as any;
     if (!data || !data.content) continue;
     
     const articleUrl = `${site_url}/blog/${slug}`;
-    const title = data.content.title;
+    const content = data.content;
+    const title = content.title || "New Update";
 
     // Build the GMB optimized description
     let descriptionText = `🚨 New Update: ${title}\n\n`;
     
-    if (data.takeaways && data.takeaways.length > 0) {
+    if (data.takeaways && Array.isArray(data.takeaways) && data.takeaways.length > 0) {
       data.takeaways.forEach((t: string) => {
         descriptionText += `✅ ${t}\n`;
       });
     } else {
-      descriptionText += `${data.content.excerpt}\n`;
+      descriptionText += `${content.excerpt || ""}\n`;
     }
     
     descriptionText += `\nTap 'Learn More' to read the full guide and check your eligibility.`;
