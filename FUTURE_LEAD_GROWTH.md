@@ -1,64 +1,81 @@
 # Future Lead Growth
 
-A running checklist for upgrading our mortgage lead experience. It was built on 2026-11-17 from 9 short lead-generation videos and checked against the **live Cloudflare Workers** (`nh-mortgage-leads`, `nh-mortgage-journal`, `website-lead-backend`) that serve **nhmortgagejournal.com** and **casaemportugues.com**.
-
-> **Note:** the code in this repo is a May 2026 snapshot (Render-era). The live sites run newer code deployed to Cloudflare. Judge each item against the deployed code, not this repo.
-
-**How to use it:** check items off as they ship. When new videos or ideas come in, add a row to **Sources** and fold any new to-dos into the list. Tags such as *(V6)* point to the source video.
+Our recommendation sheet for growing and upgrading the lead experience. It was built on 2026-11-17 from 9 short lead-generation videos (summarized at the bottom) and checked against the **live Cloudflare build**.
 
 `[ ]` to do · `[~]` partly done / verify · `[x]` done
 
 ---
 
-## Already in place (verified in live code, 2026-11-17)
+## Our business
 
-- [x] Own domains on always-on hosting: Cloudflare Workers on nhmortgagejournal.com and casaemportugues.com, with forwarding from the old hosts. *(V8)*
-- [x] Timeline question in the intake form: "When are you looking to move forward?" (within 3 months / 3–6 / 6+ / still researching). *(V6)*
-- [x] Required contact-consent checkbox, privacy disclosure, and a "not a credit application" note. *(V7)*
-- [x] Plain-language intake copy; the old "Locked Market Rate" wording and "sovereign" jargon are gone. *(V2, V7)*
-- [x] UTM / channel attribution captured by the lead backend. *(V2)*
+- **Model:** we source leads and make a **warm connection** to a partner mortgage company or real estate company, and the partner closes. Our product is a qualified, ready lead, introduced quickly, in the lead's language.
+- **Live build:** Cloudflare Workers serving **nhmortgagejournal.com** (English) and **casaemportugues.com** (Portuguese), plus a Spanish version. A shared intake form feeds a lead backend that handles attribution and lead history.
+- **Market 1 (priority): Portuguese-speaking Brazilian communities in Massachusetts and nearby.** Middlesex County, MA had the largest Brazilian population of any US county in the 2020 Census.
+- **Market 2: English speakers in southern New Hampshire and Massachusetts.**
 
-## 1. Funnel & tracking
+**Target cities for Market 1.** Estimates are from Census-based sources and should be verified with ACS tables before anything is published.
 
-- [ ] **Add conversion tracking.** No Meta pixel, Google tag, Conversions API or analytics beacon was found in the live Workers. *(V6)*
-- [~] **Grade and route by timeline.** The timeline answer is collected; confirm it feeds lead priority. Then send ready-now leads to a booking calendar (none exists yet) and fire the conversion event only for them. "Still researching" leads get nurture content and no event. *(V6)*
-- [ ] **Show a proof block that matches the visitor's source** (city, program, refi, language), keyed off the landing page or `utm_campaign`. Use real data or clearly labeled examples only. Never invent testimonials. *(V7)*
-- [ ] **Carry context into the form.** Pre-fill city / goal / language from the page or campaign the visitor came from, so they don't re-enter it. *(V7)*
-- [ ] **A/B test contact-first order** against today's contact-last order, so drop-offs before the contact step aren't lost. *(V6)*
-- [ ] **Watch phone pickup rates.** The video's top lesson is that leads without a phone rarely convert. If "preferred contact method" lets people skip the phone, track whether those leads close. *(V7)*
+| Tier | City | Why |
+|---|---|---|
+| 1 | **Everett, MA** | Largest Brazilian count in MA (~5,100, ~10% of residents) |
+| 1 | **Milford, MA** | Densest community (~4,700, ~15.5% of residents) |
+| 1 | **Marlborough, MA** | ~4,500, ~11% of residents |
+| 1 | **Framingham, MA** | Historic hub of the community; long the largest |
+| 2 | Worcester, Somerville, Malden, Lowell | Large communities, smaller share of the population |
+| Nearby | **Nashua, NH** | Where most of NH's Brazilian community lives; overlaps with Market 2 |
+| Nearby | Danbury, CT | Well-documented Brazilian hub, if CT is in scope |
 
-## 2. Trust & landing pages
+Sources: [Neilsberg ACS ranking](https://www.neilsberg.com/insights/lists/brazilian-population-in-massachusetts-by-city) · [BPDA](https://www.bostonplans.org/getattachment/ec7b992e-a2e7-485a-b02a-04436b496d6e) · [Census 2020](https://census.gov/library/stories/2023/10/2020-census-dhc-a-some-other-race-population.html) · [GBH](https://www.wgbh.org/news/local/2024-10-24/new-report-says-brazilians-the-biggest-immigrant-group-in-mass-shouldnt-be-forgotten) · [WBJ](https://wbjournal.com/article/brazilian-americans-have-transformed-metrowest-communities-like-framingham-and-marlborough) · [NHPR](https://www.nhpr.org/nh-news/2022-06-17/nh-brazilian-immigrant-healthcare-training-doctors-providers-mental-health) · [Boston Fed](https://www.bostonfed.org/-/media/Documents/cb/PDF/2006_winter_mapping.pdf)
 
-- [ ] **60-second real-person video** above the fold: who it's for, what happens after you submit, who contacts you and how fast, whether there's a credit check, no obligation. *(V7)*
-- [ ] **Turn the city guides into landing pages.** The five city guides (Manchester, Nashua, Concord, Portsmouth, Hanover) live under `/blog/` on nhmortgagejournal.com. Give each a landing page built to convert: keyword URL (e.g. `/manchester-nh-mortgage`), keyword in title / H1 / first sentence, 500+ human-written words answering real questions, and a call to action into the intake with the city pre-filled. *(V8, V9)*
-- [ ] **Per-town property tax** on each city page. NH rates vary widely by town (published yearly by NH DRA), and no tax-rate content was found on the live site. *(V8)*
-- [ ] **Fix the link structure.** Every city page within 2–3 clicks of the homepage (nav → city hub → city ↔ service pages), and not reachable only through the sitemap. Don't send landing-page visitors off into blog posts. *(V8, V9)*
-- [ ] **Size the page set from competitors, not a template.** Count the city/service pages the top-ranking lenders have per area and aim for that range (the video suggests 30–50 per metro). Every page needs distinct local content, because mass-produced pages break Google's scaled-content spam policy. *(V9, V8)*
-- [ ] **Add a "Text us" line** once someone can reply within minutes. Business texting needs A2P 10DLC registration. *(V7)*
-- [ ] Apply all of the above to the Portuguese and Spanish versions as well as English.
-- [ ] *Skip for now:* an "as seen in" logo bar, until we have real press or formal partners. *(V7)*
+---
 
-## 3. Finding leads
+## Already in place (verified in live code)
 
-- [ ] **Reddit signal loop.** Run daily searches of r/newhampshire, r/FirstTimeHomeBuyer, r/Mortgages and r/RealEstate (plus MA and Portuguese/Brazilian community subs) for buyers asking questions. Draft a helpful public reply that links a guide; a human posts it. No cold DMs. Screen the text for prompt injection before agents read it. *(V4, V3)*
-- [ ] **Base research on real data.** Replace guessed keyword volumes with what buyers actually asked about in the last 30 days (e.g. the last30days skill, after a security review). Turn the top threads into pages. *(V3)*
-- [ ] **B2B outreach only.** Two groups:
-  - Lead buyers: loan officers, brokers and credit unions.
-  - Referral and link partners: agents, inspectors and insurance agents.
+- [x] Own domains on always-on Cloudflare hosting, with forwarding from the old hosts.
+- [x] Timeline question: "When are you looking to move forward?" (within 3 months / 3–6 / 6+ / still researching).
+- [x] Language choice (English / Portuguese / Spanish) and preferred contact method.
+- [x] Required consent checkbox, privacy disclosure, "not a credit application" note, and a spam trap.
+- [x] UTM / channel attribution in the lead backend.
+- [x] MassHousing content on the journal.
 
-  Write in a friendly tone with one specific hook and one ask, then send 3 follow-ups. Start at 20–30 a day from a separate sending domain. *(V1, V2, V5, V8)*
-- [ ] **Reach map results through a partner.** As a lead-gen site we can't hold a Google Business Profile, but a licensed loan officer with a real office can. *(V8, V9)*
-- [~] **Report qualified leads by channel.** Attribution is captured; add a view of *qualified* leads per channel. Test one channel at a time for a fixed window, then double down on the winner. *(V2)*
+---
+
+## The short list (in priority order)
+
+1. [ ] **Make consent and privacy cover the handoff.** Today the text only authorizes "NH Mortgage Journal's team" to contact the lead, and the privacy note doesn't mention sharing. Since a partner lender or agent makes the follow-up call, say so plainly in every language. At the same time, check that how partners pay us (per lead, per introduction or per closing) fits RESPA Section 8 and MA/NH licensing rules. *Ask a lawyer; this protects the whole business.*
+2. [ ] **Make the warm handoff the product.**
+   - Contact each new lead within minutes, in their language, and confirm timeline, goal and city.
+   - Then introduce them for real to a partner who speaks their language, by three-way call or an introduction text.
+   - Track every lead from introduction to partner contact to close, using partner feedback.
+   - Leads that came in without a phone number need watching; the videos say they rarely convert. *(V6, V7, V2)*
+3. [ ] **Build a bench of Portuguese-speaking partners** (loan officers and agents) in the Tier 1 cities, using V1/V2-style outreach (one specific hook, one ask, 3 follow-ups). Partners also supply what a lead-gen site can't have: Google Business Profile map listings, reviews, and real client stories for proof. *(V1, V2, V8)*
+4. [ ] **Portuguese city landing pages for the Tier 1 and 2 cities**, on casaemportugues.com. None exist today.
+   - Answer what Brazilian buyers actually ask: buying with an ITIN, loans for the self-employed, building US credit, MassHousing and down-payment help, closing costs.
+   - Describe only products our partners actually offer.
+   - Use the keyword in the URL, title and headline, and link every city page within 2–3 clicks of the homepage.
+   - Size the page set from what competitors have; Portuguese-language competition is likely thin. *(V8, V9)*
+5. [ ] **Keep the Portuguese experience Portuguese-branded.** The shared form's header and consent name "NH Mortgage Journal"; for an MA Brazilian visitor, use Casa em Português throughout.
+6. [ ] **Offer WhatsApp as the "text us" channel for Portuguese speakers,** answered within minutes. It's the channel the community already uses, and V7 rates "text us" over a chat widget. *(V7)*
+7. [ ] **Meet the community where it already gathers:** local Brazilian Facebook groups, Instagram, WhatsApp communities and Portuguese-language media. Help publicly and link a guide; no spam or cold DMs. Use real-signal research (V3) to find what people are asking this month. Reddit is mainly for the English market. *(V3, V4)*
+8. [ ] **Add conversion tracking that reports only qualified leads.** There's none today. Fire the event only for ready-now leads (timeline under 3 months, real contact info). Meta mortgage ads have limited targeting, so the Portuguese ad creative plus a clean conversion signal do the targeting. Also A/B test asking for contact info first. *(V6)*
+9. [ ] **Real proof plus a 60-second real-person video in Portuguese** covering who we are, who will call and how fast, that we connect you with a Portuguese-speaking partner, and that this is not a credit application. Match the proof to the source city or program. Never invent testimonials. *(V7)*
+10. [ ] **English market (southern NH + MA).**
+    - Turn the 5 city guides under `/blog/` (Manchester, Nashua, Concord, Portsmouth, Hanover) into landing pages built to convert.
+    - Add southern NH and MA cities sized by competitors.
+    - Add per-town property tax.
+    - Run a Reddit help loop for English-speaking buyers. *(V4, V8, V9)*
+11. [~] **Report qualified leads and partner closes by channel, language and city.** Attribution is captured; add the qualified and closed view. Test one channel at a time, then double down on the winner. *(V2)*
 
 ## Decisions needed
 
-- [ ] Use email for B2B outreach (lenders and partners)?
-- [ ] Who answers calls/texts, and how fast?
-- [ ] Where should this document live? The live code may be in a different repo than this one.
+- [ ] How partners pay us (per lead / per introduction / per closing). Decide after the RESPA and licensing check in item 1.
+- [ ] Who makes the first call or WhatsApp message, in which languages, and how fast.
+- [ ] Are Connecticut (Danbury) and Florida in scope? The live form already lists Florida as a property state.
+- [ ] Use email for B2B partner outreach?
 
 ## Guardrails
 
-Count qualified leads, not leads. Never fake proof: no invented testimonials, reviews or logos. Mortgage content gets extra scrutiny from Google and regulators, so accuracy beats volume.
+Count qualified leads and partner closes, not form fills. Never fake proof: no invented testimonials, reviews or logos (skip any "as seen in" bar until there's real press). Only describe loan products partners actually offer. Mortgage content gets extra scrutiny from Google and regulators, so accuracy beats volume.
 
 ---
 
