@@ -62,21 +62,59 @@ Count qualified leads, not leads. Never fake proof: no invented testimonials, re
 
 ---
 
-## Sources
-
-| # | Creator | Topic | Takeaway for us |
-|---|---|---|---|
-| V1 | @jackroberts | "Harvey" open-source outbound agent | AI handles research + personalized outreach; use it for B2B only |
-| V2 | Patrick Dang | 7 keys to lead generation | ~75/day cap, friendly tone, one ask, follow up 3×, double down |
-| V3 | Allie Miller | /last30days research skill | Research ranked by real engagement → action |
-| V4 | @wolfecreates | ThreadSignals Reddit leads | People asking for help in public are warm leads |
-| V5 | @growthwithkj | Gojiberry + ChatGPT | Signal-triggered outreach (mostly a product pitch) |
-| V6 | @drmattshiver | Training Meta to send qualified leads | What you report back to Meta is your targeting; qualify first |
-| V7 | @jssiehcktt | Landing-page fixes tier list | Proof matching the visitor (10), text-us (7), founder video (7), keep phone field |
-| V8 | @build_in_public | Local SEO basics | Page per service/city, 500+ human words, internal links, landing pages over blog posts |
-| V9 | @_toddanderson | How many location pages | 30–50 per metro sized by competitors; every page 2–3 clicks from home |
+## Video findings (sources)
 
 Full transcripts: `tru/Research/Lead_Growth_Video_Transcripts.md`
+
+**The common thread:** act on signs that someone is ready instead of blasting lists. Qualify before you count a lead. Research, personalize, make one clear ask, follow up.
+
+**V1 · @jackroberts: "Harvey" outbound agent (40s)**
+- A free, open-source Claude Code agent: you describe what you sell and your ideal customer. It finds businesses, reads their sites, picks the best fits, writes a cold email around something specific to each, reads replies and steers interested people to a booked call.
+- *For us:* useful for B2B outreach (lenders, partners) only, never for cold-emailing consumers.
+
+**V2 · Patrick Dang: 7 keys to lead generation (10 min)**
+- About 75 emails or LinkedIn messages a day at most; more risks your email domain or a LinkedIn ban.
+- Write like you're talking to a friend. Don't over-share. One clear ask ("book a meeting," not "let me know").
+- Follow up 3 times, 3–7 days apart (he says replies rise from ~5% to 10–25%).
+- When a channel works, double down instead of spreading thin. Make it a game so you stay consistent.
+
+**V3 · Allie Miller: /last30days skill (4 min)**
+- A Claude Code plugin that searches the last 30 days of Reddit, X, YouTube and more, ranked by real engagement rather than editors.
+- Use research to act, not just to learn: a weekly scheduled job that finds people matching a signal and drafts outreach to them.
+- *For us:* find what buyers are asking now, then build pages and replies around it. Have it security-reviewed first.
+
+**V4 · @wolfecreates: ThreadSignals Reddit leads (57s)**
+- Set a goal, subreddit and keywords; the tool pulls matching posts, AI tags them hot or warm and drafts a reply.
+- People asking for help in public are warm leads. Help publicly first, then start a conversation.
+
+**V5 · @growthwithkj: Gojiberry + ChatGPT (50s)**
+- Prompt for leads matching a signal (e.g. a business that just raised funding); the tool ranks them and runs outreach.
+- Despite the "no cold outreach" claim, it is automated cold outreach. Mostly a product pitch.
+
+**V6 · @drmattshiver: training Meta to send qualified leads (2 min)**
+- Meta finds more people like whoever triggers your conversion event, so what you report back is your targeting. Report junk and Meta finds more junk.
+- After contact info, ask a qualifying question (e.g. "When do you want to start?"). Qualified people go to a calendar page with the pixel; everyone else goes to a page with no calendar and no pixel.
+- Allow about 2 weeks for Meta to adjust. 10–20 qualified leads a day beat 50 junk ones.
+- *For us:* mortgage ads are a Meta "special ad category" with limited targeting, which makes this matter even more.
+
+**V7 · @jssiehcktt: landing-page fixes tier list (82s)**
+- **10:** proof that matches the ad's audience (same page, proof section keyed off the ad).
+- **7:** a "Text us" line instead of a chat widget.
+- **7:** a 60-second founder video: who it's for and what happens after you submit.
+- **5:** an "as seen in" logo bar, only if the logos are real and recent.
+- **1:** removing the phone field. You get more leads, but nobody picks up.
+
+**V8 · @build_in_public: local SEO basics (2 min)**
+- One page per service + city. Title = service + city + state, and the headline matches it.
+- 500+ human-written words answering real questions. Link services to cities and back.
+- A complete Google Business Profile plus reviews from every happy customer ("half of local SEO").
+- Use landing pages built to convert, not blog posts. Open with why you're the one to trust. Get links from related non-competitors and real directories.
+- *For us:* a lead-gen site can't hold a Business Profile, so reach map results through a licensed partner.
+
+**V9 · @_toddanderson: how many location pages (50s)**
+- About 30–50 pages per metro area, sized by counting what the top-ranking competitors have ("you don't want 200 and you don't want two").
+- Every city page within 2–3 clicks of the homepage; reachable only through the sitemap means broken linking. Clean keyword URLs.
+- No copy-paste templates. He notes the top map-results competitors use the keyword far more often (a correlation, not a license to stuff keywords).
 
 ---
 [[CURRENT_TASKS]] | [[Mortgage_LeadGen_NH_MOC]]
